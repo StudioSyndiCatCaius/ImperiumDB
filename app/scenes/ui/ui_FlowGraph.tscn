@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://yo3kw5xm1r1y"]
+
+[ext_resource type="Script" uid="uid://ninltbqxj6cg" path="res://app/scenes/ui/ui_FlowGraph.gd" id="1_pb1ws"]
+[ext_resource type="PackedScene" uid="uid://dlr7wei0mcpmo" path="res://app/scenes/ui/ui_ParamEdit.tscn" id="2_mhv03"]
+[ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="3_m5ua5"]
+
+[node name="UiFlowGraph" type="PanelContainer" node_paths=PackedStringArray("N_Graph", "N_ParamEdit")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pb1ws")
+N_Graph = NodePath("HSplitContainer/GraphEdit")
+N_ParamEdit = NodePath("HSplitContainer/UiParamEdit")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 2
+split_offset = -320
+
+[node name="GraphEdit" type="GraphEdit" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/grid_major = Color(0, 0, 0, 0.615686)
+theme_override_colors/grid_minor = Color(1, 1, 1, 0.0509804)
+right_disconnects = true
+
+[node name="UiParamEdit" parent="HSplitContainer" instance=ExtResource("2_mhv03")]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="cmp_InputAction" type="Node" parent="."]
+script = ExtResource("3_m5ua5")
+metadata/_custom_type_script = "uid://dmgwd5itujl7q"
+
+[connection signal="connection_request" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]
+[connection signal="disconnection_request" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
+[connection signal="duplicate_nodes_request" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_duplicate_nodes_request"]
+[connection signal="node_deselected" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_deselected"]
+[connection signal="node_selected" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_selected"]

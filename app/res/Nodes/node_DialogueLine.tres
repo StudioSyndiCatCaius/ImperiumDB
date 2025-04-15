@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=10 format=3 uid="uid://c35fffw47e3so"]
+
+[ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_geyaj"]
+[ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="2_72hee"]
+[ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="2_cjk38"]
+[ext_resource type="Script" uid="uid://jbgjwigi0wbu" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_script.gd" id="3_jkdxu"]
+[ext_resource type="Script" uid="uid://ba5sgmo2v4x72" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_text.gd" id="4_n4xin"]
+
+[sub_resource type="Resource" id="Resource_72hee"]
+script = ExtResource("1_geyaj")
+name = ""
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_cjk38"]
+script = ExtResource("1_geyaj")
+name = ""
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_m5aoy"]
+script = ExtResource("4_n4xin")
+default = ""
+name = ""
+metadata/_custom_type_script = "uid://ba5sgmo2v4x72"
+
+[sub_resource type="Resource" id="Resource_ak86w"]
+script = ExtResource("3_jkdxu")
+default = ""
+name = ""
+metadata/_custom_type_script = "uid://jbgjwigi0wbu"
+
+[resource]
+script = ExtResource("2_72hee")
+name = "Line"
+color = Color(0.361525, 0.67072, 0.893594, 1)
+scale = Vector2(200, 100)
+inputs = Array[ExtResource("1_geyaj")]([SubResource("Resource_72hee")])
+outputs = Array[ExtResource("1_geyaj")]([SubResource("Resource_cjk38")])
+properties = Dictionary[StringName, ExtResource("2_cjk38")]({
+&"line": SubResource("Resource_m5aoy"),
+&"speaker": SubResource("Resource_ak86w")
+})
+metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

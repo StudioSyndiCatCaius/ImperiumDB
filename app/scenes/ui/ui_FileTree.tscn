@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://da8qer3yy0t2p"]
+
+[ext_resource type="Script" uid="uid://dtl3wst86vgj7" path="res://app/scenes/ui/ui_FileTree.gd" id="1_rafb5"]
+[ext_resource type="Texture2D" uid="uid://dullmjmvl2s2h" path="res://app/assets/2D/icons/Icon_Folder_T.PNG" id="2_ad5mi"]
+[ext_resource type="Texture2D" uid="uid://bw7vluaiopfwi" path="res://app/assets/2D/icons/Icon_File_T.PNG" id="3_tlf0m"]
+[ext_resource type="Texture2D" uid="uid://db8jiorl8ivnr" path="res://app/assets/2D/icons/t_ico_MagniGlass.png" id="4_tlf0m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rafb5"]
+bg_color = Color(0.187176, 0.187176, 0.187176, 1)
+border_width_left = 10
+border_color = Color(0.325441, 0.325441, 0.325441, 1)
+
+[node name="UiFileTreeItem" type="VBoxContainer" node_paths=PackedStringArray("N_BtnOpen", "N_BtnExpand", "N_SubitemRoot", "N_SubitemList", "N_timer_dblClk")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rafb5")
+icon_folder = ExtResource("2_ad5mi")
+icon_file = ExtResource("3_tlf0m")
+N_BtnOpen = NodePath("HBoxContainer/btn_open")
+N_BtnExpand = NodePath("HBoxContainer/Button")
+N_SubitemRoot = NodePath("PanelContainer")
+N_SubitemList = NodePath("PanelContainer/VBoxContainer")
+N_timer_dblClk = NodePath("Timer_dblClick")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 10
+text = "sdf"
+alignment = 0
+
+[node name="btn_open" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("4_tlf0m")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_rafb5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Timer_dblClick" type="Timer" parent="."]
+wait_time = 0.2
+
+[connection signal="pressed" from="HBoxContainer/Button" to="." method="_on_btn_expand_pressed"]
+[connection signal="pressed" from="HBoxContainer/btn_open" to="." method="_on_btn_open_pressed"]
+[connection signal="timeout" from="Timer_dblClick" to="." method="_on_timer_dbl_click_timeout"]

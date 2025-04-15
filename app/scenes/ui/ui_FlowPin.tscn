@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://cowsypvdc8sib"]
+
+[ext_resource type="Script" uid="uid://cxx6nna8wfhlf" path="res://app/scenes/ui/ui_FlowPin.gd" id="1_0unwo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0unwo"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0, 0, 0.333333)
+
+[node name="UiFlowPin" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0unwo")
+script = ExtResource("1_0unwo")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 10
+text = "text here"
+autowrap_mode = 2

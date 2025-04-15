@@ -1,0 +1,2 @@
+extends res__ImpAsset
+class_name res_Entity

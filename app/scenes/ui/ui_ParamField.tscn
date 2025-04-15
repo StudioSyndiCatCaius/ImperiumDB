@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://tdkxa6gh31q2"]
+
+[ext_resource type="Script" uid="uid://d2u71x8t1fvlx" path="res://app/scenes/ui/ui_ParamField.gd" id="1_1f7ek"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1f7ek"]
+font_size = 10
+
+[node name="UiParamField" type="PanelContainer" node_paths=PackedStringArray("N_paramRoot", "N_Label", "N_edit_string", "N_edit_text", "N_edit_code")]
+custom_minimum_size = Vector2(0, 50)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1f7ek")
+N_paramRoot = NodePath("HBoxContainer/Control")
+N_Label = NodePath("HBoxContainer/Label")
+N_edit_string = NodePath("HBoxContainer/Control/edit_string")
+N_edit_text = NodePath("HBoxContainer/Control/edit_text")
+N_edit_code = NodePath("HBoxContainer/Control/CodeEdit")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+text = "NAME"
+label_settings = SubResource("LabelSettings_1f7ek")
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CheckButton" type="CheckButton" parent="HBoxContainer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+metadata/size = 50.0
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+metadata/size = 50.0
+
+[node name="edit_string" type="TextEdit" parent="HBoxContainer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/size = 40.0
+
+[node name="edit_text" type="TextEdit" parent="HBoxContainer/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/size = 80.0
+
+[node name="CodeEdit" type="CodeEdit" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+gutters_draw_line_numbers = true
+metadata/size = 80.0
+
+[connection signal="toggled" from="HBoxContainer/Control/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="value_changed" from="HBoxContainer/Control/SpinBox" to="." method="_on_spin_box_value_changed"]
+[connection signal="text_changed" from="HBoxContainer/Control/edit_string" to="." method="_on_edit_string_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/Control/edit_text" to="." method="_on_edit_text_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/Control/CodeEdit" to="." method="_on_code_edit_text_changed"]

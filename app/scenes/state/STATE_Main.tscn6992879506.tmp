@@ -1,0 +1,78 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctjrlx32blsk4"]
+
+[ext_resource type="Script" uid="uid://dc38o7eyh2un8" path="res://app/scenes/state/state_main.gd" id="1_2mmce"]
+[ext_resource type="PackedScene" uid="uid://okap22rdmsq" path="res://app/scenes/ui/ui_FileTree_Item.tscn" id="2_j53oe"]
+[ext_resource type="PackedScene" uid="uid://yo3kw5xm1r1y" path="res://app/scenes/ui/ui_FlowGraph.tscn" id="2_nrvy0"]
+
+[node name="StateProjects" type="Node" node_paths=PackedStringArray("N_TabGraphs", "N_ProjName")]
+script = ExtResource("1_2mmce")
+N_TabGraphs = NodePath("Control/VBoxContainer/HBoxContainer/TABS_FlowGraph")
+N_ProjName = NodePath("Control/VBoxContainer/HBoxContainer2/txt_projName")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="txt_projName" type="Label" parent="Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Project Name Here"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="MenuBar" type="MenuBar" parent="Control/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="UiFileTree" parent="Control/VBoxContainer/HBoxContainer/PanelContainer" instance=ExtResource("2_j53oe")]
+layout_mode = 2
+path = "/data/"
+is_project_relative = true
+
+[node name="TABS_FlowGraph" type="TabContainer" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 10
+current_tab = 0
+
+[node name="UiFlowGraph" parent="Control/VBoxContainer/HBoxContainer/TABS_FlowGraph" instance=ExtResource("2_nrvy0")]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="UiFlowGraph2" parent="Control/VBoxContainer/HBoxContainer/TABS_FlowGraph" instance=ExtResource("2_nrvy0")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="UiFlowGraph3" parent="Control/VBoxContainer/HBoxContainer/TABS_FlowGraph" instance=ExtResource("2_nrvy0")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2

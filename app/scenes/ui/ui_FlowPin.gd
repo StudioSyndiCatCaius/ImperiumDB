@@ -1,0 +1,2 @@
+extends PanelContainer
+class_name ui_FlowPin

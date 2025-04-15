@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=11 format=3 uid="uid://cc7cwq67lktkc"]
+
+[ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_022fw"]
+[ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="2_3cf1y"]
+[ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="2_h4ba1"]
+[ext_resource type="Script" uid="uid://jbgjwigi0wbu" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_script.gd" id="3_3cf1y"]
+[ext_resource type="Script" uid="uid://ceujn71enal42" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_float.gd" id="4_inpog"]
+
+[sub_resource type="Resource" id="Resource_h4ba1"]
+script = ExtResource("1_022fw")
+name = "in"
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_3cf1y"]
+script = ExtResource("1_022fw")
+name = "ended"
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_inpog"]
+script = ExtResource("1_022fw")
+name = "started"
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_dswm5"]
+script = ExtResource("4_inpog")
+default = 0.0
+name = ""
+metadata/_custom_type_script = "uid://ceujn71enal42"
+
+[sub_resource type="Resource" id="Resource_8irlh"]
+script = ExtResource("3_3cf1y")
+default = "cam_"
+name = ""
+metadata/_custom_type_script = "uid://jbgjwigi0wbu"
+
+[resource]
+script = ExtResource("2_h4ba1")
+name = "Camera"
+color = Color(0, 1, 0, 1)
+scale = Vector2(0, 0)
+inputs = Array[ExtResource("1_022fw")]([SubResource("Resource_h4ba1")])
+outputs = Array[ExtResource("1_022fw")]([SubResource("Resource_3cf1y"), SubResource("Resource_inpog")])
+properties = Dictionary[StringName, ExtResource("2_3cf1y")]({
+&"blend_time": SubResource("Resource_dswm5"),
+&"camera_id": SubResource("Resource_8irlh")
+})
+metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

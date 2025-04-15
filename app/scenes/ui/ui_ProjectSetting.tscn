@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkcfxxh3oy3ei"]
+
+[ext_resource type="Script" uid="uid://bqgsvu6wv7cu4" path="res://app/scenes/ui/ui_ProjectSetting.gd" id="1_h40rn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8tqva"]
+bg_color = Color(0.6, 0.6, 0.6, 0.0392157)
+
+[node name="UiProjectSetting" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8tqva")
+script = ExtResource("1_h40rn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "lab"
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CheckButton" type="CheckButton" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+rounded = true
+
+[connection signal="toggled" from="HBoxContainer/Control/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="value_changed" from="HBoxContainer/Control/SpinBox" to="." method="_on_spin_box_value_changed"]

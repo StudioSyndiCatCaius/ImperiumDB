@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=3 uid="uid://cacamryng1men"]
+
+[ext_resource type="Script" uid="uid://dx0qw0dorrarf" path="res://app/scenes/ui/ui_Project.gd" id="1_l787r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v5dg3"]
+bg_color = Color(0.490196, 0.505882, 1, 0.0431373)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="Resource" id="Resource_v5dg3"]
+metadata/__load_path__ = "res://app/assets/2D/icons/arrowDown.png"
+
+[sub_resource type="LabelSettings" id="LabelSettings_v5dg3"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_l787r"]
+font_size = 10
+
+[node name="UiProject" type="PanelContainer" node_paths=PackedStringArray("N_name", "N_path", "N_image")]
+custom_minimum_size = Vector2(0, 100)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v5dg3")
+script = ExtResource("1_l787r")
+N_name = NodePath("HBoxContainer/VBoxContainer/txt_name")
+N_path = NodePath("HBoxContainer/VBoxContainer/txt_name2")
+N_image = NodePath("HBoxContainer/TextureRect")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = SubResource("Resource_v5dg3")
+expand_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="txt_name" type="Label" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "ProjectName"
+label_settings = SubResource("LabelSettings_v5dg3")
+
+[node name="txt_name2" type="Label" parent="HBoxContainer/VBoxContainer"]
+modulate = Color(0.698039, 0.839216, 1, 0.541176)
+layout_mode = 2
+text = "pathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpathpath
+"
+label_settings = SubResource("LabelSettings_l787r")
+autowrap_mode = 1
+
+[node name="btn_open" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "open
+"
+
+[node name="btn_delete" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "remove"
+
+[connection signal="pressed" from="HBoxContainer/btn_open" to="." method="_on_btn_open_pressed"]
+[connection signal="pressed" from="HBoxContainer/btn_delete" to="." method="_on_btn_delete_pressed"]

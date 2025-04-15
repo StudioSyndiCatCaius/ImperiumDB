@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://be6llttf77wh3"]
+
+[ext_resource type="Script" uid="uid://c1u0egab4m38y" path="res://app/scenes/ui/ui_FlowNode.gd" id="1_nfslp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfslp"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+
+[node name="UiFlowNode" type="GraphNode"]
+custom_minimum_size = Vector2(100, 50)
+offset_right = 306.0
+offset_bottom = 144.0
+theme_override_styles/titlebar = SubResource("StyleBoxFlat_nfslp")
+title = "text"
+script = ExtResource("1_nfslp")
+
+[connection signal="position_offset_changed" from="." to="." method="_on_position_offset_changed"]

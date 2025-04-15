@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=4 format=3 uid="uid://d18b4k3y6yx1v"]
+
+[ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_7slly"]
+[ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="2_f1e01"]
+[ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="2_t5mve"]
+
+[resource]
+script = ExtResource("2_f1e01")
+name = ""
+color = Color(1, 1, 1, 1)
+scale = Vector2(0, 0)
+inputs = Array[ExtResource("1_7slly")]([])
+outputs = Array[ExtResource("1_7slly")]([])
+properties = Dictionary[StringName, ExtResource("2_t5mve")]({})
+metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

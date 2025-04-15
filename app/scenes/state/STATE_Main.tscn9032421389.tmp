@@ -1,0 +1,113 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctjrlx32blsk4"]
+
+[ext_resource type="Script" uid="uid://dc38o7eyh2un8" path="res://app/scenes/state/state_main.gd" id="1_2mmce"]
+[ext_resource type="PackedScene" uid="uid://da8qer3yy0t2p" path="res://app/scenes/ui/ui_FileTree.tscn" id="2_j53oe"]
+[ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="2_klkow"]
+[ext_resource type="PackedScene" uid="uid://yo3kw5xm1r1y" path="res://app/scenes/ui/ui_FlowGraph.tscn" id="2_nrvy0"]
+[ext_resource type="Resource" uid="uid://d2ys46uk5pnh4" path="res://app/res/Graphs/graph_OneLine.tres" id="4_1lsm5"]
+[ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="5_mud24"]
+
+[node name="StateProjects" type="Node" node_paths=PackedStringArray("N_TabGraphs", "N_ProjName", "N_Dialog_save", "N_Dialog_confirm_quit")]
+script = ExtResource("1_2mmce")
+N_TabGraphs = NodePath("Control/VBoxContainer/HBoxContainer/TABS_FlowGraph")
+N_ProjName = NodePath("Control/VBoxContainer/HBoxContainer2/txt_projName")
+N_Dialog_save = NodePath("dialog_SAVE")
+N_Dialog_confirm_quit = NodePath("dlg_confirm_quit")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="txt_projName" type="Label" parent="Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Project Name Here"
+
+[node name="Control" type="Control" parent="Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="btn_quit" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+icon = ExtResource("2_klkow")
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="menu_file" type="MenuButton" parent="Control/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+text = "File"
+item_count = 1
+popup/item_0/id = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="UiFileTree" parent="Control/VBoxContainer/HBoxContainer/PanelContainer" instance=ExtResource("2_j53oe")]
+layout_mode = 2
+path = "/data/"
+is_project_relative = true
+
+[node name="TABS_FlowGraph" type="TabContainer" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 10
+current_tab = 0
+
+[node name="UiFlowGraph" parent="Control/VBoxContainer/HBoxContainer/TABS_FlowGraph" instance=ExtResource("2_nrvy0")]
+layout_mode = 2
+current_graph = ExtResource("4_1lsm5")
+metadata/_tab_index = 0
+
+[node name="i_save" type="Node" parent="."]
+script = ExtResource("5_mud24")
+key = 83
+Require_CTRL = true
+metadata/_custom_type_script = "uid://dmgwd5itujl7q"
+
+[node name="dialog_SAVE" type="FileDialog" parent="."]
+access = 2
+root_subfolder = "res://save"
+filters = PackedStringArray("*.ImpAsset")
+use_native_dialog = true
+
+[node name="dlg_confirm_quit" type="ConfirmationDialog" parent="."]
+title = "Return to Project selection?"
+initial_position = 1
+size = Vector2i(300, 100)
+
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_quit" to="." method="_on_btn_quit_pressed"]
+[connection signal="FileDoubleClick" from="Control/VBoxContainer/HBoxContainer/PanelContainer/UiFileTree" to="." method="_on_ui_file_tree_file_double_click"]
+[connection signal="tree_exiting" from="Control/VBoxContainer/HBoxContainer/PanelContainer/UiFileTree" to="." method="_on_ui_file_tree_tree_exiting"]
+[connection signal="InputBegin" from="i_save" to="." method="_on_i_save_input_begin"]
+[connection signal="confirmed" from="dialog_SAVE" to="." method="_on_dialog_save_confirmed"]
+[connection signal="file_selected" from="dialog_SAVE" to="." method="_on_dialog_save_file_selected"]
+[connection signal="confirmed" from="dlg_confirm_quit" to="." method="_on_dlg_confirm_quit_confirmed"]
