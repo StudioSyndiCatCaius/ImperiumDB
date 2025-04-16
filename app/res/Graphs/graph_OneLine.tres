@@ -45,7 +45,7 @@ metadata/_custom_type_script = "uid://c8huevudgf4xi"
 
 [sub_resource type="Resource" id="Resource_8ndnn"]
 script = ExtResource("1_j8wae")
-position = Vector2(600, 200)
+position = Vector2(700, 200)
 template = ExtResource("5_b8py5")
 label = "end"
 id = 0

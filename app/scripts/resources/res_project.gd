@@ -33,10 +33,10 @@ func __load(data: Dictionary):
 	for i in G_File.LIST_AllInDir(GetProjectDir()+"/tables/"):
 		var _nam=i.get_file().split(".")[0]
 		print("   Register table "+_nam)
-		DataTables[_nam]={}
+		DataTables[_nam]=G_File.CSV_Import(i)
 
 func TABLE_GetKeys(table: String) -> PackedStringArray:
 	return DataTables.get(table,{}).keys()
 
 func TABLE_GetEntry(table: String, entry: String):
-	return DataTables.get(table,{}).get(entry,"")
+	return DataTables.get(table,{}).get(entry,{})

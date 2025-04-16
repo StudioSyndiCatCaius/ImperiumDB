@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvajjfr0l0gc2"]
+
+[ext_resource type="Script" uid="uid://b2hos7n6ba5qg" path="res://app/scenes/ui/ui_tableItem.gd" id="1_1j4qi"]
+[ext_resource type="Texture2D" uid="uid://bw7vluaiopfwi" path="res://app/assets/2D/icons/Icon_File_T.PNG" id="1_a2a5m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bufjt"]
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_1j4qi"]
+font_size = 9
+font_color = Color(0.650128, 0.650128, 0.650128, 1)
+
+[node name="UiTableItem" type="PanelContainer" node_paths=PackedStringArray("N_name", "N_desc", "N_icon")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_1j4qi")
+N_name = NodePath("HBoxContainer/lbl_nam")
+N_desc = NodePath("HBoxContainer/PanelContainer/lbl_desc")
+N_icon = NodePath("HBoxContainer/TextureRect")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("1_a2a5m")
+
+[node name="lbl_nam" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.3
+text = "name"
+label_settings = SubResource("LabelSettings_bufjt")
+
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lbl_desc" type="Label" parent="HBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 0.3
+text = "name"
+label_settings = SubResource("LabelSettings_1j4qi")

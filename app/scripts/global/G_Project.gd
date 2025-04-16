@@ -15,6 +15,11 @@ func _exit_tree():
 	if active_project!=null:
 		active_project.__save()
 
-
 func LOAD(project: res_project):
 	active_project=project
+
+func TABLE_GetItem(table: String, entry: String):
+	return active_project.DataTables.get(table,{}).get(entry,{})
+
+func TABLE_GetItemList(table: String):
+	return active_project.DataTables.get(table,{}).keys()

@@ -121,3 +121,51 @@ func LIST_AllInDir(path: String, include_full_path: bool = true) -> Array[String
 	dir.list_dir_end()
 	
 	return result
+
+
+func CSV_Import(csv_file_path: String) -> Dictionary:
+	var result = {}
+	var file = FileAccess.open(csv_file_path, FileAccess.READ)
+	
+	if file == null:
+		print("Error opening file: ", FileAccess.get_open_error())
+		return result
+	
+	# Read header row
+	var header = file.get_csv_line()
+	if header.size() <= 1:
+		print("CSV file must have at least two columns")
+		return result
+	
+	# Store the keys for values (excluding the first column which is for entry keys)
+	var value_keys = []
+	for i in range(1, header.size()):
+		value_keys.append(header[i])
+	
+	# Process data rows
+	while !file.eof_reached():
+		var row = file.get_csv_line()
+		
+		# Skip empty rows or rows with insufficient data
+		if row.size() <= 1 or row[0].strip_edges() == "":
+			continue
+			
+		var entry_key = row[0]
+		var entry_values = {}
+		
+		# Add values to the entry dictionary
+		for i in range(1, min(row.size(), value_keys.size() + 1)):
+			var value = row[i]
+			
+			# Try to convert numerical values
+			if value.is_valid_int():
+				value = value.to_int()
+			elif value.is_valid_float():
+				value = value.to_float()
+				
+			entry_values[value_keys[i - 1]] = value
+		
+		# Add the entry to the result dictionary
+		result[entry_key] = entry_values
+	
+	return result

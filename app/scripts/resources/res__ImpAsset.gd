@@ -43,12 +43,18 @@ func JSON_Set(json: Dictionary):
 	template=load(json.get('_template',""))
 	META_Load(json.get('meta',{}))
 
-func SAVE(path: String):
-	print('Saving Resource'+str(self)+" to "+path)
-	#ResourceSaver.save(self,path,ResourceSaver.FLAG_BUNDLE_RESOURCES)
-	G_File.SAVE_Json(JSON_Get(),path)
+func SAVE(path: String=""):
+	if !path.is_empty() or !File_IsValid():
+		linked_file=path
+	G_File.SAVE_Json(JSON_Get(),linked_file)
 
 func LOAD(path: String):
 	print("loading "+str(self)+" as "+path)
 	#ResourceLoader.load(path)
+	linked_file=path
 	JSON_Set(G_File.LOAD_Json(path))
+
+
+
+func File_IsValid():
+	return FileAccess.file_exists(linked_file)

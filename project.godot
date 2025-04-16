@@ -25,6 +25,7 @@ G_Project="*res://app/scripts/global/G_Project.gd"
 G_String="*res://app/scripts/global/G_String.gd"
 G_Resource="*res://app/scripts/global/G_Resource.gd"
 G_Conv="*res://app/scripts/global/G_Conv.gd"
+G_Log="*res://app/scripts/global/G_Log.gd"
 
 [display]
 
@@ -37,8 +38,7 @@ folder_colors={
 "res://app/assets/": "teal",
 "res://app/res/": "red",
 "res://app/scenes/": "yellow",
-"res://app/scripts/": "blue",
-"res://save/": "gray"
+"res://app/scripts/": "blue"
 }
 
 [input]

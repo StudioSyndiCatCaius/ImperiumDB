@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctjrlx32blsk4"]
+[gd_scene load_steps=11 format=3 uid="uid://ctjrlx32blsk4"]
 
 [ext_resource type="Script" uid="uid://dc38o7eyh2un8" path="res://app/scenes/state/state_main.gd" id="1_2mmce"]
 [ext_resource type="PackedScene" uid="uid://da8qer3yy0t2p" path="res://app/scenes/ui/ui_FileTree.tscn" id="2_j53oe"]
@@ -6,10 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://yo3kw5xm1r1y" path="res://app/scenes/ui/ui_FlowGraph.tscn" id="2_nrvy0"]
 [ext_resource type="Texture2D" uid="uid://db8jiorl8ivnr" path="res://app/assets/2D/icons/t_ico_MagniGlass.png" id="3_f2nj0"]
 [ext_resource type="Resource" uid="uid://d2ys46uk5pnh4" path="res://app/res/Graphs/graph_OneLine.tres" id="4_1lsm5"]
+[ext_resource type="Texture2D" uid="uid://67trfpi1ip13" path="res://icon.svg" id="4_3tr6m"]
+[ext_resource type="PackedScene" uid="uid://dlb3v1t3bl27p" path="res://app/scenes/ui/ui_LogDisplay.tscn" id="4_mggx4"]
 [ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="5_mud24"]
 [ext_resource type="PackedScene" uid="uid://bjysjg1rmufb5" path="res://app/scenes/tabs/SubTab_tables.tscn" id="6_dhbk0"]
 
-[node name="StateProjects" type="Node" node_paths=PackedStringArray("N_TabsMain", "N_TabGraphs", "N_ProjName", "N_Dialog_save", "N_Dialog_confirm_quit", "N_TreeRoot")]
+[node name="StateProjects" type="Node" node_paths=PackedStringArray("N_TabsMain", "N_TabGraphs", "N_ProjName", "N_Dialog_save", "N_Dialog_confirm_quit", "N_TreeRoot", "N_img_logo")]
 script = ExtResource("1_2mmce")
 default_graph = ExtResource("4_1lsm5")
 N_TabsMain = NodePath("Control/VBoxContainer/TABS_Main")
@@ -18,6 +20,7 @@ N_ProjName = NodePath("Control/VBoxContainer/HBoxContainer2/txt_projName")
 N_Dialog_save = NodePath("dialog_SAVE")
 N_Dialog_confirm_quit = NodePath("dlg_confirm_quit")
 N_TreeRoot = NodePath("Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/UiFileTree")
+N_img_logo = NodePath("Control/VBoxContainer/HBoxContainer2/Container/img_logo")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -39,17 +42,36 @@ grow_vertical = 2
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
+[node name="Container" type="BoxContainer" parent="Control/VBoxContainer/HBoxContainer2"]
+clip_contents = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="img_logo" type="TextureRect" parent="Control/VBoxContainer/HBoxContainer2/Container"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("4_3tr6m")
+expand_mode = 2
+stretch_mode = 6
+
 [node name="txt_projName" type="Label" parent="Control/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 text = "Project Name Here"
 
 [node name="btn_OpenRoot" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
+text = "Open Folder"
 icon = ExtResource("3_f2nj0")
 
 [node name="Control" type="Control" parent="Control/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="PanelContainer" parent="Control/VBoxContainer/HBoxContainer2" instance=ExtResource("4_mggx4")]
+layout_mode = 2
 
 [node name="btn_quit2" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -71,10 +93,9 @@ popup/item_0/id = 0
 [node name="TABS_Main" type="TabContainer" parent="Control/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-current_tab = 1
+current_tab = 0
 
 [node name="Flow" type="HBoxContainer" parent="Control/VBoxContainer/TABS_Main"]
-visible = false
 layout_mode = 2
 size_flags_vertical = 3
 metadata/_tab_index = 0
@@ -108,6 +129,7 @@ current_graph = ExtResource("4_1lsm5")
 metadata/_tab_index = 0
 
 [node name="entities" type="HBoxContainer" parent="Control/VBoxContainer/TABS_Main"]
+visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -141,10 +163,16 @@ key = 83
 Require_CTRL = true
 metadata/_custom_type_script = "uid://dmgwd5itujl7q"
 
+[node name="i_new" type="Node" parent="."]
+script = ExtResource("5_mud24")
+key = 78
+Require_CTRL = true
+metadata/_custom_type_script = "uid://dmgwd5itujl7q"
+
 [node name="dialog_SAVE" type="FileDialog" parent="."]
 access = 2
 root_subfolder = "res://save"
-filters = PackedStringArray("*.ImpAsset")
+filters = PackedStringArray("*.ImpFlow")
 use_native_dialog = true
 
 [node name="dlg_confirm_quit" type="ConfirmationDialog" parent="."]
@@ -160,6 +188,7 @@ size = Vector2i(300, 100)
 [connection signal="FileDoubleClick" from="Control/VBoxContainer/TABS_Main/entities/PanelContainer/VBoxContainer2/UiFileTree" to="." method="_on_ui_file_tree_file_double_click"]
 [connection signal="tree_exiting" from="Control/VBoxContainer/TABS_Main/entities/PanelContainer/VBoxContainer2/UiFileTree" to="." method="_on_ui_file_tree_tree_exiting"]
 [connection signal="InputBegin" from="i_save" to="." method="_on_i_save_input_begin"]
+[connection signal="InputBegin" from="i_new" to="." method="_on_i_new_input_begin"]
 [connection signal="confirmed" from="dialog_SAVE" to="." method="_on_dialog_save_confirmed"]
 [connection signal="file_selected" from="dialog_SAVE" to="." method="_on_dialog_save_file_selected"]
 [connection signal="confirmed" from="dlg_confirm_quit" to="." method="_on_dlg_confirm_quit_confirmed"]

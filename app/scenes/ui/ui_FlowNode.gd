@@ -16,7 +16,7 @@ func Setup(node: res_FlowNode_Inst):
 	
 	if node.template!=null:
 		size=node.template.scale
-		title=name
+		#title=name
 		self_modulate=node.template.color
 		
 		print(" ------- doing connections ------- ")

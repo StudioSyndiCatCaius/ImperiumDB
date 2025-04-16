@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlb3v1t3bl27p"]
+
+[ext_resource type="Script" uid="uid://dmtlgcbmqd6k" path="res://app/scenes/ui/ui_LogDisplay.gd" id="1_5t8ck"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5t8ck"]
+font_size = 10
+
+[node name="PanelContainer" type="PanelContainer" node_paths=PackedStringArray("N_lbl_text", "N_timer")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_5t8ck")
+N_lbl_text = NodePath("lbl_notif")
+N_timer = NodePath("timer_notif")
+
+[node name="lbl_notif" type="Label" parent="."]
+layout_mode = 2
+text = "notifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotifnotif"
+label_settings = SubResource("LabelSettings_5t8ck")
+clip_text = true
+
+[node name="timer_notif" type="Timer" parent="."]
+wait_time = 2.5
+
+[connection signal="timeout" from="timer_notif" to="." method="_on_timer_notif_timeout"]

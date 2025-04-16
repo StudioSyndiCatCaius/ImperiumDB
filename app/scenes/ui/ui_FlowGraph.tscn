@@ -1,34 +1,63 @@
-[gd_scene load_steps=4 format=3 uid="uid://yo3kw5xm1r1y"]
+[gd_scene load_steps=12 format=3 uid="uid://yo3kw5xm1r1y"]
 
 [ext_resource type="Script" uid="uid://ninltbqxj6cg" path="res://app/scenes/ui/ui_FlowGraph.gd" id="1_pb1ws"]
+[ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="2_bo6kr"]
 [ext_resource type="PackedScene" uid="uid://dlr7wei0mcpmo" path="res://app/scenes/ui/ui_ParamEdit.tscn" id="2_mhv03"]
 [ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="3_m5ua5"]
+[ext_resource type="Resource" uid="uid://m7r70barb2ek" path="res://app/res/Nodes/node_Start.tres" id="3_x45cu"]
+[ext_resource type="Resource" uid="uid://bkr1os7iwems3" path="res://app/res/Nodes/node_End.tres" id="4_oajqh"]
+[ext_resource type="Resource" uid="uid://c35fffw47e3so" path="res://app/res/Nodes/node_DialogueLine.tres" id="5_8gdf5"]
+[ext_resource type="Resource" uid="uid://bnqj4dfhemqvx" path="res://app/res/Nodes/node_Delay.tres" id="6_2j4u1"]
+[ext_resource type="Resource" uid="uid://cc7cwq67lktkc" path="res://app/res/Nodes/node_camera.tres" id="7_ofthg"]
+[ext_resource type="Resource" uid="uid://dvjfwamds2f5f" path="res://app/res/Nodes/node_Branch.tres" id="8_1shpp"]
+[ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="9_x45cu"]
 
-[node name="UiFlowGraph" type="PanelContainer" node_paths=PackedStringArray("N_Graph", "N_ParamEdit")]
+[node name="UiFlowGraph" type="PanelContainer" node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pb1ws")
-N_Graph = NodePath("HSplitContainer/GraphEdit")
-N_ParamEdit = NodePath("HSplitContainer/UiParamEdit")
+node_types = Array[ExtResource("2_bo6kr")]([ExtResource("3_x45cu"), ExtResource("4_oajqh"), ExtResource("5_8gdf5"), ExtResource("6_2j4u1"), ExtResource("7_ofthg"), ExtResource("8_1shpp")])
+N_Graph = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit")
+N_ParamEdit = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/UiParamEdit")
+N_NodeList = NodePath("VBoxContainer/HSplitContainer2/list_nodes")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="btn_close" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Close Graph"
+icon = ExtResource("9_x45cu")
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="list_nodes" type="ItemList" parent="VBoxContainer/HSplitContainer2"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+item_count = 1
+item_0/text = "asfa"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/HSplitContainer2"]
 layout_mode = 2
 split_offset = -320
 
-[node name="GraphEdit" type="GraphEdit" parent="HSplitContainer"]
+[node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/grid_major = Color(0, 0, 0, 0.615686)
 theme_override_colors/grid_minor = Color(1, 1, 1, 0.0509804)
+scroll_offset = Vector2(-320, -23)
 right_disconnects = true
 
-[node name="UiParamEdit" parent="HSplitContainer" instance=ExtResource("2_mhv03")]
+[node name="UiParamEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer" instance=ExtResource("2_mhv03")]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
@@ -36,8 +65,11 @@ layout_mode = 2
 script = ExtResource("3_m5ua5")
 metadata/_custom_type_script = "uid://dmgwd5itujl7q"
 
-[connection signal="connection_request" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]
-[connection signal="disconnection_request" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
-[connection signal="duplicate_nodes_request" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_duplicate_nodes_request"]
-[connection signal="node_deselected" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_deselected"]
-[connection signal="node_selected" from="HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_selected"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/btn_close" to="." method="_on_btn_close_pressed"]
+[connection signal="item_selected" from="VBoxContainer/HSplitContainer2/list_nodes" to="." method="_on_list_nodes_item_selected"]
+[connection signal="connection_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]
+[connection signal="delete_nodes_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
+[connection signal="disconnection_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
+[connection signal="duplicate_nodes_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_duplicate_nodes_request"]
+[connection signal="node_deselected" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_deselected"]
+[connection signal="node_selected" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_selected"]
