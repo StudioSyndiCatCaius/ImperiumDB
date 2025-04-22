@@ -8,11 +8,11 @@ var linked_file: String
 @export var tags: PackedStringArray
 @export var params={}
 
+signal OnParamEdit(asset: res__ImpAsset,param: String, value)
+
 func _init():
 	print("argo: "+str(self))
 	
-
-
 func META_Save(dic: Dictionary):
 	pass
 
@@ -54,7 +54,9 @@ func LOAD(path: String):
 	linked_file=path
 	JSON_Set(G_File.LOAD_Json(path))
 
-
-
 func File_IsValid():
 	return FileAccess.file_exists(linked_file)
+
+func Param_Set(param: String, value):
+	params[param]=value
+	OnParamEdit.emit(self,param,value)

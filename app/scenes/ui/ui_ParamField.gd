@@ -51,7 +51,7 @@ func _ready():
 		N_edit_list.select(_valIndex)
 
 func VALUE_SetAs_String(st: String):
-	asset.params[field]=st
+	asset.Param_Set(field,st)
 
 func _on_edit_string_text_changed():
 	VALUE_SetAs_String(N_edit_string.text)
@@ -63,10 +63,10 @@ func _on_code_edit_text_changed():
 	VALUE_SetAs_String(N_edit_code.text)
 
 func _on_spin_box_value_changed(value):
-	asset.params[field]=value
+	asset.Param_Set(field,value)
 
 func _on_check_button_toggled(toggled_on):
-	asset.params[field]=toggled_on
+	asset.Param_Set(field,toggled_on)
 
 func _on_edit_list_item_selected(index):
 	VALUE_SetAs_String(N_edit_list.get_item_text(index))

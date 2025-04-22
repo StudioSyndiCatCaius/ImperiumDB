@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=10 format=3 uid="uid://o5fgoly3ibxq"]
+
+[ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_apk7d"]
+[ext_resource type="Script" uid="uid://c7pjb25tbibt7" path="res://app/scripts/resources/sub/NodeDescriptor/res_NodeDesc_Line.gd" id="1_fskgu"]
+[ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="2_fskgu"]
+[ext_resource type="Script" uid="uid://ba5sgmo2v4x72" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_text.gd" id="3_apk7d"]
+[ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="4_h374t"]
+
+[sub_resource type="Resource" id="Resource_h374t"]
+script = ExtResource("1_fskgu")
+param_a = ""
+param_b = "text"
+metadata/_custom_type_script = "uid://c7pjb25tbibt7"
+
+[sub_resource type="Resource" id="Resource_apk7d"]
+script = ExtResource("1_apk7d")
+name = ""
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_j24g0"]
+script = ExtResource("1_apk7d")
+name = ""
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_fskgu"]
+script = ExtResource("3_apk7d")
+default = ""
+name = ""
+metadata/_custom_type_script = "uid://ba5sgmo2v4x72"
+
+[resource]
+script = ExtResource("4_h374t")
+name = "Choice"
+color = Color(0, 1, 0, 1)
+scale = Vector2(150, 80)
+inputs = Array[ExtResource("1_apk7d")]([SubResource("Resource_apk7d")])
+outputs = Array[ExtResource("1_apk7d")]([SubResource("Resource_j24g0")])
+descriptor = SubResource("Resource_h374t")
+properties = Dictionary[StringName, ExtResource("2_fskgu")]({
+&"text": SubResource("Resource_fskgu")
+})
+metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

@@ -8,3 +8,5 @@ class_name res_FlowNode_type
 
 @export var inputs: Array[res_FlowPin]
 @export var outputs: Array[res_FlowPin]
+
+@export var descriptor: res_FlowNode_descriptor

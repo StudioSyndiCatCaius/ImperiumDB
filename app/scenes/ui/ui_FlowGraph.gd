@@ -1,6 +1,8 @@
 extends PanelContainer
 class_name ui_GraphEdit
 
+var nodes_selected: Array[ui_GraphNode]
+
 @export var current_graph: res_FlowGraph
 @export var node_types: Array[res_FlowNode_type]
 
@@ -8,7 +10,6 @@ class_name ui_GraphEdit
 @export var N_Graph: GraphEdit
 @export var N_ParamEdit: ui_ParamEdit
 @export var N_NodeList: ItemList
-
 
 @onready var REF_GraphNode=preload("res://app/scenes/ui/ui_FlowNode.tscn")
 
@@ -81,7 +82,7 @@ func _on_graph_edit_disconnection_request(from_node, from_port, to_node, to_port
 # ==================================================================
 # Node Selection
 # ==================================================================
-var nodes_selected: Array[ui_GraphNode]
+
 
 func _on_graph_edit_node_selected(node):
 	nodes_selected.push_back(node)
@@ -100,8 +101,7 @@ func _on_graph_edit_node_deselected(node):
 func _on_graph_edit_duplicate_nodes_request():
 	pass
 
-
-func _on_list_nodes_item_selected(index):
+func _on_list_nodes_item_activated(index):
 	var _temp=node_types[index]
 	var _node=res_FlowNode_Inst.new()
 	_node.template=_temp
@@ -113,7 +113,10 @@ func _on_graph_edit_delete_nodes_request(nodes):
 	for i in N_Graph.get_children():
 		if nodes.has(i.name):
 			NODE_Remove(i)
-			
+	for i in nodes_selected:
+		if i:
+			i.selected=false
+		
 
 func _on_btn_close_pressed():
 	queue_free()

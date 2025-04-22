@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=10 format=3 uid="uid://ba0hr703cwwm5"]
+
+[ext_resource type="Script" uid="uid://c7pjb25tbibt7" path="res://app/scripts/resources/sub/NodeDescriptor/res_NodeDesc_Line.gd" id="1_1y40a"]
+[ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="2_1y40a"]
+[ext_resource type="Script" uid="uid://ba5sgmo2v4x72" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_text.gd" id="3_ntmq7"]
+[ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="3_wg2h5"]
+[ext_resource type="Script" uid="uid://bx1jd8dwnrwl3" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_string.gd" id="4_5l2ap"]
+[ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="5_4t7io"]
+
+[sub_resource type="Resource" id="Resource_5l2ap"]
+script = ExtResource("1_1y40a")
+param_a = "dev"
+param_b = "comment"
+metadata/_custom_type_script = "uid://c7pjb25tbibt7"
+
+[sub_resource type="Resource" id="Resource_1y40a"]
+script = ExtResource("3_ntmq7")
+default = ""
+name = ""
+metadata/_custom_type_script = "uid://ba5sgmo2v4x72"
+
+[sub_resource type="Resource" id="Resource_wg2h5"]
+script = ExtResource("4_5l2ap")
+default = ""
+name = ""
+metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
+
+[resource]
+script = ExtResource("5_4t7io")
+name = "Comment"
+color = Color(0.223529, 0.301961, 0.403922, 0.537255)
+scale = Vector2(300, 200)
+inputs = Array[ExtResource("2_1y40a")]([])
+outputs = Array[ExtResource("2_1y40a")]([])
+descriptor = SubResource("Resource_5l2ap")
+properties = Dictionary[StringName, ExtResource("3_wg2h5")]({
+&"comment": SubResource("Resource_1y40a"),
+&"dev": SubResource("Resource_wg2h5")
+})
+metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

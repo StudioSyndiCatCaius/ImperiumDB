@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://yo3kw5xm1r1y"]
+[gd_scene load_steps=17 format=3 uid="uid://yo3kw5xm1r1y"]
 
 [ext_resource type="Script" uid="uid://ninltbqxj6cg" path="res://app/scenes/ui/ui_FlowGraph.gd" id="1_pb1ws"]
 [ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="2_bo6kr"]
@@ -10,7 +10,12 @@
 [ext_resource type="Resource" uid="uid://bnqj4dfhemqvx" path="res://app/res/Nodes/node_Delay.tres" id="6_2j4u1"]
 [ext_resource type="Resource" uid="uid://cc7cwq67lktkc" path="res://app/res/Nodes/node_camera.tres" id="7_ofthg"]
 [ext_resource type="Resource" uid="uid://dvjfwamds2f5f" path="res://app/res/Nodes/node_Branch.tres" id="8_1shpp"]
+[ext_resource type="Resource" uid="uid://o5fgoly3ibxq" path="res://app/res/Nodes/node_Choice.tres" id="9_8gdf5"]
 [ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="9_x45cu"]
+[ext_resource type="Resource" uid="uid://cqbxxue7c4knx" path="res://app/res/Nodes/node_ChoiceHUB.tres" id="10_2j4u1"]
+[ext_resource type="Resource" uid="uid://b3s3lqswjysgm" path="res://app/res/Nodes/node_HUB.tres" id="11_ofthg"]
+[ext_resource type="Resource" uid="uid://kokc0fradgnk" path="res://app/res/Nodes/node_ToHUB.tres" id="12_1shpp"]
+[ext_resource type="Resource" uid="uid://ba0hr703cwwm5" path="res://app/res/Nodes/node_Comment.tres" id="13_1shpp"]
 
 [node name="UiFlowGraph" type="PanelContainer" node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList")]
 anchors_preset = 15
@@ -19,7 +24,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pb1ws")
-node_types = Array[ExtResource("2_bo6kr")]([ExtResource("3_x45cu"), ExtResource("4_oajqh"), ExtResource("5_8gdf5"), ExtResource("6_2j4u1"), ExtResource("7_ofthg"), ExtResource("8_1shpp")])
+node_types = Array[ExtResource("2_bo6kr")]([ExtResource("3_x45cu"), ExtResource("4_oajqh"), ExtResource("5_8gdf5"), ExtResource("6_2j4u1"), ExtResource("7_ofthg"), ExtResource("8_1shpp"), ExtResource("9_8gdf5"), ExtResource("10_2j4u1"), ExtResource("11_ofthg"), ExtResource("12_1shpp"), ExtResource("13_1shpp")])
 N_Graph = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit")
 N_ParamEdit = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/UiParamEdit")
 N_NodeList = NodePath("VBoxContainer/HSplitContainer2/list_nodes")
@@ -42,6 +47,8 @@ size_flags_vertical = 3
 [node name="list_nodes" type="ItemList" parent="VBoxContainer/HSplitContainer2"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 10
 item_count = 1
 item_0/text = "asfa"
 
@@ -54,7 +61,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/grid_major = Color(0, 0, 0, 0.615686)
 theme_override_colors/grid_minor = Color(1, 1, 1, 0.0509804)
-scroll_offset = Vector2(-320, -23)
 right_disconnects = true
 
 [node name="UiParamEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer" instance=ExtResource("2_mhv03")]
@@ -66,7 +72,7 @@ script = ExtResource("3_m5ua5")
 metadata/_custom_type_script = "uid://dmgwd5itujl7q"
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/btn_close" to="." method="_on_btn_close_pressed"]
-[connection signal="item_selected" from="VBoxContainer/HSplitContainer2/list_nodes" to="." method="_on_list_nodes_item_selected"]
+[connection signal="item_activated" from="VBoxContainer/HSplitContainer2/list_nodes" to="." method="_on_list_nodes_item_activated"]
 [connection signal="connection_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="delete_nodes_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
 [connection signal="disconnection_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]

@@ -10,13 +10,14 @@ var LIST_pins: Array[ui_FlowPin]
 
 func Setup(node: res_FlowNode_Inst):
 	node_data=node
+	node_data.OnParamEdit.connect(_paramEdited)
 	name=node.label
 	
 	position_offset=node.position
 	
 	if node.template!=null:
 		size=node.template.scale
-		#title=name
+		title=node.template.name
 		self_modulate=node.template.color
 		
 		print(" ------- doing connections ------- ")
@@ -37,8 +38,15 @@ func Setup(node: res_FlowNode_Inst):
 			var pin=node_data.template.outputs[i]
 			ValidateSlotPint(i)
 			set_slot_enabled_right(i,true)
-		
+		Refresh()
 	return
+
+func _paramEdited(asset,param,value):
+	Refresh()
+
+func Refresh():
+	if node_data.template.descriptor:
+		ValidateSlotPint(0).N_text.text=node_data.template.descriptor.GetDescription(node_data.params)
 
 func ValidateSlotPint(index: int) -> ui_FlowPin:
 	while get_child(index)==null:
