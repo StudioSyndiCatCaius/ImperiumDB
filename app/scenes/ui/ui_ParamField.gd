@@ -9,6 +9,8 @@ class_name ui_ParamField
 @export var N_edit_text: TextEdit
 @export var N_edit_code: TextEdit
 @export var N_edit_list: OptionButton
+@export var N_edit_bool: CheckBox
+@export var N_edit_spin: SpinBox
 
 var asset: res__ImpAsset
 var template: res__ImpTemplate
@@ -19,6 +21,9 @@ func get_field_ui() -> Control:
 
 func _ready():
 	var field_data=template.properties[field]
+	var _val=asset.params.get(field,"")
+	var _default_val=template.properties[field].default
+	tooltip_text=field_data.tooltip
 	
 	N_Label.text=field
 	
@@ -27,12 +32,10 @@ func _ready():
 	
 	custom_minimum_size.y=get_field_ui().get_meta("size",30)
 	
-	var _val=asset.params.get(field,"")
-	
 	if field_data.type==0:
-		$HBoxContainer/Control/CheckButton.toggled=asset.params.get(field,false)
+		N_edit_bool.button_pressed=asset.params.get(field,_default_val)
 	if field_data.type==1:
-		$HBoxContainer/Control/SpinBox.value=asset.params.get(field,0)
+		N_edit_spin.value=asset.params.get(field,0)
 	if field_data.type==2:
 		N_edit_string.text=_val
 	if field_data.type==3:
@@ -45,7 +48,15 @@ func _ready():
 		var list=G_Project.TABLE_GetItemList(field_data.table)
 		var _valIndex=-1
 		for i in list:
+			var _idx=list.find(i)
+			var _imgPath=G_Project.PATH_GetRoot()+"/image/ico_"+field_data.table+"_"+i+".png"
+			var _ico=G_File.LOAD_Texture(_imgPath)
+			var _tblData=G_Project.TABLE_GetItem(field_data.table,i)
+			
 			N_edit_list.add_item(i)
+			N_edit_list.set_item_tooltip(_idx,_tblData.get("description",""))
+			N_edit_list.set_item_icon(_idx,_ico)
+			
 			if i == _val:
 				_valIndex=list.find(i)
 		N_edit_list.select(_valIndex)

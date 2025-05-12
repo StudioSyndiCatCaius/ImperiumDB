@@ -1,15 +1,65 @@
-[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=4 format=3 uid="uid://qtwlxd4aoapm"]
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=14 format=3 uid="uid://qtwlxd4aoapm"]
 
+[ext_resource type="Script" uid="uid://bvh7r6jpp3tda" path="res://app/scripts/resources/sub/NodeDescriptor/res_NodeDesc_Params.gd" id="1_k8ato"]
 [ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_xr4f4"]
 [ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="2_5qkts"]
 [ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="2_i4v06"]
+[ext_resource type="Script" uid="uid://bam4ih8mgp8ye" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_tableItem.gd" id="3_yjxyi"]
+[ext_resource type="Script" uid="uid://b35kmyl4ah3xd" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_int.gd" id="4_k8ato"]
+
+[sub_resource type="Resource" id="Resource_ovtgf"]
+script = ExtResource("1_k8ato")
+metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
+
+[sub_resource type="Resource" id="Resource_k8ato"]
+script = ExtResource("1_xr4f4")
+name = ""
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_i4v06"]
+script = ExtResource("1_xr4f4")
+name = ">"
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_5qkts"]
+script = ExtResource("1_xr4f4")
+name = "="
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_yjxyi"]
+script = ExtResource("1_xr4f4")
+name = "<"
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_bjmik"]
+script = ExtResource("3_yjxyi")
+default = ""
+table = "params"
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://bam4ih8mgp8ye"
+
+[sub_resource type="Resource" id="Resource_m4tvs"]
+script = ExtResource("4_k8ato")
+default = 0
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://b35kmyl4ah3xd"
 
 [resource]
 script = ExtResource("2_i4v06")
-name = ""
-color = Color(1, 1, 1, 1)
-scale = Vector2(0, 0)
-inputs = Array[ExtResource("1_xr4f4")]([])
-outputs = Array[ExtResource("1_xr4f4")]([])
-properties = Dictionary[StringName, ExtResource("2_5qkts")]({})
+name = "Param - Check"
+color = Color(0.239216, 1, 0.694118, 1)
+scale = Vector2(200, 150)
+UseLinkKey = false
+inputs = Array[ExtResource("1_xr4f4")]([SubResource("Resource_k8ato")])
+outputs = Array[ExtResource("1_xr4f4")]([SubResource("Resource_i4v06"), SubResource("Resource_5qkts"), SubResource("Resource_yjxyi")])
+descriptor = SubResource("Resource_ovtgf")
+CsvImportFields = PackedStringArray()
+properties = Dictionary[StringName, ExtResource("2_5qkts")]({
+&"param": SubResource("Resource_bjmik"),
+&"value": SubResource("Resource_m4tvs")
+})
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

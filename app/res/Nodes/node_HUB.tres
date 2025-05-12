@@ -14,6 +14,8 @@ metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 script = ExtResource("4_baetr")
 default = ""
 name = ""
+order = 0
+tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [resource]
@@ -21,9 +23,11 @@ script = ExtResource("3_baetr")
 name = "HUB"
 color = Color(0.348088, 0.451001, 0.5834, 1)
 scale = Vector2(0, 80)
+UseLinkKey = false
 inputs = Array[ExtResource("1_4sxah")]([])
 outputs = Array[ExtResource("1_4sxah")]([null])
 descriptor = SubResource("Resource_baetr")
+CsvImportFields = PackedStringArray()
 properties = Dictionary[StringName, ExtResource("2_najdd")]({
 &"hub": SubResource("Resource_8aquy")
 })

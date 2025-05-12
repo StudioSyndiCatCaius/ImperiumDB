@@ -5,6 +5,7 @@ class_name cmp_InputAction
 @export var Require_CTRL=false
 @export var Require_Alt=false
 @export var Require_Shift=false
+@export var RequiredVisibleNode: Control
 
 var is_down=false
 
@@ -20,11 +21,12 @@ func Is_Pressed():
 	return false
 
 func _process(delta):
-	if is_down:
-		if !Is_Pressed():
-			is_down=false
-			InputEnd.emit()
-	else:
-		if Is_Pressed():
-			is_down=true
-			InputBegin.emit()
+	if RequiredVisibleNode==null or RequiredVisibleNode.visible:
+		if is_down:
+			if !Is_Pressed():
+				is_down=false
+				InputEnd.emit()
+		else:
+			if Is_Pressed():
+				is_down=true
+				InputBegin.emit()

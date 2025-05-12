@@ -1,15 +1,65 @@
-[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=4 format=3 uid="uid://cnqn5gf1yxmkj"]
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=14 format=3 uid="uid://cnqn5gf1yxmkj"]
 
 [ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_35rmm"]
+[ext_resource type="Script" uid="uid://bvh7r6jpp3tda" path="res://app/scripts/resources/sub/NodeDescriptor/res_NodeDesc_Params.gd" id="1_ep1ry"]
 [ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="2_s8gxr"]
 [ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="2_x7mim"]
+[ext_resource type="Script" uid="uid://bam4ih8mgp8ye" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_tableItem.gd" id="4_8gfis"]
+[ext_resource type="Script" uid="uid://b35kmyl4ah3xd" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_int.gd" id="5_ep1ry"]
+[ext_resource type="Script" uid="uid://lx8kkxfanx4i" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_bool.gd" id="6_ep1ry"]
+
+[sub_resource type="Resource" id="Resource_dnkhh"]
+script = ExtResource("1_ep1ry")
+metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
+
+[sub_resource type="Resource" id="Resource_8gfis"]
+script = ExtResource("1_35rmm")
+name = ""
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_ep1ry"]
+script = ExtResource("1_35rmm")
+name = ""
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_teqem"]
+script = ExtResource("6_ep1ry")
+default = false
+name = ""
+order = 5
+tooltip = "If true, will add to current value insead of setting it."
+metadata/_custom_type_script = "uid://lx8kkxfanx4i"
+
+[sub_resource type="Resource" id="Resource_uag84"]
+script = ExtResource("4_8gfis")
+default = ""
+table = "params"
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://bam4ih8mgp8ye"
+
+[sub_resource type="Resource" id="Resource_n0a05"]
+script = ExtResource("5_ep1ry")
+default = 0
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://b35kmyl4ah3xd"
 
 [resource]
 script = ExtResource("2_s8gxr")
-name = ""
-color = Color(1, 1, 1, 1)
-scale = Vector2(0, 0)
-inputs = Array[ExtResource("1_35rmm")]([])
-outputs = Array[ExtResource("1_35rmm")]([])
-properties = Dictionary[StringName, ExtResource("2_x7mim")]({})
+name = "Param - Set"
+color = Color(0.118348, 0.903562, 0.595467, 1)
+scale = Vector2(180, 80)
+UseLinkKey = false
+inputs = Array[ExtResource("1_35rmm")]([SubResource("Resource_8gfis")])
+outputs = Array[ExtResource("1_35rmm")]([SubResource("Resource_ep1ry")])
+descriptor = SubResource("Resource_dnkhh")
+CsvImportFields = PackedStringArray()
+properties = Dictionary[StringName, ExtResource("2_x7mim")]({
+&"increment": SubResource("Resource_teqem"),
+&"param": SubResource("Resource_uag84"),
+&"value": SubResource("Resource_n0a05")
+})
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

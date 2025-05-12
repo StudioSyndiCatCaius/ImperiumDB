@@ -1,15 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://cowsypvdc8sib"]
+[gd_scene load_steps=5 format=3 uid="uid://cowsypvdc8sib"]
 
 [ext_resource type="Script" uid="uid://cxx6nna8wfhlf" path="res://app/scenes/ui/ui_FlowPin.gd" id="1_0unwo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0unwo"]
-content_margin_left = 5.0
-content_margin_top = 5.0
-content_margin_right = 5.0
-content_margin_bottom = 5.0
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
 bg_color = Color(0, 0, 0, 0.333333)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
 
-[node name="UiFlowPin" type="PanelContainer"]
+[sub_resource type="LabelSettings" id="LabelSettings_0unwo"]
+font_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmbcl"]
+content_margin_left = 2.0
+content_margin_top = 1.0
+content_margin_right = 2.0
+content_margin_bottom = 1.0
+bg_color = Color(0, 0, 0, 0.243137)
+
+[node name="UiFlowPin" type="PanelContainer" node_paths=PackedStringArray("N_text", "N_lbl_in", "N_lbl_out")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,9 +33,31 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0unwo")
 script = ExtResource("1_0unwo")
+N_text = NodePath("VBoxContainer/PanelContainer/RichTextLabel")
+N_lbl_in = NodePath("VBoxContainer/lb_in")
+N_lbl_out = NodePath("VBoxContainer/lb_out")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+
+[node name="lb_in" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "-"
+label_settings = SubResource("LabelSettings_0unwo")
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_mmbcl")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_font_sizes/normal_font_size = 10
-text = "text here"
+text = " "
 autowrap_mode = 2
+
+[node name="lb_out" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "-"
+label_settings = SubResource("LabelSettings_0unwo")

@@ -6,5 +6,6 @@ class_name res_NodeDesc_Line
 
 func GetDescription(data) -> String:
 	var out=""
-	out=data.get(param_a,"")+": ''"+data.get(param_b,"")+"''"
+	out=data.get(param_a,"")+": \n	''"+data.get(param_b,"")+"''"
 	return out
+	

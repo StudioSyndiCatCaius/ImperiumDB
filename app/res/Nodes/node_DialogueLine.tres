@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=12 format=3 uid="uid://c35fffw47e3so"]
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=16 format=3 uid="uid://c35fffw47e3so"]
 
 [ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_geyaj"]
 [ext_resource type="Script" uid="uid://c7pjb25tbibt7" path="res://app/scripts/resources/sub/NodeDescriptor/res_NodeDesc_Line.gd" id="1_n4xin"]
@@ -6,9 +6,13 @@
 [ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="2_cjk38"]
 [ext_resource type="Script" uid="uid://bam4ih8mgp8ye" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_tableItem.gd" id="4_jkdxu"]
 [ext_resource type="Script" uid="uid://ba5sgmo2v4x72" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_text.gd" id="4_n4xin"]
+[ext_resource type="Script" uid="uid://bx1jd8dwnrwl3" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_string.gd" id="6_ak86w"]
+[ext_resource type="Script" uid="uid://jbgjwigi0wbu" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_script.gd" id="7_m5aoy"]
 
 [sub_resource type="Resource" id="Resource_ak86w"]
 script = ExtResource("1_n4xin")
+param_a = "speaker"
+param_b = "line"
 metadata/_custom_type_script = "uid://c7pjb25tbibt7"
 
 [sub_resource type="Resource" id="Resource_72hee"]
@@ -25,25 +29,49 @@ metadata/_custom_type_script = "uid://df7hah3kf11l3"
 script = ExtResource("4_n4xin")
 default = ""
 name = ""
+order = -1
+tooltip = ""
 metadata/_custom_type_script = "uid://ba5sgmo2v4x72"
+
+[sub_resource type="Resource" id="Resource_vt3ge"]
+script = ExtResource("7_m5aoy")
+default = ""
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://jbgjwigi0wbu"
 
 [sub_resource type="Resource" id="Resource_n4xin"]
 script = ExtResource("4_jkdxu")
 default = ""
 table = "characters"
 name = ""
+order = -2
+tooltip = ""
 metadata/_custom_type_script = "uid://bam4ih8mgp8ye"
+
+[sub_resource type="Resource" id="Resource_gcq02"]
+script = ExtResource("6_ak86w")
+default = ""
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [resource]
 script = ExtResource("2_72hee")
 name = "Line"
 color = Color(0.361525, 0.67072, 0.893594, 1)
-scale = Vector2(200, 100)
+scale = Vector2(175, 150)
+UseLinkKey = true
 inputs = Array[ExtResource("1_geyaj")]([SubResource("Resource_72hee")])
 outputs = Array[ExtResource("1_geyaj")]([SubResource("Resource_cjk38")])
 descriptor = SubResource("Resource_ak86w")
+CsvImportFields = PackedStringArray("speaker", "line")
 properties = Dictionary[StringName, ExtResource("2_cjk38")]({
 &"line": SubResource("Resource_m5aoy"),
-&"speaker": SubResource("Resource_n4xin")
+&"script": SubResource("Resource_vt3ge"),
+&"speaker": SubResource("Resource_n4xin"),
+&"tags": SubResource("Resource_gcq02")
 })
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

@@ -26,7 +26,7 @@ func _ready():
 	
 	#setup first graph
 	G_Node.Children_ClearAll(N_TabGraphs)
-	GRAPH_Open(default_graph)
+	GRAPH_Open(default_graph.duplicate(true))
 
 func focus():
 	return get_viewport().gui_get_focus_owner()
@@ -36,10 +36,11 @@ func focus():
 # =============================================================================
 func _on_i_save_input_begin():
 	var graph: ui_GraphEdit=GRAPH_GetCurrent()
-	if graph.current_graph.File_IsValid():
-		SAVE_Confirm(graph.current_graph.linked_file,graph.current_graph)
-	else:
-		SAVE_Request(graph.current_graph)
+	if graph and graph.current_graph:
+		if graph.current_graph.File_IsValid():
+			SAVE_Confirm(graph.current_graph.linked_file,graph.current_graph)
+		else:
+			SAVE_Request(graph.current_graph)
 
 func _on_i_new_input_begin():
 	var _new = default_graph.duplicate(true)
@@ -60,7 +61,7 @@ func SAVE_Confirm(path : String, obj=null):
 		if object_to_save.has_method("SAVE"):
 			print('trying to save object')
 			object_to_save.SAVE(path)
-	GRAPH_GetCurrent().Refresh()
+	GRAPH_GetCurrent().GRAPH_Refresh()
 	G_Log.Notification("File Saved: "+str(path),Color.GREEN)
 
 

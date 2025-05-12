@@ -12,6 +12,7 @@ signal OnParamEdit(asset: res__ImpAsset,param: String, value)
 
 func _init():
 	print("argo: "+str(self))
+
 	
 func META_Save(dic: Dictionary):
 	pass

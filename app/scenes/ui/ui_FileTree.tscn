@@ -1,16 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://da8qer3yy0t2p"]
+[gd_scene load_steps=7 format=3 uid="uid://da8qer3yy0t2p"]
 
 [ext_resource type="Script" uid="uid://dtl3wst86vgj7" path="res://app/scenes/ui/ui_FileTree.gd" id="1_rafb5"]
 [ext_resource type="Texture2D" uid="uid://dullmjmvl2s2h" path="res://app/assets/2D/icons/Icon_Folder_T.PNG" id="2_ad5mi"]
 [ext_resource type="Texture2D" uid="uid://bw7vluaiopfwi" path="res://app/assets/2D/icons/Icon_File_T.PNG" id="3_tlf0m"]
 [ext_resource type="Texture2D" uid="uid://db8jiorl8ivnr" path="res://app/assets/2D/icons/t_ico_MagniGlass.png" id="4_tlf0m"]
+[ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="5_0q2ni"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rafb5"]
 bg_color = Color(0.187176, 0.187176, 0.187176, 1)
 border_width_left = 10
 border_color = Color(0.325441, 0.325441, 0.325441, 1)
 
-[node name="UiFileTreeItem" type="VBoxContainer" node_paths=PackedStringArray("N_BtnOpen", "N_BtnExpand", "N_SubitemRoot", "N_SubitemList", "N_timer_dblClk")]
+[node name="UiFileTreeItem" type="VBoxContainer" node_paths=PackedStringArray("N_BtnOpen", "N_BtnExpand", "N_SubitemRoot", "N_SubitemList", "N_timer_dblClk", "N_popup_file", "N_popup_folder", "N_confirm_delete", "N_TxtEdit_name", "N_lbl_fileCount")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -24,6 +25,11 @@ N_BtnExpand = NodePath("HBoxContainer/Button")
 N_SubitemRoot = NodePath("PanelContainer")
 N_SubitemList = NodePath("PanelContainer/VBoxContainer")
 N_timer_dblClk = NodePath("Timer_dblClick")
+N_popup_file = NodePath("popup_file")
+N_popup_folder = NodePath("popup_folder")
+N_confirm_delete = NodePath("confrim_delete")
+N_TxtEdit_name = NodePath("HBoxContainer/Button/Tedit_name")
+N_lbl_fileCount = NodePath("HBoxContainer/Button/lbl_fileCount")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -35,6 +41,36 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 10
 text = "sdf"
 alignment = 0
+
+[node name="Tedit_name" type="TextEdit" parent="HBoxContainer/Button"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/background_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.464637, 0.706424, 0.77315, 1)
+theme_override_font_sizes/font_size = 10
+text = "afasf"
+
+[node name="lbl_fileCount" type="Label" parent="HBoxContainer/Button"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -6.5
+offset_bottom = 6.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.34902)
+theme_override_font_sizes/font_size = 9
+text = "50"
 
 [node name="btn_open" type="Button" parent="HBoxContainer"]
 layout_mode = 2
@@ -51,6 +87,39 @@ layout_mode = 2
 [node name="Timer_dblClick" type="Timer" parent="."]
 wait_time = 0.2
 
+[node name="i_RightMousee" type="Node" parent="."]
+script = ExtResource("5_0q2ni")
+metadata/_custom_type_script = "uid://dmgwd5itujl7q"
+
+[node name="popup_folder" type="PopupMenu" parent="."]
+item_count = 2
+item_0/text = "New Folder"
+item_0/id = 0
+item_1/text = "Rename"
+item_1/id = 1
+
+[node name="popup_file" type="PopupMenu" parent="."]
+auto_translate_mode = 1
+item_count = 3
+item_0/text = "Duplicate"
+item_0/id = 0
+item_1/text = "Delete"
+item_1/id = 1
+item_2/text = "Rename"
+item_2/id = 2
+
+[node name="confrim_delete" type="ConfirmationDialog" parent="."]
+title = "Delete this Flow?"
+initial_position = 2
+
+[connection signal="gui_input" from="HBoxContainer/Button" to="." method="_on_button_gui_input"]
 [connection signal="pressed" from="HBoxContainer/Button" to="." method="_on_btn_expand_pressed"]
+[connection signal="focus_exited" from="HBoxContainer/Button/Tedit_name" to="." method="_on_tedit_name_focus_exited"]
+[connection signal="gutter_removed" from="HBoxContainer/Button/Tedit_name" to="." method="_on_tedit_name_gutter_removed"]
+[connection signal="text_set" from="HBoxContainer/Button/Tedit_name" to="." method="_on_tedit_name_text_set"]
 [connection signal="pressed" from="HBoxContainer/btn_open" to="." method="_on_btn_open_pressed"]
 [connection signal="timeout" from="Timer_dblClick" to="." method="_on_timer_dbl_click_timeout"]
+[connection signal="InputBegin" from="i_RightMousee" to="." method="_on_i_right_mousee_input_begin"]
+[connection signal="index_pressed" from="popup_folder" to="." method="_on_popup_folder_index_pressed"]
+[connection signal="index_pressed" from="popup_file" to="." method="_on_popup_file_index_pressed"]
+[connection signal="confirmed" from="confrim_delete" to="." method="_on_confrim_delete_confirmed"]

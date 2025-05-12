@@ -1,0 +1,67 @@
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=13 format=3 uid="uid://lruwdx6nf07v"]
+
+[ext_resource type="Script" uid="uid://bvh7r6jpp3tda" path="res://app/scripts/resources/sub/NodeDescriptor/res_NodeDesc_Params.gd" id="1_khb30"]
+[ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="2_0lgjt"]
+[ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="3_gafx3"]
+[ext_resource type="Script" uid="uid://b35kmyl4ah3xd" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_int.gd" id="4_ydvah"]
+[ext_resource type="Script" uid="uid://bam4ih8mgp8ye" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_tableItem.gd" id="5_lra5j"]
+[ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="6_ryn51"]
+
+[sub_resource type="Resource" id="Resource_dnkhh"]
+script = ExtResource("1_khb30")
+text_size = 10
+metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
+
+[sub_resource type="Resource" id="Resource_8gfis"]
+script = ExtResource("2_0lgjt")
+name = ""
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_ep1ry"]
+script = ExtResource("2_0lgjt")
+name = ""
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_lb52h"]
+script = ExtResource("4_ydvah")
+default = 0
+name = ""
+order = 1
+tooltip = ""
+metadata/_custom_type_script = "uid://b35kmyl4ah3xd"
+
+[sub_resource type="Resource" id="Resource_3t8qx"]
+script = ExtResource("5_lra5j")
+default = ""
+table = "characters"
+name = ""
+order = 3
+tooltip = ""
+metadata/_custom_type_script = "uid://bam4ih8mgp8ye"
+
+[sub_resource type="Resource" id="Resource_6h7bu"]
+script = ExtResource("5_lra5j")
+default = ""
+table = "items"
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://bam4ih8mgp8ye"
+
+[resource]
+script = ExtResource("6_ryn51")
+name = "Item - Owned"
+color = Color(0.118348, 0.903562, 0.595467, 1)
+scale = Vector2(180, 80)
+UseLinkKey = false
+inputs = Array[ExtResource("2_0lgjt")]([SubResource("Resource_8gfis")])
+outputs = Array[ExtResource("2_0lgjt")]([SubResource("Resource_ep1ry")])
+descriptor = SubResource("Resource_dnkhh")
+CsvImportFields = PackedStringArray()
+Exapndable = false
+properties = Dictionary[StringName, ExtResource("3_gafx3")]({
+&"amount": SubResource("Resource_lb52h"),
+&"character": SubResource("Resource_3t8qx"),
+&"item": SubResource("Resource_6h7bu")
+})
+metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

@@ -25,12 +25,16 @@ metadata/_custom_type_script = "uid://df7hah3kf11l3"
 script = ExtResource("4_inpog")
 default = 0.0
 name = ""
+order = 0
+tooltip = ""
 metadata/_custom_type_script = "uid://ceujn71enal42"
 
 [sub_resource type="Resource" id="Resource_8irlh"]
 script = ExtResource("3_3cf1y")
 default = "cam_"
 name = ""
+order = 0
+tooltip = ""
 metadata/_custom_type_script = "uid://jbgjwigi0wbu"
 
 [resource]
@@ -38,8 +42,10 @@ script = ExtResource("2_h4ba1")
 name = "Camera"
 color = Color(0, 1, 0, 1)
 scale = Vector2(0, 0)
+UseLinkKey = false
 inputs = Array[ExtResource("1_022fw")]([SubResource("Resource_h4ba1")])
 outputs = Array[ExtResource("1_022fw")]([SubResource("Resource_3cf1y"), SubResource("Resource_inpog")])
+CsvImportFields = PackedStringArray()
 properties = Dictionary[StringName, ExtResource("2_3cf1y")]({
 &"blend_time": SubResource("Resource_dswm5"),
 &"camera_id": SubResource("Resource_8irlh")

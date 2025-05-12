@@ -1,33 +1,49 @@
-[gd_scene load_steps=17 format=3 uid="uid://yo3kw5xm1r1y"]
+[gd_scene load_steps=28 format=3 uid="uid://yo3kw5xm1r1y"]
 
 [ext_resource type="Script" uid="uid://ninltbqxj6cg" path="res://app/scenes/ui/ui_FlowGraph.gd" id="1_pb1ws"]
 [ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="2_bo6kr"]
 [ext_resource type="PackedScene" uid="uid://dlr7wei0mcpmo" path="res://app/scenes/ui/ui_ParamEdit.tscn" id="2_mhv03"]
+[ext_resource type="Resource" uid="uid://d2ys46uk5pnh4" path="res://app/res/Graphs/graph_OneLine.tres" id="2_rre87"]
 [ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="3_m5ua5"]
 [ext_resource type="Resource" uid="uid://m7r70barb2ek" path="res://app/res/Nodes/node_Start.tres" id="3_x45cu"]
 [ext_resource type="Resource" uid="uid://bkr1os7iwems3" path="res://app/res/Nodes/node_End.tres" id="4_oajqh"]
 [ext_resource type="Resource" uid="uid://c35fffw47e3so" path="res://app/res/Nodes/node_DialogueLine.tres" id="5_8gdf5"]
 [ext_resource type="Resource" uid="uid://bnqj4dfhemqvx" path="res://app/res/Nodes/node_Delay.tres" id="6_2j4u1"]
 [ext_resource type="Resource" uid="uid://cc7cwq67lktkc" path="res://app/res/Nodes/node_camera.tres" id="7_ofthg"]
-[ext_resource type="Resource" uid="uid://dvjfwamds2f5f" path="res://app/res/Nodes/node_Branch.tres" id="8_1shpp"]
+[ext_resource type="Resource" uid="uid://dvjfwamds2f5f" path="res://app/res/Nodes/node_ScriptIf.tres" id="8_1shpp"]
 [ext_resource type="Resource" uid="uid://o5fgoly3ibxq" path="res://app/res/Nodes/node_Choice.tres" id="9_8gdf5"]
+[ext_resource type="Resource" uid="uid://dwo7gmh6sgi1m" path="res://app/res/Nodes/node_GameSystem.tres" id="9_mwko7"]
 [ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="9_x45cu"]
 [ext_resource type="Resource" uid="uid://cqbxxue7c4knx" path="res://app/res/Nodes/node_ChoiceHUB.tres" id="10_2j4u1"]
+[ext_resource type="Resource" uid="uid://caopt46w3bk4i" path="res://app/res/Nodes/node_GameMenu.tres" id="10_25pll"]
 [ext_resource type="Resource" uid="uid://b3s3lqswjysgm" path="res://app/res/Nodes/node_HUB.tres" id="11_ofthg"]
 [ext_resource type="Resource" uid="uid://kokc0fradgnk" path="res://app/res/Nodes/node_ToHUB.tres" id="12_1shpp"]
 [ext_resource type="Resource" uid="uid://ba0hr703cwwm5" path="res://app/res/Nodes/node_Comment.tres" id="13_1shpp"]
+[ext_resource type="Resource" uid="uid://onnek54v2vw8" path="res://app/res/Nodes/node_Movie.tres" id="14_xt6vc"]
+[ext_resource type="Resource" uid="uid://dy0rj2w6g5ser" path="res://app/res/Nodes/node_OncePerSave.tres" id="15_hgl2u"]
+[ext_resource type="Resource" uid="uid://qtwlxd4aoapm" path="res://app/res/Nodes/node_FactCheck.tres" id="16_rpa31"]
+[ext_resource type="Resource" uid="uid://b2imjumokwiur" path="res://app/res/Nodes/node_FlagBool.tres" id="17_givdd"]
+[ext_resource type="Resource" uid="uid://cnqn5gf1yxmkj" path="res://app/res/Nodes/node_FactSet.tres" id="19_c10mc"]
+[ext_resource type="Resource" uid="uid://dikyoiqnrqhov" path="res://app/res/Nodes/node_ScriptEvent.tres" id="20_1loq1"]
+[ext_resource type="Resource" uid="uid://bjrdxbgd5dhho" path="res://app/res/Nodes/node_ItemGive.tres" id="23_25pll"]
+[ext_resource type="Resource" uid="uid://c6ycwkl3rxvgk" path="res://app/res/Nodes/node_ImgCG.tres" id="24_yrd06"]
 
-[node name="UiFlowGraph" type="PanelContainer" node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList")]
+[node name="UiFlowGraph" type="PanelContainer" node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pb1ws")
-node_types = Array[ExtResource("2_bo6kr")]([ExtResource("3_x45cu"), ExtResource("4_oajqh"), ExtResource("5_8gdf5"), ExtResource("6_2j4u1"), ExtResource("7_ofthg"), ExtResource("8_1shpp"), ExtResource("9_8gdf5"), ExtResource("10_2j4u1"), ExtResource("11_ofthg"), ExtResource("12_1shpp"), ExtResource("13_1shpp")])
+default_graph = ExtResource("2_rre87")
+node_types = Array[ExtResource("2_bo6kr")]([ExtResource("3_x45cu"), ExtResource("4_oajqh"), ExtResource("5_8gdf5"), ExtResource("6_2j4u1"), ExtResource("7_ofthg"), ExtResource("9_mwko7"), ExtResource("10_25pll"), ExtResource("9_8gdf5"), ExtResource("10_2j4u1"), ExtResource("11_ofthg"), ExtResource("12_1shpp"), ExtResource("13_1shpp"), ExtResource("14_xt6vc"), ExtResource("15_hgl2u"), ExtResource("16_rpa31"), ExtResource("17_givdd"), ExtResource("19_c10mc"), ExtResource("8_1shpp"), ExtResource("20_1loq1"), ExtResource("23_25pll"), ExtResource("24_yrd06")])
 N_Graph = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit")
-N_ParamEdit = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/UiParamEdit")
+N_ParamEdit = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Node")
 N_NodeList = NodePath("VBoxContainer/HSplitContainer2/list_nodes")
+N_lbl_scriptPath = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer/lbl_scriptPath")
+N_Dlg_csv = NodePath("FileDialog")
+N_Spin_KeyOffset = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/spin_OffsetKey")
+N_popup_Nodelist = NodePath("N_popup_NodeList")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -54,7 +70,7 @@ item_0/text = "asfa"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/HSplitContainer2"]
 layout_mode = 2
-split_offset = -320
+split_offset = -400
 
 [node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer"]
 layout_mode = 2
@@ -63,19 +79,91 @@ theme_override_colors/grid_major = Color(0, 0, 0, 0.615686)
 theme_override_colors/grid_minor = Color(1, 1, 1, 0.0509804)
 right_disconnects = true
 
-[node name="UiParamEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer" instance=ExtResource("2_mhv03")]
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer"]
+layout_mode = 2
+current_tab = 0
+
+[node name="Node" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer" instance=ExtResource("2_mhv03")]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+metadata/_tab_index = 0
 
-[node name="cmp_InputAction" type="Node" parent="."]
+[node name="Import" type="PanelContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lbl_scriptPath" type="TextEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "sfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfaf"
+
+[node name="btn_ScriptSet" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+layout_mode = 2
+text = "Set Script"
+
+[node name="spin_OffsetKey" type="SpinBox" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+layout_mode = 2
+rounded = true
+prefix = "Key Offset   "
+
+[node name="btn_UpdateKeys" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+layout_mode = 2
+text = "Update Keys"
+
+[node name="btn_ScriptImport" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+layout_mode = 2
+text = "Import Script"
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+layout_mode = 2
+
+[node name="btn_FixCon" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+layout_mode = 2
+text = "Fix Connections"
+
+[node name="i_NextNode" type="Node" parent="." node_paths=PackedStringArray("RequiredVisibleNode")]
 script = ExtResource("3_m5ua5")
+key = 4194309
+Require_CTRL = true
+RequiredVisibleNode = NodePath("..")
 metadata/_custom_type_script = "uid://dmgwd5itujl7q"
 
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.csv")
+use_native_dialog = true
+
+[node name="N_popup_NodeList" type="PopupMenu" parent="."]
+theme_override_font_sizes/font_size = 10
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/btn_close" to="." method="_on_btn_close_pressed"]
 [connection signal="item_activated" from="VBoxContainer/HSplitContainer2/list_nodes" to="." method="_on_list_nodes_item_activated"]
 [connection signal="connection_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="delete_nodes_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
 [connection signal="disconnection_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
 [connection signal="duplicate_nodes_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_duplicate_nodes_request"]
+[connection signal="gui_input" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_gui_input"]
 [connection signal="node_deselected" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_deselected"]
 [connection signal="node_selected" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_selected"]
+[connection signal="text_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer/lbl_scriptPath" to="." method="_on_lbl_script_path_text_changed"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_ScriptSet" to="." method="_on_btn_script_set_pressed"]
+[connection signal="value_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/spin_OffsetKey" to="." method="_on_spin_offset_key_value_changed"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_UpdateKeys" to="." method="_on_btn_update_keys_pressed"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_ScriptImport" to="." method="_on_btn_script_import_pressed"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_FixCon" to="." method="_on_btn_fix_con_pressed"]
+[connection signal="InputBegin" from="i_NextNode" to="." method="_INPUT_Next"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="index_pressed" from="N_popup_NodeList" to="." method="_on_n_popup_node_list_index_pressed"]

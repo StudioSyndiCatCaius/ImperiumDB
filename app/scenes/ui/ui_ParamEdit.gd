@@ -19,8 +19,14 @@ func OBJECT_Set(_obj: res__ImpAsset, _template: res__ImpTemplate):
 	print("setting paramEdit to: "+str(_obj))
 	template=_template
 	asset=_obj
+	
+	var prop_order= template.properties.keys()
+	var _pr=template.properties
+	prop_order.sort_custom(func(a,b):
+		return _pr[a].order < _pr[b].order
+		)
 
-	for p in template.properties:
+	for p in prop_order:
 		var new_param: ui_ParamField = REF_ParanField.instantiate()
 		new_param.asset=asset
 		new_param.template=template

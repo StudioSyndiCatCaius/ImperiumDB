@@ -1,0 +1,13 @@
+[gd_resource type="CodeHighlighter" format=3 uid="uid://dt0ms70yxn1uh"]
+
+[resource]
+number_color = Color(9.72241e-06, 0.926886, 0.44227, 1)
+symbol_color = Color(0.995956, 0.859303, 0.668416, 1)
+function_color = Color(0.144395, 0.448821, 0.840402, 1)
+member_variable_color = Color(0.989394, 0.88584, 0.764449, 1)
+keyword_colors = {
+"end": Color(1, 0.133333, 0.329412, 1),
+"if": Color(1, 0.132823, 0.327938, 1),
+"local": Color(1, 0.133333, 0.329412, 1),
+"return": Color(1, 0.133333, 0.329412, 1)
+}

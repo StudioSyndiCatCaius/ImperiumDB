@@ -1,8 +1,11 @@
 extends res__ImpAsset
 class_name res_FlowGraph
 
+@export var linked_script=""
+@export var importkeyoffset=0
 @export var nodes: Array[res_FlowNode_Inst]
 @export var connections: Array[res_FlowConnection]
+
 
 func META_Save(dic: Dictionary):
 	# SAVE connections
@@ -15,7 +18,7 @@ func META_Save(dic: Dictionary):
 			to_port=i.to_port,
 		})
 	dic["connections"]=_con
-	
+	dic["linked_script"]=linked_script
 	# SAVE nodes
 	var _nod=[]
 	for i in nodes:
@@ -23,8 +26,7 @@ func META_Save(dic: Dictionary):
 	dic["nodes"]=_nod
 
 func META_Load(dic: Dictionary):
-	print("--------- LOADING META: "+str(dic))
-	# LOAD connections
+	linked_script=dic.get("linked_script","")
 	connections.clear()
 	for i in dic.get("connections",[]):
 		CONNECTION_AddFromDic(i)

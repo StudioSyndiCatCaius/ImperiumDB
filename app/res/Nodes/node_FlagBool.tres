@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=11 format=3 uid="uid://b2imjumokwiur"]
+
+[ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_qdext"]
+[ext_resource type="Script" uid="uid://bvh7r6jpp3tda" path="res://app/scripts/resources/sub/NodeDescriptor/res_NodeDesc_Params.gd" id="1_tmtua"]
+[ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="2_fe5ds"]
+[ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="3_sleby"]
+[ext_resource type="Script" uid="uid://bam4ih8mgp8ye" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_tableItem.gd" id="3_wrmnr"]
+
+[sub_resource type="Resource" id="Resource_rguel"]
+script = ExtResource("1_tmtua")
+metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
+
+[sub_resource type="Resource" id="Resource_3nrf1"]
+script = ExtResource("1_qdext")
+name = "in"
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_bs2f0"]
+script = ExtResource("1_qdext")
+name = "true"
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_au22j"]
+script = ExtResource("1_qdext")
+name = "false"
+metadata/_custom_type_script = "uid://df7hah3kf11l3"
+
+[sub_resource type="Resource" id="Resource_tmtua"]
+script = ExtResource("3_wrmnr")
+default = ""
+table = "params"
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://bam4ih8mgp8ye"
+
+[resource]
+script = ExtResource("3_sleby")
+name = "Param - If"
+color = Color(1, 0, 0, 1)
+scale = Vector2(150, 100)
+UseLinkKey = false
+inputs = Array[ExtResource("1_qdext")]([SubResource("Resource_3nrf1")])
+outputs = Array[ExtResource("1_qdext")]([SubResource("Resource_bs2f0"), SubResource("Resource_au22j")])
+descriptor = SubResource("Resource_rguel")
+CsvImportFields = PackedStringArray()
+properties = Dictionary[StringName, ExtResource("2_fe5ds")]({
+&"param": SubResource("Resource_tmtua")
+})
+metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

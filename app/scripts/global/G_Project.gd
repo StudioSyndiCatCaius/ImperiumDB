@@ -18,8 +18,8 @@ func _exit_tree():
 func LOAD(project: res_project):
 	active_project=project
 
-func TABLE_GetItem(table: String, entry: String):
+func TABLE_GetItem(table: String, entry: String) ->Dictionary:
 	return active_project.DataTables.get(table,{}).get(entry,{})
 
-func TABLE_GetItemList(table: String):
+func TABLE_GetItemList(table: String) -> PackedStringArray:
 	return active_project.DataTables.get(table,{}).keys()

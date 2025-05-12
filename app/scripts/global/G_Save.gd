@@ -3,7 +3,17 @@ extends Node
 var dic_projects={}
 var path_SaveProj="user://projects.json"
 var list_projects: Array[res_project]
+var users=[]
 
+
+func USER_init() -> Dictionary:
+	var _new={
+		name="",
+		id=randi_range(0,9999999),
+		email="",
+	}
+	users.push_back(_new)
+	return _new
 
 func _ready():
 	dic_projects=G_File.LOAD_Json(path_SaveProj)

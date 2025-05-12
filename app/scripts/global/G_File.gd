@@ -3,6 +3,10 @@ extends Node
 
 signal OnFilesUpdated
 
+@export var csv_imports={
+	
+}
+
 # ==============================================================================
 # Json
 # ==============================================================================
@@ -167,5 +171,147 @@ func CSV_Import(csv_file_path: String) -> Dictionary:
 		
 		# Add the entry to the result dictionary
 		result[entry_key] = entry_values
-	
+	csv_imports[csv_file_path]=result
 	return result
+
+
+func DUPLICATE_Autoname(source_path: String) -> String:
+	# Extract the base directory, filename, and extension
+	var dir_path = source_path.get_base_dir()
+	var file_name = source_path.get_file().get_basename()
+	var file_extension = source_path.get_extension()
+	
+	# Initialize variables for the new path
+	var new_file_name = ""
+	var new_path = ""
+	var counter = 1
+	
+	# Keep checking until we find a filename that doesn't exist
+	while true:
+		if counter == 1:
+			new_file_name = file_name + " - Copy"
+		else:
+			new_file_name = file_name + " - Copy (" + str(counter) + ")"
+		
+		new_path = dir_path.path_join(new_file_name + "." + file_extension)
+		
+		# Check if the new path already exists
+		if not FileAccess.file_exists(new_path):
+			break
+			
+		# Increment counter and try again
+		counter += 1
+	
+	# Now that we have a unique filename, duplicate the file
+	var result = DUPLICATE(source_path, new_path)
+	
+	if result:
+		print("File duplicated successfully to: ", new_path)
+		return new_path
+	else:
+		print("Failed to duplicate file")
+		return ""
+
+# The original duplicate_file function from before
+func DUPLICATE(source_path: String, destination_path: String) -> bool:
+	# Check if source file exists
+	if not FileAccess.file_exists(source_path):
+		print("Source file doesn't exist: ", source_path)
+		return false
+	
+	# Open the source file for reading
+	var source_file = FileAccess.open(source_path, FileAccess.READ)
+	if source_file == null:
+		print("Failed to open source file: ", FileAccess.get_open_error())
+		return false
+	
+	# Open the destination file for writing
+	var destination_file = FileAccess.open(destination_path, FileAccess.WRITE)
+	if destination_file == null:
+		print("Failed to open destination file: ", FileAccess.get_open_error())
+		source_file.close()
+		return false
+	
+	# Read the entire content from the source file
+	var content = source_file.get_buffer(source_file.get_length())
+	
+	# Write the content to the destination file
+	destination_file.store_buffer(content)
+	
+	# Close both files
+	source_file.close()
+	destination_file.close()
+	
+	return true
+
+func RENAME(file_path: String, new_base_name: String) -> bool:
+	# Check if the file exists
+	if not FileAccess.file_exists(file_path):
+		print("File doesn't exist: ", file_path)
+		return false
+	
+	# Get the directory, original filename, and extension
+	var dir_path = file_path.get_base_dir()
+	var extension = file_path.get_extension()
+	
+	# Create the new path with new base name but same path and extension
+	var new_path = dir_path.path_join(new_base_name + "." + extension)
+	
+	# Get access to the directory
+	var dir = DirAccess.open(dir_path)
+	if dir == null:
+		print("Error opening directory: ", DirAccess.get_open_error())
+		return false
+	
+	# Perform the rename operation
+	var error = dir.rename(file_path.get_file(), new_base_name + "." + extension)
+	
+	# Check if rename was successful
+	if error != OK:
+		print("Failed to rename file: ", error)
+		return false
+	
+	print("Successfully renamed file from ", file_path, " to ", new_path)
+	return true
+
+func FOLDER_New(base_path: String, folder_name: String = "New Folder") -> String:
+	# Ensure the base path exists
+	if not DirAccess.dir_exists_absolute(base_path):
+		print("Base directory doesn't exist: ", base_path)
+		return ""
+	
+	# Open the base directory
+	var dir = DirAccess.open(base_path)
+	if dir == null:
+		print("Error opening directory: ", DirAccess.get_open_error())
+		return ""
+	
+	# Initialize variables for the new folder name
+	var new_folder_name = folder_name
+	var counter = 1
+	var new_folder_path = ""
+	
+	# Keep checking until we find a folder name that doesn't exist
+	while true:
+		if counter == 1:
+			new_folder_path = base_path.path_join(new_folder_name)
+		else:
+			new_folder_path = base_path.path_join(new_folder_name + " (" + str(counter) + ")")
+		
+		# Check if the new folder path already exists
+		if not DirAccess.dir_exists_absolute(new_folder_path):
+			break
+			
+		# Increment counter and try again
+		counter += 1
+	
+	# Create the new folder
+	var error = dir.make_dir(new_folder_path.get_file())
+	
+	# Check if folder creation was successful
+	if error != OK:
+		print("Failed to create folder: ", error)
+		return ""
+	
+	print("Successfully created folder: ", new_folder_path)
+	return new_folder_path

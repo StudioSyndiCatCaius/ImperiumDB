@@ -1,20 +1,41 @@
-[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=5 format=3 uid="uid://m7r70barb2ek"]
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=9 format=3 uid="uid://m7r70barb2ek"]
 
 [ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_ehmpn"]
+[ext_resource type="Script" uid="uid://bvh7r6jpp3tda" path="res://app/scripts/resources/sub/NodeDescriptor/res_NodeDesc_Params.gd" id="1_rye63"]
 [ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="2_jfs6d"]
 [ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="2_mbwwx"]
+[ext_resource type="Script" uid="uid://bx1jd8dwnrwl3" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_string.gd" id="3_jfs6d"]
+
+[sub_resource type="Resource" id="Resource_qm506"]
+script = ExtResource("1_rye63")
+text_size = 10
+metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_mbwwx"]
 script = ExtResource("1_ehmpn")
 name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
+[sub_resource type="Resource" id="Resource_rye63"]
+script = ExtResource("3_jfs6d")
+default = ""
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
+
 [resource]
 script = ExtResource("2_mbwwx")
 name = "Start"
 color = Color(0.756471, 0.404282, 0.487428, 1)
-scale = Vector2(40, 20)
+scale = Vector2(100, 75)
+UseLinkKey = false
 inputs = Array[ExtResource("1_ehmpn")]([])
 outputs = Array[ExtResource("1_ehmpn")]([SubResource("Resource_mbwwx")])
-properties = Dictionary[StringName, ExtResource("2_jfs6d")]({})
+descriptor = SubResource("Resource_qm506")
+CsvImportFields = PackedStringArray()
+Exapndable = false
+properties = Dictionary[StringName, ExtResource("2_jfs6d")]({
+&"flag": SubResource("Resource_rye63")
+})
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"
