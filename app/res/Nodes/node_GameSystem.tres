@@ -16,11 +16,13 @@ UseLinkKey = false
 inputs = Array[ExtResource("1_7ixkr")]([])
 outputs = Array[ExtResource("1_7ixkr")]([])
 CsvImportFields = PackedStringArray()
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_b8gem")]({})
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"
 
 [sub_resource type="Resource" id="Resource_jbr54"]
 script = ExtResource("4_e6fvc")
+text_size = 10
 metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_0oyhe"]
@@ -61,6 +63,7 @@ outputs = Array[ExtResource("1_7ixkr")]([SubResource("Resource_aym4k")])
 descriptor = SubResource("Resource_jbr54")
 CsvImportFields = PackedStringArray()
 NextNode = SubResource("Resource_8c4et")
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_b8gem")]({
 &"flag": SubResource("Resource_cav1s"),
 &"system": SubResource("Resource_7ixkr")

@@ -14,6 +14,7 @@
 script = ExtResource("1_fskgu")
 param_a = ""
 param_b = "text"
+text_size = 10
 metadata/_custom_type_script = "uid://c7pjb25tbibt7"
 
 [sub_resource type="Resource" id="Resource_apk7d"]
@@ -78,6 +79,7 @@ outputs = Array[ExtResource("1_apk7d")]([SubResource("Resource_j24g0")])
 descriptor = SubResource("Resource_h374t")
 CsvImportFields = PackedStringArray()
 NextNode = ExtResource("1_j24g0")
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_fskgu")]({
 &"condition": SubResource("Resource_3xvmi"),
 &"flag_required": SubResource("Resource_obacs"),

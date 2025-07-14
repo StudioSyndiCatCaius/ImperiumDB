@@ -9,6 +9,7 @@
 
 [sub_resource type="Resource" id="Resource_ovtgf"]
 script = ExtResource("1_k8ato")
+text_size = 10
 metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_k8ato"]
@@ -58,6 +59,7 @@ inputs = Array[ExtResource("1_xr4f4")]([SubResource("Resource_k8ato")])
 outputs = Array[ExtResource("1_xr4f4")]([SubResource("Resource_i4v06"), SubResource("Resource_5qkts"), SubResource("Resource_yjxyi")])
 descriptor = SubResource("Resource_ovtgf")
 CsvImportFields = PackedStringArray()
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_5qkts")]({
 &"param": SubResource("Resource_bjmik"),
 &"value": SubResource("Resource_m4tvs")

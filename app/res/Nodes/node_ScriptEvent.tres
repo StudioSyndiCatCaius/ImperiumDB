@@ -10,6 +10,7 @@
 script = ExtResource("1_7snkd")
 param_a = "speaker"
 param_b = "script"
+text_size = 10
 metadata/_custom_type_script = "uid://c7pjb25tbibt7"
 
 [sub_resource type="Resource" id="Resource_21kjb"]
@@ -40,6 +41,7 @@ inputs = Array[ExtResource("1_21kjb")]([SubResource("Resource_21kjb")])
 outputs = Array[ExtResource("1_21kjb")]([SubResource("Resource_bww3e")])
 descriptor = SubResource("Resource_4f46w")
 CsvImportFields = PackedStringArray()
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_bww3e")]({
 &"script": SubResource("Resource_hivei")
 })

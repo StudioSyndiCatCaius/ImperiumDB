@@ -25,5 +25,6 @@ inputs = Array[ExtResource("1_hfxqi")]([SubResource("Resource_2uh3g")])
 outputs = Array[ExtResource("1_hfxqi")]([SubResource("Resource_hfxqi")])
 CsvImportFields = PackedStringArray()
 NextNode = ExtResource("1_kyu1s")
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_kyu1s")]({})
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

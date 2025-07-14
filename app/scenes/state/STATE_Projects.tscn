@@ -126,6 +126,7 @@ Name = "hide_path"
 
 [node name="Dialog_Load" type="FileDialog" parent="."]
 title = "Open a File"
+initial_position = 1
 ok_button_text = "Open"
 file_mode = 0
 access = 2

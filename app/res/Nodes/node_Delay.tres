@@ -32,6 +32,7 @@ UseLinkKey = false
 inputs = Array[ExtResource("1_johom")]([SubResource("Resource_hplms")])
 outputs = Array[ExtResource("1_johom")]([SubResource("Resource_mmc32")])
 CsvImportFields = PackedStringArray()
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_mmc32")]({
 &"duration": SubResource("Resource_ykixl")
 })

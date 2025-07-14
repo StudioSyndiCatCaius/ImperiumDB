@@ -18,13 +18,17 @@ func LIST_Refresh():
 			i._refresh()
 
 func LIST_Rebuild():
+	print("Rebuilding Projects list")
 	G_Node.Children_ClearAll(N_ProjList)
 	
 	for i in G_Save.list_projects:
-		var new_proj: ui_Project=ref_UiProj.instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+		var new_proj: ui_Project=ref_UiProj.instantiate()
+		print("  new proj = "+str(new_proj))
+		print("  i        = "+str(i))
 		new_proj.project=i
 		new_proj.OnAction.connect(PROJECT_Action)
 		N_ProjList.add_child(new_proj)
+		print("  --  added '"+str(i)+"' to projects list")
 
 func PROJECT_Action(action: int, project: res_project):
 	if action==0:

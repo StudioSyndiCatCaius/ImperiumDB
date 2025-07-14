@@ -28,5 +28,6 @@ UseLinkKey = false
 inputs = Array[ExtResource("1_86hhs")]([SubResource("Resource_2c2p2")])
 outputs = Array[ExtResource("1_86hhs")]([SubResource("Resource_86hhs"), SubResource("Resource_3r21t")])
 CsvImportFields = PackedStringArray()
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_3r21t")]({})
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

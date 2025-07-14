@@ -46,6 +46,7 @@ UseLinkKey = false
 inputs = Array[ExtResource("1_022fw")]([SubResource("Resource_h4ba1")])
 outputs = Array[ExtResource("1_022fw")]([SubResource("Resource_3cf1y"), SubResource("Resource_inpog")])
 CsvImportFields = PackedStringArray()
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_3cf1y")]({
 &"blend_time": SubResource("Resource_dswm5"),
 &"camera_id": SubResource("Resource_8irlh")

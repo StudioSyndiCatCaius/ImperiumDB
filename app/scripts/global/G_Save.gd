@@ -24,11 +24,14 @@ func _exit_tree():
 	G_File.SAVE_Json(dic_projects,path_SaveProj)
 
 func PROJECT_Load(path: String):
-	
+	print("Loading Project: "+path)
 	if !dic_projects['projects'].has(path):
+		print("  -- path not in project list. Adding now.")
 		dic_projects['projects'].push_back(path)
 		
 	var new_proj =res_project.new()
+	
+	print("  new project object created as: "+str(new_proj))
 	new_proj.path=path
 	new_proj.__load(G_File.LOAD_Json(path))
 	list_projects.push_front(new_proj)

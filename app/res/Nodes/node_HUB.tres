@@ -8,6 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_baetr"]
 script = ExtResource("1_najdd")
+text_size = 10
 metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_8aquy"]
@@ -28,6 +29,7 @@ inputs = Array[ExtResource("1_4sxah")]([])
 outputs = Array[ExtResource("1_4sxah")]([null])
 descriptor = SubResource("Resource_baetr")
 CsvImportFields = PackedStringArray()
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_najdd")]({
 &"hub": SubResource("Resource_8aquy")
 })

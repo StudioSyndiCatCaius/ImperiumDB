@@ -27,6 +27,7 @@ UseLinkKey = false
 inputs = Array[ExtResource("1_83on6")]([SubResource("Resource_6mogs")])
 outputs = Array[ExtResource("1_83on6")]([])
 CsvImportFields = PackedStringArray()
+Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_nb3gp")]({
 &"flag": SubResource("Resource_k40xd")
 })
