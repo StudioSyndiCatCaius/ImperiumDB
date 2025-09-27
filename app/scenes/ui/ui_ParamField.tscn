@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://tdkxa6gh31q2"]
 
 [ext_resource type="Script" uid="uid://d2u71x8t1fvlx" path="res://app/scenes/ui/ui_ParamField.gd" id="1_1f7ek"]
-[ext_resource type="CodeHighlighter" uid="uid://dt0ms70yxn1uh" path="res://app/assets/CodeHighlight/CodeHighlight_lua.tres" id="2_8se0m"]
+[ext_resource type="PackedScene" uid="uid://dd6yosq7h7cpa" path="res://app/scenes/ui/ui_ScriptBlock.tscn" id="2_8se0m"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1f7ek"]
 font_size = 10
@@ -42,7 +42,7 @@ N_paramRoot = NodePath("HBoxContainer/Control")
 N_Label = NodePath("HBoxContainer/Label")
 N_edit_string = NodePath("HBoxContainer/Control/edit_string")
 N_edit_text = NodePath("HBoxContainer/Control/edit_text")
-N_edit_code = NodePath("HBoxContainer/Control/CodeEdit")
+N_edit_code = NodePath("HBoxContainer/Control/edit_code")
 N_edit_list = NodePath("HBoxContainer/Control/edit_list")
 N_edit_bool = NodePath("HBoxContainer/Control/CheckButton")
 N_edit_spin = NodePath("HBoxContainer/Control/SpinBox")
@@ -91,19 +91,8 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_2iwqf")
 wrap_mode = 1
 metadata/size = 80.0
 
-[node name="CodeEdit" type="CodeEdit" parent="HBoxContainer/Control"]
-visible = false
+[node name="edit_code" parent="HBoxContainer/Control" instance=ExtResource("2_8se0m")]
 layout_mode = 2
-theme_override_colors/background_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 11
-text = "if targ==\"memo\"
-
-end
-
-return 1/3"
-syntax_highlighter = ExtResource("2_8se0m")
-gutters_draw_line_numbers = true
-metadata/size = 80.0
 
 [node name="edit_list" type="OptionButton" parent="HBoxContainer/Control"]
 layout_mode = 2
@@ -112,5 +101,5 @@ layout_mode = 2
 [connection signal="value_changed" from="HBoxContainer/Control/SpinBox" to="." method="_on_spin_box_value_changed"]
 [connection signal="text_changed" from="HBoxContainer/Control/edit_string" to="." method="_on_edit_string_text_changed"]
 [connection signal="text_changed" from="HBoxContainer/Control/edit_text" to="." method="_on_edit_text_text_changed"]
-[connection signal="text_changed" from="HBoxContainer/Control/CodeEdit" to="." method="_on_code_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/Control/edit_code" to="." method="_on_N_edit_code_text_changed"]
 [connection signal="item_selected" from="HBoxContainer/Control/edit_list" to="." method="_on_edit_list_item_selected"]

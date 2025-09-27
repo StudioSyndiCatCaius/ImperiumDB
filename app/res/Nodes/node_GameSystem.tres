@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=13 format=3 uid="uid://dwo7gmh6sgi1m"]
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=14 format=3 uid="uid://dwo7gmh6sgi1m"]
 
 [ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_7ixkr"]
 [ext_resource type="Script" uid="uid://crm303ac8kxhw" path="res://app/scripts/resources/res_ParamType.gd" id="2_b8gem"]
 [ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="3_ahqih"]
 [ext_resource type="Script" uid="uid://bvh7r6jpp3tda" path="res://app/scripts/resources/sub/NodeDescriptor/res_NodeDesc_Params.gd" id="4_e6fvc"]
 [ext_resource type="Script" uid="uid://bx1jd8dwnrwl3" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_string.gd" id="5_ae7j1"]
-[ext_resource type="Script" uid="uid://bam4ih8mgp8ye" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_tableItem.gd" id="6_5bujh"]
+[ext_resource type="Script" uid="uid://bam4ih8mgp8ye" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_tableItem.gd" id="6_7ixkr"]
 
 [sub_resource type="Resource" id="Resource_8c4et"]
 script = ExtResource("3_ahqih")
@@ -35,6 +35,14 @@ script = ExtResource("1_7ixkr")
 name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
+[sub_resource type="Resource" id="Resource_b8gem"]
+script = ExtResource("5_ae7j1")
+default = ""
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
+
 [sub_resource type="Resource" id="Resource_cav1s"]
 script = ExtResource("5_ae7j1")
 default = ""
@@ -43,8 +51,8 @@ order = 0
 tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
-[sub_resource type="Resource" id="Resource_7ixkr"]
-script = ExtResource("6_5bujh")
+[sub_resource type="Resource" id="Resource_ahqih"]
+script = ExtResource("6_7ixkr")
 default = ""
 table = "systems"
 name = ""
@@ -65,7 +73,8 @@ CsvImportFields = PackedStringArray()
 NextNode = SubResource("Resource_8c4et")
 Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_b8gem")]({
+&"context": SubResource("Resource_b8gem"),
 &"flag": SubResource("Resource_cav1s"),
-&"system": SubResource("Resource_7ixkr")
+&"system": SubResource("Resource_ahqih")
 })
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

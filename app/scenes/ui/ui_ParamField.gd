@@ -7,10 +7,20 @@ class_name ui_ParamField
 
 @export var N_edit_string: TextEdit
 @export var N_edit_text: TextEdit
-@export var N_edit_code: TextEdit
+@export var N_edit_code: CodeEdit
 @export var N_edit_list: OptionButton
 @export var N_edit_bool: CheckBox
 @export var N_edit_spin: SpinBox
+
+var autocomplete_functions=[
+	"move_player",
+	"jump_action", 
+	"attack_enemy",
+	"collect_item",
+	"open_door",
+	"save_game",
+	"load_game"
+]
 
 var asset: res__ImpAsset
 var template: res__ImpTemplate
@@ -20,6 +30,7 @@ func get_field_ui() -> Control:
 	return N_paramRoot.get_child(template.properties[field].type)
 
 func _ready():
+	
 	var field_data=template.properties[field]
 	var _val=asset.params.get(field,"")
 	var _default_val=template.properties[field].default
@@ -70,7 +81,8 @@ func _on_edit_string_text_changed():
 func _on_edit_text_text_changed():
 	VALUE_SetAs_String(N_edit_text.text)
 
-func _on_code_edit_text_changed():
+func _on_N_edit_code_text_changed():
+	N_edit_code.request_code_completion(true)
 	VALUE_SetAs_String(N_edit_code.text)
 
 func _on_spin_box_value_changed(value):

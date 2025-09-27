@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=18 format=3 uid="uid://o5fgoly3ibxq"]
+[gd_resource type="Resource" script_class="res_FlowNode_type" load_steps=21 format=3 uid="uid://o5fgoly3ibxq"]
 
 [ext_resource type="Script" uid="uid://df7hah3kf11l3" path="res://app/scripts/resources/res_FlowPin.gd" id="1_apk7d"]
 [ext_resource type="Script" uid="uid://c7pjb25tbibt7" path="res://app/scripts/resources/sub/NodeDescriptor/res_NodeDesc_Line.gd" id="1_fskgu"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ba5sgmo2v4x72" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_text.gd" id="3_apk7d"]
 [ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="4_h374t"]
 [ext_resource type="Script" uid="uid://jbgjwigi0wbu" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_script.gd" id="6_h374t"]
+[ext_resource type="Script" uid="uid://bx1jd8dwnrwl3" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_string.gd" id="6_obacs"]
 [ext_resource type="Script" uid="uid://bam4ih8mgp8ye" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_tableItem.gd" id="7_3xvmi"]
 [ext_resource type="Script" uid="uid://lx8kkxfanx4i" path="res://app/scripts/resources/sub/paramTypes/res_ParamType_bool.gd" id="8_2b1w2"]
 
@@ -30,19 +31,19 @@ metadata/_custom_type_script = "uid://df7hah3kf11l3"
 [sub_resource type="Resource" id="Resource_3xvmi"]
 script = ExtResource("6_h374t")
 default = ""
+method_table = "script"
 name = ""
 order = 0
 tooltip = ""
 metadata/_custom_type_script = "uid://jbgjwigi0wbu"
 
-[sub_resource type="Resource" id="Resource_obacs"]
-script = ExtResource("7_3xvmi")
+[sub_resource type="Resource" id="Resource_qgcfd"]
+script = ExtResource("6_obacs")
 default = ""
-table = "params"
 name = ""
 order = 0
 tooltip = ""
-metadata/_custom_type_script = "uid://bam4ih8mgp8ye"
+metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [sub_resource type="Resource" id="Resource_u6oba"]
 script = ExtResource("8_2b1w2")
@@ -52,9 +53,18 @@ order = 0
 tooltip = ""
 metadata/_custom_type_script = "uid://lx8kkxfanx4i"
 
+[sub_resource type="Resource" id="Resource_dwewv"]
+script = ExtResource("3_apk7d")
+default = ""
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://ba5sgmo2v4x72"
+
 [sub_resource type="Resource" id="Resource_2b1w2"]
 script = ExtResource("6_h374t")
 default = ""
+method_table = "script"
 name = ""
 order = 0
 tooltip = ""
@@ -67,6 +77,15 @@ name = ""
 order = -1
 tooltip = ""
 metadata/_custom_type_script = "uid://ba5sgmo2v4x72"
+
+[sub_resource type="Resource" id="Resource_3jox8"]
+script = ExtResource("7_3xvmi")
+default = ""
+table = "ChoiceType"
+name = ""
+order = 0
+tooltip = ""
+metadata/_custom_type_script = "uid://bam4ih8mgp8ye"
 
 [resource]
 script = ExtResource("4_h374t")
@@ -82,9 +101,11 @@ NextNode = ExtResource("1_j24g0")
 Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_fskgu")]({
 &"condition": SubResource("Resource_3xvmi"),
-&"flag_required": SubResource("Resource_obacs"),
+&"flag_required": SubResource("Resource_qgcfd"),
 &"flag_value": SubResource("Resource_u6oba"),
+&"meta": SubResource("Resource_dwewv"),
 &"script": SubResource("Resource_2b1w2"),
-&"text": SubResource("Resource_fskgu")
+&"text": SubResource("Resource_fskgu"),
+&"type": SubResource("Resource_3jox8")
 })
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

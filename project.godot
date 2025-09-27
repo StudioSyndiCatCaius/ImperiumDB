@@ -13,7 +13,7 @@ config_version=5
 config/name="ImperiumDB"
 run/main_scene="uid://bdr5j31pt6q4r"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://bhmawjg5g0mrd"
 
 [autoload]
 

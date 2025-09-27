@@ -32,6 +32,7 @@ metadata/_custom_type_script = "uid://ceujn71enal42"
 [sub_resource type="Resource" id="Resource_8irlh"]
 script = ExtResource("3_3cf1y")
 default = "cam_"
+method_table = "script"
 name = ""
 order = 0
 tooltip = ""

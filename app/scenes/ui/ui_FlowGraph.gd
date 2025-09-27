@@ -12,6 +12,7 @@ var current_graph: res_FlowGraph
 @export var N_ParamEdit: ui_ParamEdit
 @export var N_NodeList: ItemList
 @export var N_lbl_scriptPath: TextEdit
+@export var N_txtedit_NodeId: TextEdit
 @export var N_Dlg_csv: FileDialog
 @export var N_Spin_KeyOffset: SpinBox
 @export var N_popup_Nodelist: PopupMenu
@@ -125,6 +126,7 @@ func _on_graph_edit_disconnection_request(from_node, from_port, to_node, to_port
 # ==================================================================
 func _on_graph_edit_node_selected(node):
 	nodes_selected.push_back(node)
+	N_txtedit_NodeId.text=node.node_data.label
 	N_ParamEdit.OBJECT_Clear()
 	var _multi: bool=nodes_selected.size()>1
 	N_ParamEdit.OBJECT_MultiMode(_multi)
@@ -132,6 +134,7 @@ func _on_graph_edit_node_selected(node):
 		N_ParamEdit.OBJECT_Set(nodes_selected[0].node_data,nodes_selected[0].node_data.template)
 
 func _on_graph_edit_node_deselected(node):
+	N_txtedit_NodeId.text=""
 	if nodes_selected.has(node):
 		N_ParamEdit.OBJECT_MultiMode(false)
 		nodes_selected.erase(node)
@@ -235,3 +238,8 @@ func _on_n_popup_node_list_index_pressed(index):
 
 func _on_btn_fix_con_pressed():
 	CONNECTIONS_Fix()
+
+func _on_text_edit_node_id_text_changed():
+	if NODES_GetSelected()[0]:
+		NODES_GetSelected()[0].node_data.label=N_txtedit_NodeId.text
+		NODES_GetSelected()[0].name=N_txtedit_NodeId.text

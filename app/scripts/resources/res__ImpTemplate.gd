@@ -1,6 +1,7 @@
 extends Resource
 class_name res__ImpTemplate
 
+@export var icon: Texture2D
 @export var properties: Dictionary[StringName,res_ParamType]
 var path_subfolder="/*/"
 

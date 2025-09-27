@@ -26,6 +26,7 @@ metadata/_custom_type_script = "uid://df7hah3kf11l3"
 [sub_resource type="Resource" id="Resource_hivei"]
 script = ExtResource("4_48pny")
 default = ""
+method_table = "script"
 name = ""
 order = 0
 tooltip = ""
