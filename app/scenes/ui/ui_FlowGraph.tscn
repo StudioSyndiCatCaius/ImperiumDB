@@ -162,10 +162,22 @@ layout_mode = 2
 layout_mode = 2
 text = "Fix Connections"
 
+[node name="btn_DelEmpty" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+layout_mode = 2
+text = "Delete Empty"
+
 [node name="i_NextNode" type="Node" parent="." node_paths=PackedStringArray("RequiredVisibleNode")]
 script = ExtResource("3_m5ua5")
 key = 4194309
 Require_CTRL = true
+RequiredVisibleNode = NodePath("..")
+metadata/_custom_type_script = "uid://dmgwd5itujl7q"
+
+[node name="i_SelectAll_Next" type="Node" parent="." node_paths=PackedStringArray("RequiredVisibleNode")]
+script = ExtResource("3_m5ua5")
+key = 4194321
+Require_CTRL = true
+Require_Shift = true
 RequiredVisibleNode = NodePath("..")
 metadata/_custom_type_script = "uid://dmgwd5itujl7q"
 
@@ -197,6 +209,8 @@ theme_override_font_sizes/font_size = 10
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_UpdateKeys" to="." method="_on_btn_update_keys_pressed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_ScriptImport" to="." method="_on_btn_script_import_pressed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_FixCon" to="." method="_on_btn_fix_con_pressed"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_DelEmpty" to="." method="_on_btn_del_empty_pressed"]
 [connection signal="InputBegin" from="i_NextNode" to="." method="_INPUT_Next"]
+[connection signal="InputBegin" from="i_SelectAll_Next" to="." method="_on_i_select_all_next_input_begin"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="index_pressed" from="N_popup_NodeList" to="." method="_on_n_popup_node_list_index_pressed"]

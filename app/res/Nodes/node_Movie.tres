@@ -8,26 +8,19 @@
 
 [sub_resource type="Resource" id="Resource_3jxjd"]
 script = ExtResource("1_3glfe")
-text_size = 10
 metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_ow05f"]
 script = ExtResource("1_s7rg4")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_s7rg4"]
 script = ExtResource("1_s7rg4")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_53jol"]
 script = ExtResource("4_3glfe")
-default = ""
 table = "movies"
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bam4ih8mgp8ye"
 
 [resource]
@@ -35,12 +28,9 @@ script = ExtResource("4_53jol")
 name = "Play Movie"
 color = Color(0.999996, 0.341443, 0.321873, 1)
 scale = Vector2(100, 75)
-UseLinkKey = false
 inputs = Array[ExtResource("1_s7rg4")]([SubResource("Resource_ow05f")])
 outputs = Array[ExtResource("1_s7rg4")]([SubResource("Resource_s7rg4")])
 descriptor = SubResource("Resource_3jxjd")
-CsvImportFields = PackedStringArray()
-Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_3glfe")]({
 &"movie": SubResource("Resource_53jol")
 })

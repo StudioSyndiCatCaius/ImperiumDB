@@ -243,3 +243,28 @@ func _on_text_edit_node_id_text_changed():
 	if NODES_GetSelected()[0]:
 		NODES_GetSelected()[0].node_data.label=N_txtedit_NodeId.text
 		NODES_GetSelected()[0].name=N_txtedit_NodeId.text
+
+
+func _on_i_select_all_next_input_begin():
+	var t: Array[ui_GraphNode]=NODES_GetSelected()
+	var _newSel: Array[String]
+	if t[0]:
+		#print(str(current_graph.connections))
+		for i in current_graph.connections:
+			print(i.from_node + " " + t[0].name)
+			if(i.from_node==t[0].name):
+				_newSel.push_back(i.to_node)
+
+	for i in _newSel:
+		for n in N_Graph.get_children():
+			if n.name==i:
+				n.selected=true
+
+func _on_btn_del_empty_pressed():
+	for i in N_Graph.get_children():
+		if i is ui_GraphNode:
+			var _p=i.node_data.params
+			print("tarma: "+str(_p))
+			if i.NODE_GetTemplate().get_meta("EmptyDelete",false):
+				if _p.get("line","")=="":
+					NODE_Remove(i)

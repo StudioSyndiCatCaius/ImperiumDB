@@ -1,0 +1,6 @@
+return {
+	name="Skill",
+	
+	params={}
+
+}

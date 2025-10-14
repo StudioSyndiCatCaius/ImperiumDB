@@ -8,20 +8,14 @@
 
 [sub_resource type="Resource" id="Resource_qm506"]
 script = ExtResource("1_rye63")
-text_size = 10
 metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_mbwwx"]
 script = ExtResource("1_ehmpn")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_rye63"]
 script = ExtResource("3_jfs6d")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [resource]
@@ -29,12 +23,8 @@ script = ExtResource("2_mbwwx")
 name = "Start"
 color = Color(0.756471, 0.404282, 0.487428, 1)
 scale = Vector2(100, 75)
-UseLinkKey = false
-inputs = Array[ExtResource("1_ehmpn")]([])
 outputs = Array[ExtResource("1_ehmpn")]([SubResource("Resource_mbwwx")])
 descriptor = SubResource("Resource_qm506")
-CsvImportFields = PackedStringArray()
-Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_jfs6d")]({
 &"flag": SubResource("Resource_rye63")
 })

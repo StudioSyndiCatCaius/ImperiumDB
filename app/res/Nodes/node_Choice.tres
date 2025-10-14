@@ -15,76 +15,45 @@
 script = ExtResource("1_fskgu")
 param_a = ""
 param_b = "text"
-text_size = 10
 metadata/_custom_type_script = "uid://c7pjb25tbibt7"
 
 [sub_resource type="Resource" id="Resource_apk7d"]
 script = ExtResource("1_apk7d")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_j24g0"]
 script = ExtResource("1_apk7d")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_3xvmi"]
 script = ExtResource("6_h374t")
-default = ""
-method_table = "script"
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://jbgjwigi0wbu"
 
 [sub_resource type="Resource" id="Resource_qgcfd"]
 script = ExtResource("6_obacs")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [sub_resource type="Resource" id="Resource_u6oba"]
 script = ExtResource("8_2b1w2")
 default = true
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://lx8kkxfanx4i"
 
 [sub_resource type="Resource" id="Resource_dwewv"]
 script = ExtResource("3_apk7d")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://ba5sgmo2v4x72"
 
 [sub_resource type="Resource" id="Resource_2b1w2"]
 script = ExtResource("6_h374t")
-default = ""
-method_table = "script"
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://jbgjwigi0wbu"
 
 [sub_resource type="Resource" id="Resource_fskgu"]
 script = ExtResource("3_apk7d")
-default = ""
-name = ""
 order = -1
-tooltip = ""
 metadata/_custom_type_script = "uid://ba5sgmo2v4x72"
 
 [sub_resource type="Resource" id="Resource_3jox8"]
 script = ExtResource("7_3xvmi")
-default = ""
 table = "ChoiceType"
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bam4ih8mgp8ye"
 
 [resource]
@@ -92,13 +61,10 @@ script = ExtResource("4_h374t")
 name = "Choice"
 color = Color(0, 1, 0, 1)
 scale = Vector2(200, 100)
-UseLinkKey = false
 inputs = Array[ExtResource("1_apk7d")]([SubResource("Resource_apk7d")])
 outputs = Array[ExtResource("1_apk7d")]([SubResource("Resource_j24g0")])
 descriptor = SubResource("Resource_h374t")
-CsvImportFields = PackedStringArray()
 NextNode = ExtResource("1_j24g0")
-Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_fskgu")]({
 &"condition": SubResource("Resource_3xvmi"),
 &"flag_required": SubResource("Resource_qgcfd"),

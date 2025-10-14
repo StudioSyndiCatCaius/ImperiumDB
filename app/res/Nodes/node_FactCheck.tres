@@ -9,12 +9,10 @@
 
 [sub_resource type="Resource" id="Resource_ovtgf"]
 script = ExtResource("1_k8ato")
-text_size = 10
 metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_k8ato"]
 script = ExtResource("1_xr4f4")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_i4v06"]
@@ -34,18 +32,10 @@ metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_25flu"]
 script = ExtResource("4_bjmik")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [sub_resource type="Resource" id="Resource_m4tvs"]
 script = ExtResource("4_k8ato")
-default = 0
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://b35kmyl4ah3xd"
 
 [resource]
@@ -53,12 +43,9 @@ script = ExtResource("2_i4v06")
 name = "Param - Check"
 color = Color(0.239216, 1, 0.694118, 1)
 scale = Vector2(200, 150)
-UseLinkKey = false
 inputs = Array[ExtResource("1_xr4f4")]([SubResource("Resource_k8ato")])
 outputs = Array[ExtResource("1_xr4f4")]([SubResource("Resource_i4v06"), SubResource("Resource_5qkts"), SubResource("Resource_yjxyi")])
 descriptor = SubResource("Resource_ovtgf")
-CsvImportFields = PackedStringArray()
-Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_5qkts")]({
 &"param": SubResource("Resource_25flu"),
 &"value": SubResource("Resource_m4tvs")

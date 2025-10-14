@@ -7,15 +7,10 @@
 
 [sub_resource type="Resource" id="Resource_6mogs"]
 script = ExtResource("1_83on6")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_k40xd"]
 script = ExtResource("3_nb3gp")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [resource]
@@ -23,11 +18,7 @@ script = ExtResource("2_6mogs")
 name = "End"
 color = Color(0.756863, 0.403922, 0.486275, 1)
 scale = Vector2(40, 20)
-UseLinkKey = false
 inputs = Array[ExtResource("1_83on6")]([SubResource("Resource_6mogs")])
-outputs = Array[ExtResource("1_83on6")]([])
-CsvImportFields = PackedStringArray()
-Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_nb3gp")]({
 &"flag": SubResource("Resource_k40xd")
 })

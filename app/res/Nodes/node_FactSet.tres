@@ -10,41 +10,28 @@
 
 [sub_resource type="Resource" id="Resource_dnkhh"]
 script = ExtResource("1_ep1ry")
-text_size = 10
 metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_8gfis"]
 script = ExtResource("1_35rmm")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_ep1ry"]
 script = ExtResource("1_35rmm")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_teqem"]
 script = ExtResource("6_ep1ry")
-default = false
-name = ""
 order = 5
 tooltip = "If true, will add to current value insead of setting it."
 metadata/_custom_type_script = "uid://lx8kkxfanx4i"
 
 [sub_resource type="Resource" id="Resource_201ob"]
 script = ExtResource("5_uag84")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [sub_resource type="Resource" id="Resource_n0a05"]
 script = ExtResource("5_ep1ry")
-default = 0
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://b35kmyl4ah3xd"
 
 [resource]
@@ -52,12 +39,9 @@ script = ExtResource("2_s8gxr")
 name = "Param - Set"
 color = Color(0.118348, 0.903562, 0.595467, 1)
 scale = Vector2(180, 80)
-UseLinkKey = false
 inputs = Array[ExtResource("1_35rmm")]([SubResource("Resource_8gfis")])
 outputs = Array[ExtResource("1_35rmm")]([SubResource("Resource_ep1ry")])
 descriptor = SubResource("Resource_dnkhh")
-CsvImportFields = PackedStringArray()
-Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_x7mim")]({
 &"increment": SubResource("Resource_teqem"),
 &"param": SubResource("Resource_201ob"),

@@ -8,7 +8,6 @@
 
 [sub_resource type="Resource" id="Resource_rguel"]
 script = ExtResource("1_tmtua")
-text_size = 10
 metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_3nrf1"]
@@ -28,10 +27,6 @@ metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_ob7sd"]
 script = ExtResource("4_tmtua")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [resource]
@@ -39,12 +34,9 @@ script = ExtResource("3_sleby")
 name = "Param - If"
 color = Color(1, 0, 0, 1)
 scale = Vector2(150, 100)
-UseLinkKey = false
 inputs = Array[ExtResource("1_qdext")]([SubResource("Resource_3nrf1")])
 outputs = Array[ExtResource("1_qdext")]([SubResource("Resource_bs2f0"), SubResource("Resource_au22j")])
 descriptor = SubResource("Resource_rguel")
-CsvImportFields = PackedStringArray()
-Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_fe5ds")]({
 &"param": SubResource("Resource_ob7sd")
 })

@@ -7,24 +7,17 @@
 
 [sub_resource type="Resource" id="Resource_2uh3g"]
 script = ExtResource("1_hfxqi")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_hfxqi"]
 script = ExtResource("1_hfxqi")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [resource]
 script = ExtResource("4_4lom4")
 name = "Choice HUB"
 color = Color(0, 1, 0, 1)
-scale = Vector2(0, 0)
-UseLinkKey = false
 inputs = Array[ExtResource("1_hfxqi")]([SubResource("Resource_2uh3g")])
 outputs = Array[ExtResource("1_hfxqi")]([SubResource("Resource_hfxqi")])
-CsvImportFields = PackedStringArray()
 NextNode = ExtResource("1_kyu1s")
-Exapndable = false
-properties = Dictionary[StringName, ExtResource("2_kyu1s")]({})
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"

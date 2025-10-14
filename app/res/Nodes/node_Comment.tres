@@ -16,18 +16,10 @@ metadata/_custom_type_script = "uid://c7pjb25tbibt7"
 
 [sub_resource type="Resource" id="Resource_1y40a"]
 script = ExtResource("3_ntmq7")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://ba5sgmo2v4x72"
 
 [sub_resource type="Resource" id="Resource_wg2h5"]
 script = ExtResource("4_5l2ap")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [resource]
@@ -35,11 +27,7 @@ script = ExtResource("5_4t7io")
 name = "Comment"
 color = Color(0.223529, 0.301961, 0.403922, 0.537255)
 scale = Vector2(300, 200)
-UseLinkKey = false
-inputs = Array[ExtResource("2_1y40a")]([])
-outputs = Array[ExtResource("2_1y40a")]([])
 descriptor = SubResource("Resource_5l2ap")
-CsvImportFields = PackedStringArray()
 Exapndable = true
 properties = Dictionary[StringName, ExtResource("3_wg2h5")]({
 &"comment": SubResource("Resource_1y40a"),

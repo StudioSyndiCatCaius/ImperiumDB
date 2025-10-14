@@ -10,63 +10,39 @@
 [sub_resource type="Resource" id="Resource_b8py5"]
 script = ExtResource("1_jl6lc")
 from_node = "start"
-from_port = 0
 to_node = "line_0"
-to_port = 0
 metadata/_custom_type_script = "uid://dub24rysp25wv"
 
 [sub_resource type="Resource" id="Resource_rlrfw"]
 script = ExtResource("1_jl6lc")
 from_node = "line_0"
-from_port = 0
 to_node = "end"
-to_port = 0
 metadata/_custom_type_script = "uid://dub24rysp25wv"
 
 [sub_resource type="Resource" id="Resource_o7qdl"]
 script = ExtResource("1_j8wae")
 position = Vector2(200, 200)
-key = ""
-size = Vector2(0, 0)
 template = ExtResource("3_gheff")
 label = "start"
-id = 0
-tags = PackedStringArray()
-params = {}
 metadata/_custom_type_script = "uid://c8huevudgf4xi"
 
 [sub_resource type="Resource" id="Resource_iciij"]
 script = ExtResource("1_j8wae")
 position = Vector2(400, 200)
-key = ""
-size = Vector2(0, 0)
 template = ExtResource("4_b8py5")
 label = "line_0"
-id = 0
-tags = PackedStringArray()
-params = {}
 metadata/_custom_type_script = "uid://c8huevudgf4xi"
 
 [sub_resource type="Resource" id="Resource_8ndnn"]
 script = ExtResource("1_j8wae")
 position = Vector2(700, 200)
-key = ""
-size = Vector2(0, 0)
 template = ExtResource("5_b8py5")
 label = "end"
-id = 0
-tags = PackedStringArray()
-params = {}
 metadata/_custom_type_script = "uid://c8huevudgf4xi"
 
 [resource]
 script = ExtResource("1_8kvbk")
-linked_script = ""
-importkeyoffset = 0
 nodes = Array[ExtResource("1_j8wae")]([SubResource("Resource_o7qdl"), SubResource("Resource_iciij"), SubResource("Resource_8ndnn")])
 connections = Array[ExtResource("1_jl6lc")]([SubResource("Resource_b8py5"), SubResource("Resource_rlrfw")])
 label = "untitled*"
-id = 0
-tags = PackedStringArray()
-params = {}
 metadata/_custom_type_script = "uid://b2ffk8qa0op7u"

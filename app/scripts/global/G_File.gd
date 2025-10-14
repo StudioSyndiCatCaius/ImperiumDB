@@ -60,7 +60,6 @@ func SAVE_Json(data: Dictionary, file_path: String):
 # ==============================================================================
 
 func LOAD_Texture(path: String) -> Texture2D:
-	
 	print("___ Loading Image: "+path+"___")
 	# Create a new image
 	var image = Image.new()

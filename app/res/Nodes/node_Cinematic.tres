@@ -8,38 +8,22 @@
 
 [sub_resource type="Resource" id="Resource_8c4et"]
 script = ExtResource("3_pk85p")
-name = ""
-color = Color(1, 1, 1, 1)
-scale = Vector2(0, 0)
-UseLinkKey = false
-inputs = Array[ExtResource("1_ss01c")]([])
-outputs = Array[ExtResource("1_ss01c")]([])
-CsvImportFields = PackedStringArray()
-Exapndable = false
-properties = Dictionary[StringName, ExtResource("2_0y217")]({})
 metadata/_custom_type_script = "uid://b4qb4v51nlhsk"
 
 [sub_resource type="Resource" id="Resource_jbr54"]
 script = ExtResource("4_7vr3p")
-text_size = 10
 metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_0oyhe"]
 script = ExtResource("1_ss01c")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_aym4k"]
 script = ExtResource("1_ss01c")
-name = ""
 metadata/_custom_type_script = "uid://df7hah3kf11l3"
 
 [sub_resource type="Resource" id="Resource_ss01c"]
 script = ExtResource("5_23875")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [resource]
@@ -47,13 +31,10 @@ script = ExtResource("3_pk85p")
 name = "Cinematic"
 color = Color(0.45487, 0.3042, 0.78, 1)
 scale = Vector2(150, 75)
-UseLinkKey = false
 inputs = Array[ExtResource("1_ss01c")]([SubResource("Resource_0oyhe")])
 outputs = Array[ExtResource("1_ss01c")]([SubResource("Resource_aym4k")])
 descriptor = SubResource("Resource_jbr54")
-CsvImportFields = PackedStringArray()
 NextNode = SubResource("Resource_8c4et")
-Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_0y217")]({
 &"Cinematic": SubResource("Resource_ss01c")
 })

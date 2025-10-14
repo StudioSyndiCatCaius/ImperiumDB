@@ -8,15 +8,10 @@
 
 [sub_resource type="Resource" id="Resource_baetr"]
 script = ExtResource("1_najdd")
-text_size = 10
 metadata/_custom_type_script = "uid://bvh7r6jpp3tda"
 
 [sub_resource type="Resource" id="Resource_8aquy"]
 script = ExtResource("4_baetr")
-default = ""
-name = ""
-order = 0
-tooltip = ""
 metadata/_custom_type_script = "uid://bx1jd8dwnrwl3"
 
 [resource]
@@ -24,12 +19,8 @@ script = ExtResource("3_baetr")
 name = "HUB"
 color = Color(0.348088, 0.451001, 0.5834, 1)
 scale = Vector2(0, 80)
-UseLinkKey = false
-inputs = Array[ExtResource("1_4sxah")]([])
 outputs = Array[ExtResource("1_4sxah")]([null])
 descriptor = SubResource("Resource_baetr")
-CsvImportFields = PackedStringArray()
-Exapndable = false
 properties = Dictionary[StringName, ExtResource("2_najdd")]({
 &"hub": SubResource("Resource_8aquy")
 })

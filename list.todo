@@ -1,2 +1,11 @@
+PRIORITY
 * Add localization to nodes
 * Add lua API, for fully lua nodes
+* script exporter (to .csv and possible .pdf)
+
+MAYBE
+* Add revisions system. Check old versions of the script?
+
+BUGS
+* sometimes it says "multiple nodes" when none or one selected
+* sometimes opening/creating new graph does not jump to that graph. (Maybe it needs to get last graph in Panel?)

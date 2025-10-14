@@ -2,9 +2,7 @@ extends GraphNode
 class_name ui_GraphNode
 
 var N_GraphOwner: ui_GraphEdit
-
 var node_data: res_FlowNode_Inst
-
 var LIST_pins: Array[ui_FlowPin]
 
 @onready var REF_Pin=preload("res://app/scenes/ui/ui_FlowPin.tscn")
