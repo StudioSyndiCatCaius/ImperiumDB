@@ -5,16 +5,15 @@
 [ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="2_klkow"]
 [ext_resource type="PackedScene" uid="uid://yo3kw5xm1r1y" path="res://app/scenes/ui/ui_FlowGraph.tscn" id="2_nrvy0"]
 [ext_resource type="Texture2D" uid="uid://db8jiorl8ivnr" path="res://app/assets/2D/icons/t_ico_MagniGlass.png" id="3_f2nj0"]
-[ext_resource type="Resource" uid="uid://d2ys46uk5pnh4" path="res://app/res/Graphs/graph_OneLine.tres" id="4_1lsm5"]
 [ext_resource type="Texture2D" uid="uid://67trfpi1ip13" path="res://icon.svg" id="4_3tr6m"]
 [ext_resource type="PackedScene" uid="uid://dlb3v1t3bl27p" path="res://app/scenes/ui/ui_LogDisplay.tscn" id="4_mggx4"]
 [ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="5_mud24"]
 [ext_resource type="PackedScene" uid="uid://bjysjg1rmufb5" path="res://app/scenes/tabs/SubTab_tables.tscn" id="6_dhbk0"]
+[ext_resource type="PackedScene" uid="uid://cqb6rudlshexc" path="res://app/scenes/ui/ui_TAB_Entities.tscn" id="8_dd25g"]
 [ext_resource type="PackedScene" uid="uid://vqbpr2mnmjra" path="res://app/scenes/ui/ui_TAB_ModelViewer.tscn" id="10_dd25g"]
 
 [node name="StateProjects" type="Node" node_paths=PackedStringArray("N_TabsMain", "N_TabGraphs", "N_ProjName", "N_Dialog_save", "N_Dialog_confirm_quit", "N_TreeRoot", "N_img_logo")]
 script = ExtResource("1_2mmce")
-default_graph = ExtResource("4_1lsm5")
 N_TabsMain = NodePath("Control/VBoxContainer/TABS_Main")
 N_TabGraphs = NodePath("Control/VBoxContainer/TABS_Main/Flow/TABS_FlowGraph")
 N_ProjName = NodePath("Control/VBoxContainer/HBoxContainer2/txt_projName")
@@ -133,30 +132,8 @@ current_tab = 0
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="entities" type="HBoxContainer" parent="Control/VBoxContainer/TABS_Main"]
-visible = false
+[node name="entities" parent="Control/VBoxContainer/TABS_Main" instance=ExtResource("8_dd25g")]
 layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/TABS_Main/entities"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/TABS_Main/entities/PanelContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="Control/VBoxContainer/TABS_Main/entities/PanelContainer"]
-layout_mode = 2
-
-[node name="btn_NewRes" type="Button" parent="Control/VBoxContainer/TABS_Main/entities/PanelContainer/VBoxContainer2"]
-layout_mode = 2
-text = "new_res"
-
-[node name="UiFileTree" parent="Control/VBoxContainer/TABS_Main/entities/PanelContainer/VBoxContainer2" instance=ExtResource("2_j53oe")]
-layout_mode = 2
-size_flags_vertical = 3
-path = "/entities/"
-is_project_relative = true
 
 [node name="tables" parent="Control/VBoxContainer/TABS_Main" instance=ExtResource("6_dhbk0")]
 visible = false
@@ -194,9 +171,6 @@ size = Vector2i(300, 100)
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_quit2" to="." method="_on_btn_quit_pressed"]
 [connection signal="FileDoubleClick" from="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree" to="." method="_on_ui_file_tree_file_double_click"]
 [connection signal="tree_exiting" from="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree" to="." method="_on_ui_file_tree_tree_exiting"]
-[connection signal="pressed" from="Control/VBoxContainer/TABS_Main/entities/PanelContainer/VBoxContainer2/btn_NewRes" to="." method="_on_btn_new_res_pressed"]
-[connection signal="FileDoubleClick" from="Control/VBoxContainer/TABS_Main/entities/PanelContainer/VBoxContainer2/UiFileTree" to="." method="_on_ui_file_tree_file_double_click"]
-[connection signal="tree_exiting" from="Control/VBoxContainer/TABS_Main/entities/PanelContainer/VBoxContainer2/UiFileTree" to="." method="_on_ui_file_tree_tree_exiting"]
 [connection signal="InputBegin" from="i_save" to="." method="_on_i_save_input_begin"]
 [connection signal="InputBegin" from="i_new" to="." method="_on_i_new_input_begin"]
 [connection signal="confirmed" from="dialog_SAVE" to="." method="_on_dialog_save_confirmed"]

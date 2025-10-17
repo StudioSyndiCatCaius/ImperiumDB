@@ -3,10 +3,19 @@ class_name ui_ParamEdit
 
 @export var N_container: Control
 
-var asset: res__ImpAsset
-var template: res__ImpTemplate
-
+var ui_types={}
 @onready var REF_ParanField=preload("res://app/scenes/ui/ui_ParamField.tscn")
+
+func _ready():
+	ui_types['text']=preload("res://app/scenes/ui/pEdit/pEdit_text.tscn")
+	ui_types['string']=preload("res://app/scenes/ui/pEdit/pEdit_string.tscn")
+	ui_types['number']=preload("res://app/scenes/ui/pEdit/pEdit_int.tscn")
+	ui_types['bool']=preload("res://app/scenes/ui/pEdit/pEdit_bool.tscn")
+	ui_types['code']=preload("res://app/scenes/ui/pEdit/pEdit_code.tscn")
+	ui_types['table']=preload("res://app/scenes/ui/pEdit/pEdit_table.tscn")
+
+
+signal OnParamEdit(param: String, value)
 
 func OBJECT_MultiMode(on: bool):
 	$Label.visible=on
@@ -14,21 +23,30 @@ func OBJECT_MultiMode(on: bool):
 func OBJECT_Clear():
 	G_Node.Children_ClearAll(N_container)
 
-func OBJECT_Set(_obj: res__ImpAsset, _template: res__ImpTemplate):
+func OBJECT_Set(_obj: Dictionary, _template: LuaTable):
 	OBJECT_Clear()
-	print("setting paramEdit to: "+str(_obj))
-	template=_template
-	asset=_obj
+	if !_obj:
+		print("could not set ParamEdit object: object is invalid")
+		return
+	if !_template:
+		print("could not set ParamEdit object: template is invalid")
+		return
 	
-	var prop_order= template.properties.keys()
-	var _pr=template.properties
-	prop_order.sort_custom(func(a,b):
-		return _pr[a].order < _pr[b].order
-		)
+	var plist: Dictionary=G_Lua.CONV(_template.get('params',{}))
+	var key_list: Array =plist.keys()
+	key_list.sort_custom(func(a,b):
+		return plist[a].get('order',0) < plist[b].get('order',0)
+	)
+	for i in key_list:
+		var _type=plist[i].get('type')
+		if ui_types.has(_type):
+			var newp: ui_pEdit=ui_types[_type].instantiate()
+			newp.paramName=i
+			newp.paramConfig=plist[i]
+			newp.Setup(_obj,_template)
+			newp.OnParamEdit.connect(_op)
+			$ScrollContainer/VBoxContainer.add_child(newp)
 
-	for p in prop_order:
-		var new_param: ui_ParamField = REF_ParanField.instantiate()
-		new_param.asset=asset
-		new_param.template=template
-		new_param.field=p
-		N_container.add_child(new_param)
+func _op(param: String, value):
+	print('migo')
+	OnParamEdit.emit(param,value)

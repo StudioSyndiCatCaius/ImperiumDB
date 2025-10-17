@@ -1,33 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://yo3kw5xm1r1y"]
+[gd_scene load_steps=6 format=3 uid="uid://yo3kw5xm1r1y"]
 
 [ext_resource type="Script" uid="uid://ninltbqxj6cg" path="res://app/scenes/ui/ui_FlowGraph.gd" id="1_pb1ws"]
-[ext_resource type="Script" uid="uid://b4qb4v51nlhsk" path="res://app/scripts/resources/res_FlowNode_type.gd" id="2_bo6kr"]
 [ext_resource type="PackedScene" uid="uid://dlr7wei0mcpmo" path="res://app/scenes/ui/ui_ParamEdit.tscn" id="2_mhv03"]
-[ext_resource type="Resource" uid="uid://d2ys46uk5pnh4" path="res://app/res/Graphs/graph_OneLine.tres" id="2_rre87"]
 [ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="3_m5ua5"]
-[ext_resource type="Resource" uid="uid://m7r70barb2ek" path="res://app/res/Nodes/node_Start.tres" id="3_x45cu"]
-[ext_resource type="Resource" uid="uid://bkr1os7iwems3" path="res://app/res/Nodes/node_End.tres" id="4_oajqh"]
-[ext_resource type="Resource" uid="uid://c35fffw47e3so" path="res://app/res/Nodes/node_DialogueLine.tres" id="5_8gdf5"]
-[ext_resource type="Resource" uid="uid://bnqj4dfhemqvx" path="res://app/res/Nodes/node_Delay.tres" id="6_2j4u1"]
-[ext_resource type="Resource" uid="uid://cc7cwq67lktkc" path="res://app/res/Nodes/node_camera.tres" id="7_ofthg"]
-[ext_resource type="Resource" uid="uid://dvjfwamds2f5f" path="res://app/res/Nodes/node_ScriptIf.tres" id="8_1shpp"]
-[ext_resource type="Resource" uid="uid://o5fgoly3ibxq" path="res://app/res/Nodes/node_Choice.tres" id="9_8gdf5"]
-[ext_resource type="Resource" uid="uid://dwo7gmh6sgi1m" path="res://app/res/Nodes/node_GameSystem.tres" id="9_mwko7"]
 [ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="9_x45cu"]
-[ext_resource type="Resource" uid="uid://cqbxxue7c4knx" path="res://app/res/Nodes/node_ChoiceHUB.tres" id="10_2j4u1"]
-[ext_resource type="Resource" uid="uid://caopt46w3bk4i" path="res://app/res/Nodes/node_GameMenu.tres" id="10_25pll"]
-[ext_resource type="Resource" uid="uid://b3s3lqswjysgm" path="res://app/res/Nodes/node_HUB.tres" id="11_ofthg"]
-[ext_resource type="Resource" uid="uid://kokc0fradgnk" path="res://app/res/Nodes/node_ToHUB.tres" id="12_1shpp"]
-[ext_resource type="Resource" uid="uid://ba0hr703cwwm5" path="res://app/res/Nodes/node_Comment.tres" id="13_1shpp"]
-[ext_resource type="Resource" uid="uid://onnek54v2vw8" path="res://app/res/Nodes/node_Movie.tres" id="14_xt6vc"]
-[ext_resource type="Resource" uid="uid://dy0rj2w6g5ser" path="res://app/res/Nodes/node_OncePerSave.tres" id="15_hgl2u"]
-[ext_resource type="Resource" uid="uid://qtwlxd4aoapm" path="res://app/res/Nodes/node_FactCheck.tres" id="16_rpa31"]
-[ext_resource type="Resource" uid="uid://b2imjumokwiur" path="res://app/res/Nodes/node_FlagBool.tres" id="17_givdd"]
-[ext_resource type="Resource" uid="uid://cnqn5gf1yxmkj" path="res://app/res/Nodes/node_FactSet.tres" id="19_c10mc"]
-[ext_resource type="Resource" uid="uid://dikyoiqnrqhov" path="res://app/res/Nodes/node_ScriptEvent.tres" id="20_1loq1"]
-[ext_resource type="Resource" uid="uid://bjrdxbgd5dhho" path="res://app/res/Nodes/node_ItemGive.tres" id="23_25pll"]
-[ext_resource type="Resource" uid="uid://c6ycwkl3rxvgk" path="res://app/res/Nodes/node_ImgCG.tres" id="24_yrd06"]
-[ext_resource type="Resource" uid="uid://bjg8gdb70eaq" path="res://app/res/Nodes/node_Cinematic.tres" id="25_yarnk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_oytv5"]
 font_size = 10
@@ -39,8 +15,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pb1ws")
-default_graph = ExtResource("2_rre87")
-node_types = Array[ExtResource("2_bo6kr")]([ExtResource("3_x45cu"), ExtResource("4_oajqh"), ExtResource("5_8gdf5"), ExtResource("6_2j4u1"), ExtResource("7_ofthg"), ExtResource("9_mwko7"), ExtResource("10_25pll"), ExtResource("9_8gdf5"), ExtResource("10_2j4u1"), ExtResource("11_ofthg"), ExtResource("12_1shpp"), ExtResource("13_1shpp"), ExtResource("14_xt6vc"), ExtResource("15_hgl2u"), ExtResource("16_rpa31"), ExtResource("17_givdd"), ExtResource("19_c10mc"), ExtResource("8_1shpp"), ExtResource("20_1loq1"), ExtResource("23_25pll"), ExtResource("24_yrd06"), ExtResource("25_yarnk")])
 N_Graph = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit")
 N_ParamEdit = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/params")
 N_NodeList = NodePath("VBoxContainer/HSplitContainer2/list_nodes")
@@ -70,8 +44,6 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 10
-item_count = 1
-item_0/text = "asfa"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/HSplitContainer2"]
 layout_mode = 2
@@ -202,6 +174,7 @@ theme_override_font_sizes/font_size = 10
 [connection signal="gui_input" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_gui_input"]
 [connection signal="node_deselected" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_deselected"]
 [connection signal="node_selected" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_selected"]
+[connection signal="OnParamEdit" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/params" to="." method="_on_params_on_param_edit"]
 [connection signal="text_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer/TextEdit_NodeID" to="." method="_on_text_edit_node_id_text_changed"]
 [connection signal="text_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer/lbl_scriptPath" to="." method="_on_lbl_script_path_text_changed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_ScriptSet" to="." method="_on_btn_script_set_pressed"]

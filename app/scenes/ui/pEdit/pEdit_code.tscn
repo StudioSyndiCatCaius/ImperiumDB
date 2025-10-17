@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://3qucqmwuvgah"]
+
+[ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_8estc"]
+[ext_resource type="PackedScene" uid="uid://dd6yosq7h7cpa" path="res://app/scenes/ui/ui_ScriptBlock.tscn" id="2_o1ewk"]
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_gmriv"]
+number_color = Color(9.72241e-06, 0.926886, 0.44227, 1)
+symbol_color = Color(0.995956, 0.859303, 0.668416, 1)
+function_color = Color(0.144395, 0.448821, 0.840402, 1)
+member_variable_color = Color(0.989394, 0.88584, 0.764449, 1)
+keyword_colors = {
+"end": Color(1, 0.133333, 0.329412, 1),
+"if": Color(1, 0.132823, 0.327938, 1),
+"local": Color(1, 0.133333, 0.329412, 1),
+"return": Color(1, 0.133333, 0.329412, 1)
+}
+
+[node name="PEditInt" type="HBoxContainer" node_paths=PackedStringArray("N__label", "N_textEdit")]
+custom_minimum_size = Vector2(0, 75)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 100.0
+grow_horizontal = 2
+script = ExtResource("1_8estc")
+N__label = NodePath("Label")
+N_textEdit = NodePath("edit_code")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+text = "lbl"
+
+[node name="edit_code" parent="." instance=ExtResource("2_o1ewk")]
+layout_mode = 2
+size_flags_horizontal = 3
+syntax_highlighter = SubResource("CodeHighlighter_gmriv")

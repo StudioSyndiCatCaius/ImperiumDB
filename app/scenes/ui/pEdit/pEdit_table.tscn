@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://p83c47nqjpd2"]
+
+[ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_uovu6"]
+[ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="2_yav1r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uovu6"]
+content_margin_left = 8.0
+content_margin_top = 4.0
+content_margin_right = 8.0
+content_margin_bottom = 4.0
+bg_color = Color(0.08, 0.08, 0.08, 0.8117647)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="PEditInt" type="HBoxContainer" node_paths=PackedStringArray("N__label", "N_List")]
+custom_minimum_size = Vector2(0, 40)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -680.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uovu6")
+N__label = NodePath("Label")
+N_List = NodePath("edit_list")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+text = "lbl"
+
+[node name="edit_list" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/icon_max_width = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_uovu6")
+
+[node name="btn_clear" type="Button" parent="."]
+layout_mode = 2
+icon = ExtResource("2_yav1r")
+
+[connection signal="item_selected" from="edit_list" to="." method="_on_edit_list_item_selected"]
+[connection signal="pressed" from="btn_clear" to="." method="_on_btn_clear_pressed"]

@@ -1,12 +1,13 @@
 return {
 	name="Choice Hub",
 	color={0,1,0,1},
-	
-	inputs=[ {} ],
-	outputs=[ {}, ],
+	quick_next="node_Choice",
+
+	inputs={ {} },
+	outputs={ {}, },
 	
 	params={
-		script={ type='lua', },
+		script={ type='code', },
 	}
 
 }

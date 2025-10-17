@@ -7,14 +7,13 @@ class_name res_project
 @export var image: Texture2D
 @export var tree_expansion={}
 @export var DataTables={}
-
-var loaded_graphs: res_FlowGraph
+var DATA={}
 
 func GetProjectDir():
 	return G_String.Split_AtCharacter(path,"/",true)[0]
 
 func __save() :
-	var out: Dictionary
+	var out=DATA
 	out['name']=name
 	out['tags']=tags
 	out['tree_expansion']=tree_expansion

@@ -1,19 +1,23 @@
 return {
-	name="Choice Hub",
+	name="Choice",
 	color={0,1,0,1},
-	
-	inputs=[ {} ],
-	outputs=[ {}, ],
+	quick_next="node_DialogueLine",
+
+	size={x=200,y=75},
+
+	inputs={ {} },
+	outputs={ {}, },
 	
 	params={
 		text={ type='text', },
-		condition={ type='lua', },
-		script={ type='lua', },
-		type={ type='table', table="ChoiceType" },
-	}
+		condition={ type='code', },
+		script={ type='code', },
+		type={ type='table', table="TypeChoice" },
+		face={ type='table', table="faces" },
+	},
 	
 	GetDescription=function(n)
-		return n['text']
+		return n['params']['text']
 	end
 
 }

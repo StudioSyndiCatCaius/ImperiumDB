@@ -1,12 +1,17 @@
 return {
 	name="Lua - Script",
 	color={0,0,1,1},
+	size={x=200,y=120},
 	
-	inputs=[ {} ],
-	outputs=[ {}, ],
+	inputs={ {} },
+	outputs={ {}, },
 	
 	params={
-		script={ type='lua', },
-	}
+		script={ type='code', },
+	},
+
+	GetDescription=function(data)
+		return data['params']['script']
+	end,
 
 }

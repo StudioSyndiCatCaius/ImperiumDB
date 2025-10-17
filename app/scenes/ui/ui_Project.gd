@@ -19,7 +19,7 @@ func _refresh():
 			N_name.text=project.name
 		if N_path:
 			N_path.text=project.path
-			N_path.visible=!G_Save.dic_projects.get("hide_path",false)
+			N_path.visible=!G_Project.dic_projects.get("hide_path",false)
 		if N_image:
 			N_image.texture=project.image
 

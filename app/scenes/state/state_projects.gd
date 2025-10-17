@@ -21,20 +21,20 @@ func LIST_Rebuild():
 	print("Rebuilding Projects list")
 	G_Node.Children_ClearAll(N_ProjList)
 	
-	for i in G_Save.list_projects:
+	for i in G_Project.list_projects:
 		var new_proj: ui_Project=ref_UiProj.instantiate()
-		print("  new proj = "+str(new_proj))
-		print("  i        = "+str(i))
 		new_proj.project=i
 		new_proj.OnAction.connect(PROJECT_Action)
 		N_ProjList.add_child(new_proj)
-		print("  --  added '"+str(i)+"' to projects list")
 
 func PROJECT_Action(action: int, project: res_project):
+	
+	# ACTION -- LOAD PROJECT
 	if action==0:
 		G_Project.LOAD(project)
 		get_tree().change_scene_to_file("res://app/scenes/state/STATE_Main.tscn")
 	
+	# ACTION -- DELETE PROJECT
 	if action==1:
 		target_proj=project
 		N_Confirm_RemoveProj.visible=true
@@ -44,11 +44,11 @@ func _on_btn_open_pressed():
 	N_Dialog_LoadProj.visible=true
 
 func _on_file_dialog_load_file_selected(path):
-	G_Save.PROJECT_Load(path)
+	G_Project.PROJECT_Load(path)
 	LIST_Rebuild()
 
 func _on_dialog_confirm_delete_confirmed():
-	G_Save.PROJECT_Remove(target_proj)
+	G_Project.PROJECT_Remove(target_proj)
 	LIST_Rebuild()
 
 

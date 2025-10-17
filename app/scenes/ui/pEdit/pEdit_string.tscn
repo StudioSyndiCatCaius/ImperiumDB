@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqt3y6ahvm8cv"]
+
+[ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_pl23h"]
+
+[node name="PEditInt" type="HBoxContainer" node_paths=PackedStringArray("N__label", "N_textEdit")]
+custom_minimum_size = Vector2(0, 30)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -680.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pl23h")
+N__label = NodePath("Label")
+N_textEdit = NodePath("TextEdit")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+text = "lbl"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+placeholder_text = "--"

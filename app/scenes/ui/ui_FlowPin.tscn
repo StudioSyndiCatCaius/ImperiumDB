@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cowsypvdc8sib"]
+[gd_scene load_steps=6 format=3 uid="uid://cowsypvdc8sib"]
 
 [ext_resource type="Script" uid="uid://cxx6nna8wfhlf" path="res://app/scenes/ui/ui_FlowPin.gd" id="1_0unwo"]
+[ext_resource type="Texture2D" uid="uid://bhmawjg5g0mrd" path="res://icon.png" id="2_mmbcl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0unwo"]
 content_margin_left = 2.0
@@ -23,7 +24,7 @@ content_margin_right = 2.0
 content_margin_bottom = 1.0
 bg_color = Color(0, 0, 0, 0.243137)
 
-[node name="UiFlowPin" type="PanelContainer" node_paths=PackedStringArray("N_text", "N_lbl_in", "N_lbl_out")]
+[node name="UiFlowPin" type="PanelContainer" node_paths=PackedStringArray("N_text", "N_lbl_in", "N_lbl_out", "N_icon")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -33,9 +34,10 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0unwo")
 script = ExtResource("1_0unwo")
-N_text = NodePath("VBoxContainer/PanelContainer/RichTextLabel")
+N_text = NodePath("VBoxContainer/PanelContainer/VBoxContainer/RichTextLabel")
 N_lbl_in = NodePath("VBoxContainer/lb_in")
 N_lbl_out = NodePath("VBoxContainer/lb_out")
+N_icon = NodePath("VBoxContainer/PanelContainer/VBoxContainer/TextureRect")
 
 [node name="VBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -50,9 +52,21 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_mmbcl")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("2_mmbcl")
+expand_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 10
 text = " "
 autowrap_mode = 2

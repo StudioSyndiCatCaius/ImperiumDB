@@ -1,12 +1,17 @@
 return {
 	name="Delay",
 	color={0,1,0,1},
+	size={x=100,y=60},
 	
-	inputs=[ {} ],
-	outputs=[ {}, ],
+	inputs={ {} },
+	outputs={ {}, },
 	
 	params={
-		time={ type='float', default=1.0 },
-	}
+		delay={ type='number', step=0.01 },
+	},
+
+	GetDescription=function (d)
+		return [["Wait : "]]..d['params']['delay']
+	end
 
 }

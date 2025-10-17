@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://djbjxip52i52s"]
+
+[ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_l0ma5"]
+
+[node name="PEditInt" type="HBoxContainer" node_paths=PackedStringArray("N__label", "N_check")]
+custom_minimum_size = Vector2(0, 40)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -680.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l0ma5")
+N__label = NodePath("Label")
+N_check = NodePath("CheckBox")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "lbl"
+
+[node name="CheckBox" type="CheckBox" parent="."]
+layout_mode = 2
+theme_override_colors/checkbox_unchecked_color = Color(0, 0, 0, 1)
+
+[connection signal="toggled" from="CheckBox" to="." method="_on_check_box_toggled"]

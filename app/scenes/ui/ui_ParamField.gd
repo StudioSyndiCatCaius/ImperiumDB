@@ -54,7 +54,7 @@ func _ready():
 	if field_data.type==4:
 		N_edit_code.text=_val
 	if field_data.type==5:
-		print()
+
 		N_edit_list.clear()
 		var list=G_Project.TABLE_GetItemList(field_data.table)
 		var _valIndex=-1

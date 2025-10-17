@@ -1,8 +1,6 @@
 extends Node
 
 
-@export var default_graph: res_FlowGraph
-
 @export_category("Links")
 @export var N_TabsMain: TabContainer
 @export var N_TabGraphs: TabContainer
@@ -17,7 +15,7 @@ extends Node
 
 func _ready():
 	if G_Project.active_project==null:
-		G_Project.active_project=G_Save.list_projects[0]
+		G_Project.active_project=G_Project.list_projects[0]
 
 	#Setup Linked Nodes
 	N_ProjName.text=G_Project.active_project.name
@@ -26,7 +24,7 @@ func _ready():
 	
 	#setup first graph
 	G_Node.Children_ClearAll(N_TabGraphs)
-	GRAPH_Open(default_graph.duplicate(true))
+	GRAPH_Open(G_Lua.GRAPH_NewDefault())
 
 func focus():
 	return get_viewport().gui_get_focus_owner()
@@ -36,14 +34,14 @@ func focus():
 # =============================================================================
 func _on_i_save_input_begin():
 	var graph: ui_GraphEdit=GRAPH_GetCurrent()
-	if graph and graph.current_graph:
-		if graph.current_graph.File_IsValid():
-			SAVE_Confirm(graph.current_graph.linked_file,graph.current_graph)
+	if graph:
+		if FileAccess.file_exists(graph.file_path):
+			SAVE_Confirm(graph.file_path,graph)
 		else:
-			SAVE_Request(graph.current_graph)
+			SAVE_Request(graph)
 
 func _on_i_new_input_begin():
-	var _new = default_graph.duplicate(true)
+	var _new = G_Lua.GRAPH_NewDefault()
 	GRAPH_Open(_new)
 
 var SAVE_data={}
@@ -57,43 +55,43 @@ func SAVE_Request(object):
 func SAVE_Confirm(path : String, obj=null):
 	if obj:
 		object_to_save=obj
+	#print("attempting to save: "+obj)
 	if object_to_save!=null:
 		if object_to_save.has_method("SAVE"):
-			print('trying to save object')
+			print('trying to save object: '+str(object_to_save))
 			object_to_save.SAVE(path)
 	GRAPH_GetCurrent().GRAPH_Refresh()
-	G_Log.Notification("File Saved: "+str(path),Color.GREEN)
 
-
-func GRAPH_Open(graph : res_FlowGraph):
+func GRAPH_Open(graph: Dictionary,path:String=""):
 	var new_graph: ui_GraphEdit =REF_GraphEdit.instantiate()
-	new_graph.current_graph=graph
+	new_graph.DATA=graph
 	N_TabGraphs.add_child(new_graph)
 	N_TabGraphs.current_tab+=1
+	if path!="":
+		new_graph.file_path=path
 	new_graph.GRAPH_Load(graph)
-	
+
+func GRAPH_FromFile(file: String) -> Dictionary:
+	return G_File.LOAD_Json(file)
 
 func GRAPH_GetCurrent() -> ui_GraphEdit:
 	return N_TabGraphs.get_current_tab_control()
 
 func GRAPH_GetFromPath(path: String) -> ui_GraphEdit:
 	for i in N_TabGraphs.get_children():
-		if i.current_graph.linked_file==path:
+		if i.file_path==path:
 			return i
 	return null
-
 
 func _on_dialog_save_confirmed():
 	print('imgo :'+N_Dialog_save.current_path)
 	#G_File.SAVE_Json(SAVE_data,N_Dialog_save.current_path)
 
-
 func _on_dialog_save_file_selected(path):
-	SAVE_Confirm(path)
+	SAVE_Confirm(path,object_to_save)
 
 func _on_btn_quit_pressed():
 	N_Dialog_confirm_quit.popup()
-
 
 
 # ===============================================================
@@ -112,15 +110,16 @@ func _on_dlg_confirm_quit_confirmed():
 
 
 func _on_ui_file_tree_file_double_click(path: String):
-	print(path.get_extension())
 	if path.get_extension()=="ImpFlow":
+		# select if already open
 		if GRAPH_GetFromPath(path):
 			var _ind= N_TabGraphs.get_children().find(GRAPH_GetFromPath(path))
 			N_TabGraphs.current_tab=_ind
+		# open if not already open
 		else:
-			var new_graph= res_FlowGraph.new()
-			new_graph.LOAD(path)
-			GRAPH_Open(new_graph)
+			var new_graph={}
+			new_graph=GRAPH_FromFile(path)
+			GRAPH_Open(new_graph,path)
 
 
 func _on_btn_open_root_pressed():

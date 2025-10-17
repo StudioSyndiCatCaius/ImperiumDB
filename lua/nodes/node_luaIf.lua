@@ -1,12 +1,17 @@
 return {
 	name="Lua - If",
 	color={1,0,0,1},
-	
-	inputs=[ {} ],
-	outputs=[ {},{} ],
+	size={x=175,y=100},
+
+	inputs={ {} },
+	outputs={ {},{}, },
 	
 	params={
-		condition={ type='lua', },
-	}
+		condition={ type='code', },
+	},
+
+	GetDescription=function(data)
+		return data['params']['condition']
+	end,
 
 }

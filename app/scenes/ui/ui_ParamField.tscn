@@ -72,8 +72,8 @@ metadata/size = 50.0
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-min_value = -1e+08
-max_value = 1e+08
+min_value = -100000000.0
+max_value = 100000000.0
 metadata/size = 50.0
 
 [node name="edit_string" type="TextEdit" parent="HBoxContainer/Control"]
@@ -95,6 +95,7 @@ metadata/size = 80.0
 layout_mode = 2
 
 [node name="edit_list" type="OptionButton" parent="HBoxContainer/Control"]
+visible = false
 layout_mode = 2
 
 [connection signal="toggled" from="HBoxContainer/Control/CheckButton" to="." method="_on_check_button_toggled"]

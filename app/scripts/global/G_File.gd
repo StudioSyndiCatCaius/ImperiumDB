@@ -58,8 +58,28 @@ func SAVE_Json(data: Dictionary, file_path: String):
 # ==============================================================================
 # Texture
 # ==============================================================================
+func PathCorrect(path: String):
+	var st: String=path
+	st=st.replace("{project}",G_Project.PATH_GetRoot())
+	return st
 
-func LOAD_Texture(path: String) -> Texture2D:
+func LOAD_String(_file_path: String) -> String:
+	var file_content = ""
+	var file_path=""
+	file_path=PathCorrect(_file_path)
+	var file = FileAccess.open(file_path, FileAccess.READ)
+
+	if file:
+		file_content = file.get_as_text()
+		file.close()
+	else:
+		print("Error: Could not open file at path: ", file_path)
+
+	return file_content
+
+func LOAD_Texture(_path: String,useImageFolder=false) -> Texture2D:
+	var path=PathCorrect(_path)
+	
 	print("___ Loading Image: "+path+"___")
 	# Create a new image
 	var image = Image.new()
@@ -77,13 +97,15 @@ func LOAD_Texture(path: String) -> Texture2D:
 	
 	return texture
 
+
+
 # ==============================================================================
 # Texture
 # ==============================================================================
 
-func LIST_AllInDir(path: String, include_full_path: bool = true) -> Array[String]:
+func LIST_AllInDir(_path: String, include_full_path: bool = true) -> Array[String]:
 	var result: Array[String] = []
-	
+	var path: String=PathCorrect(_path)
 	# Check if the directory exists
 	if not DirAccess.dir_exists_absolute(path):
 		print("Directory does not exist: ", path)
