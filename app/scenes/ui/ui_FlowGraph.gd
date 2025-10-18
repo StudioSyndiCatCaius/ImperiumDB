@@ -5,7 +5,7 @@ var nodes_selected: Array[ui_GraphNode]
 var importkeyoffset=0
 
 var node_group_icons=[
-	"res://app/assets/2D/icons/Icon_File_T.PNG",
+	"",
 	"res://app/assets/2D/icons/t_ico_PlusGreen.png",
 ]
 
@@ -39,10 +39,11 @@ func _ready():
 	
 	# add selectable nodes
 	N_NodeList.clear()
-	for i in G_Lua.D_nodes:
+	var _NodeKeys=G_Lua.NODES_GetKeysAlphabetical()
+	for i in _NodeKeys:
 		var dat=G_Lua.D_nodes[i].get("name","*no name")
 		var _nodeMeta=G_Lua.D_node_meta.get(i,{})
-		var _m_group=_nodeMeta.get('group')
+		var _m_group=_nodeMeta.get('group',0)
 		var texture: Texture2D=null
 		if node_group_icons.size()>_m_group:
 			texture=load(node_group_icons[_m_group])
@@ -212,7 +213,7 @@ func _on_graph_edit_duplicate_nodes_request():
 			
 
 func _on_list_nodes_item_activated(index):
-	var _nodeType=G_Lua.D_nodes.keys()[index]
+	var _nodeType=G_Lua.NODES_GetKeysAlphabetical()[index]
 	var _node=G_Lua.NODE_Generate(_nodeType)
 	
 	_node.position=N_Graph.scroll_offset*(1/N_Graph.zoom)+get_local_mouse_position()

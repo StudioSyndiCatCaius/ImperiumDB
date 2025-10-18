@@ -1,23 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://b045fq123icq6"]
+[gd_scene load_steps=3 format=3 uid="uid://b045fq123icq6"]
 
 [ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_7yixw"]
+[ext_resource type="StyleBox" uid="uid://c6gds5rtj3hm5" path="res://app/assets/Style/style_panel_param.tres" id="1_rcf8p"]
 
-[node name="PEditInt" type="HBoxContainer" node_paths=PackedStringArray("N__label", "N_int")]
+[node name="PEditInt" type="PanelContainer" node_paths=PackedStringArray("N__label", "N_int")]
 custom_minimum_size = Vector2(0, 40)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 23.0
+offset_bottom = 40.0
 grow_horizontal = 2
+theme_override_styles/panel = ExtResource("1_rcf8p")
 script = ExtResource("1_7yixw")
-N__label = NodePath("Label")
-N_int = NodePath("SpinBox")
+N__label = NodePath("HBoxContainer/Label")
+N_int = NodePath("HBoxContainer/SpinBox")
 
-[node name="Label" type="Label" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 2
 text = "lbl"
 
-[node name="SpinBox" type="SpinBox" parent="."]
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 min_value = -999.0

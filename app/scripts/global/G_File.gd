@@ -40,6 +40,17 @@ func LOAD_Json(path: String) -> Dictionary:
 
 
 func SAVE_Json(data: Dictionary, file_path: String):
+	# Extract the directory path from the file path
+	var dir_path = file_path.get_base_dir()
+	
+	# Create directories if they don't exist
+	if dir_path != "" and not DirAccess.dir_exists_absolute(dir_path):
+		var error = DirAccess.make_dir_recursive_absolute(dir_path)
+		if error != OK:
+			print("Error creating directories: " + dir_path)
+			print("Error code: " + str(error))
+			return false
+	
 	# Create the JSON string
 	var json_string = JSON.stringify(data, "  ")  # Pretty print with 2-space indentation
 	
@@ -97,11 +108,43 @@ func LOAD_Texture(_path: String,useImageFolder=false) -> Texture2D:
 	
 	return texture
 
-
-
 # ==============================================================================
 # Texture
 # ==============================================================================
+
+func FILES_SortByExtension(paths: PackedStringArray) -> PackedStringArray:
+	var folders := []
+	var files := []
+	
+	# Separate folders from files
+	for path in paths:
+		if path.ends_with("/") or DirAccess.dir_exists_absolute(path):
+			folders.append(path)
+		else:
+			files.append(path)
+	
+	# Sort folders alphabetically
+	folders.sort()
+	
+	# Sort files by extension, then by name
+	files.sort_custom(func(a: String, b: String) -> bool:
+		var ext_a: String = a.get_extension().to_lower()
+		var ext_b: String = b.get_extension().to_lower()
+		
+		if ext_a == ext_b:
+			# Same extension, sort by full path
+			return a.naturalnocasecmp_to(b) < 0
+		else:
+			# Different extensions, sort by extension
+			return ext_a.naturalnocasecmp_to(ext_b) < 0
+	)
+	
+	# Combine: folders first, then files
+	var result: PackedStringArray = []
+	result.append_array(folders)
+	result.append_array(files)
+	
+	return result
 
 func LIST_AllInDir(_path: String, include_full_path: bool = true) -> Array[String]:
 	var result: Array[String] = []

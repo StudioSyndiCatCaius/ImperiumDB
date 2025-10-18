@@ -133,6 +133,7 @@ layout_mode = 2
 metadata/_tab_index = 0
 
 [node name="entities" parent="Control/VBoxContainer/TABS_Main" instance=ExtResource("8_dd25g")]
+visible = false
 layout_mode = 2
 
 [node name="tables" parent="Control/VBoxContainer/TABS_Main" instance=ExtResource("6_dhbk0")]

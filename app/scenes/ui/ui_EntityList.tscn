@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://ube5h44ginst"]
+
+[ext_resource type="Script" uid="uid://qcvayjpfgagd" path="res://app/scenes/ui/ui_EntityList.gd" id="1_fqok7"]
+[ext_resource type="Texture2D" uid="uid://decjpmjcqqyq" path="res://app/assets/2D/icons/t_ico_PlusGreen.png" id="2_0rb1h"]
+
+[node name="TabBar" type="VBoxContainer" node_paths=PackedStringArray("N_tree")]
+offset_right = 306.0
+offset_bottom = 401.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_fqok7")
+N_tree = NodePath("Tree")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+text = "New"
+icon = ExtResource("2_0rb1h")
+
+[node name="Tree" type="ItemList" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="item_activated" from="Tree" to="." method="_on_tree_item_activated"]

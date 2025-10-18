@@ -1,6 +1,6 @@
-return {
-	name="Exit",
-	color={1,0.5,0.5,1},
+ImpDB_Nodes['node_End']={
+	name="🛑Exit",
+	color={0.7,0.4,0.4,1},
 	
 	inputs={ {} },
 	outputs={ },

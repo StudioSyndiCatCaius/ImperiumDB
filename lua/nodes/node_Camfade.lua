@@ -1,7 +1,9 @@
-return {
-	name="Camera - Fade",
+
+ImpDB_Nodes['node_Camfade']={
+	name="🎥Fade",
 	color={0.2,0.2,0.2,1},
 	size={x=100,y=60},
+	quick_next="node_delay",
 	
 	inputs={ {} },
 	outputs={ {}, },

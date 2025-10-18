@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://3qucqmwuvgah"]
+[gd_scene load_steps=5 format=3 uid="uid://3qucqmwuvgah"]
 
 [ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_8estc"]
+[ext_resource type="StyleBox" uid="uid://c6gds5rtj3hm5" path="res://app/assets/Style/style_panel_param.tres" id="1_gmriv"]
 [ext_resource type="PackedScene" uid="uid://dd6yosq7h7cpa" path="res://app/scenes/ui/ui_ScriptBlock.tscn" id="2_o1ewk"]
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_gmriv"]
@@ -15,23 +16,28 @@ keyword_colors = {
 "return": Color(1, 0.133333, 0.329412, 1)
 }
 
-[node name="PEditInt" type="HBoxContainer" node_paths=PackedStringArray("N__label", "N_textEdit")]
+[node name="PEditInt" type="PanelContainer" node_paths=PackedStringArray("N__label", "N_textEdit")]
 custom_minimum_size = Vector2(0, 75)
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 100.0
 grow_horizontal = 2
+theme_override_styles/panel = ExtResource("1_gmriv")
 script = ExtResource("1_8estc")
-N__label = NodePath("Label")
-N_textEdit = NodePath("edit_code")
+N__label = NodePath("HBoxContainer/Label")
+N_textEdit = NodePath("HBoxContainer/edit_code")
 
-[node name="Label" type="Label" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
 text = "lbl"
 
-[node name="edit_code" parent="." instance=ExtResource("2_o1ewk")]
+[node name="edit_code" parent="HBoxContainer" instance=ExtResource("2_o1ewk")]
 layout_mode = 2
 size_flags_horizontal = 3
 syntax_highlighter = SubResource("CodeHighlighter_gmriv")

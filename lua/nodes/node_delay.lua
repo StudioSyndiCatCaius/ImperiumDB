@@ -1,5 +1,5 @@
-return {
-	name="Delay",
+ImpDB_Nodes['node_delay']={
+	name="⌛Delay",
 	color={0,1,0,1},
 	size={x=100,y=60},
 	

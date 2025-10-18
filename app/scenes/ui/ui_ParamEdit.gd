@@ -1,12 +1,17 @@
 extends Control
 class_name ui_ParamEdit
 
-@export var N_container: Control
+@export var key=""
+@export var N_container: GridContainer
+@export var columns=1
 
 var ui_types={}
 @onready var REF_ParanField=preload("res://app/scenes/ui/ui_ParamField.tscn")
 
+
 func _ready():
+	N_container.columns=columns
+	G_Node.Children_ClearAll(N_container)
 	ui_types['text']=preload("res://app/scenes/ui/pEdit/pEdit_text.tscn")
 	ui_types['string']=preload("res://app/scenes/ui/pEdit/pEdit_string.tscn")
 	ui_types['number']=preload("res://app/scenes/ui/pEdit/pEdit_int.tscn")
@@ -42,10 +47,12 @@ func OBJECT_Set(_obj: Dictionary, _template: LuaTable):
 		if ui_types.has(_type):
 			var newp: ui_pEdit=ui_types[_type].instantiate()
 			newp.paramName=i
+			newp.paramCategory=key
 			newp.paramConfig=plist[i]
 			newp.Setup(_obj,_template)
 			newp.OnParamEdit.connect(_op)
-			$ScrollContainer/VBoxContainer.add_child(newp)
+			newp.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+			N_container.add_child(newp)
 
 func _op(param: String, value):
 	print('migo')

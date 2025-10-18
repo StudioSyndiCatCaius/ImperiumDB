@@ -1,5 +1,5 @@
-return {
-	name="HUB",
+ImpDB_Nodes['node_HUB']={
+	name="🔗HUB",
 	color={0.1,0.1,0.1,1},
 	size={x=75,y=75},
 

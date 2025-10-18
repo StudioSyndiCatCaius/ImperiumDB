@@ -1,6 +1,6 @@
 
-return {
-	name="Game System",
+ImpDB_Nodes['node_GameSystem']={
+	name="🎮Game System",
 	color={1,0,1,1},
 	quick_next="node_DialogueLine",
 	

@@ -1,5 +1,5 @@
-return {
-	name="Lua - If",
+ImpDB_Nodes['node_luaIf']={
+	name="🔵Lua If",
 	color={1,0,0,1},
 	size={x=175,y=100},
 

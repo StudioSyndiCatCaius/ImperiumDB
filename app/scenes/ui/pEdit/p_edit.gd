@@ -1,9 +1,10 @@
-extends Control
+extends PanelContainer
 class_name ui_pEdit
 
 var paramConfig={}
 var paramData={}
 var paramName=""
+var paramCategory=""
 
 @export var N__label: Label
 @export var N_textEdit: TextEdit
@@ -17,7 +18,9 @@ func Setup(obj: Dictionary, template: LuaTable):
 	paramData=obj
 	
 	if N__label: N__label.text=paramName
-	var _val=paramData['params'].get(paramName,"")
+	if !paramData.has(paramCategory):
+		paramData[paramCategory]={}
+	var _val=paramData[paramCategory].get(paramName,"")
 	
 	# TEXT
 	if N_textEdit:
@@ -30,8 +33,17 @@ func Setup(obj: Dictionary, template: LuaTable):
 		var _valIndex=-1
 		var _tbl=paramConfig.get('table')
 		var list=[]
+		
 		if _tbl:
-			list=G_Project.TABLE_GetItemList(_tbl)
+			var _glob=G_Lua.DATABASE_Get()
+			var ltbl=_glob.get(_tbl,{})
+			if ltbl is LuaTable:
+				var _dtbl=ltbl.to_dictionary()
+				var _keys=_dtbl.keys()
+				list=_keys
+				list.sort()
+			else:
+				list=G_Project.TABLE_GetItemList(_tbl)
 		#from csv
 		if _tbl:
 			for i in list:
@@ -67,14 +79,14 @@ func Setup(obj: Dictionary, template: LuaTable):
 	
 	# NUMBER
 	if N_int:
-		var _p=paramData['params']
+		var _p=paramData[paramCategory]
 		N_int.step=paramConfig.get('step',0.1)
 		
 		N_int.value=_p.get(paramName,0) as float
 		N_int.value_changed.connect(_on_spin_box_value_changed)
 	
 	if N_check:
-		var _v=paramData['params'].get(paramName,false)
+		var _v=paramData[paramCategory].get(paramName,false)
 		if _v is bool:
 			N_check.button_pressed=_v
 		else:
@@ -82,7 +94,7 @@ func Setup(obj: Dictionary, template: LuaTable):
 		#N_check.toggled.connect(_on_check_button_toggled)
 
 func SET(val):
-	paramData["params"][paramName]=val
+	paramData[paramCategory][paramName]=val
 	OnParamEdit.emit(paramName,val)
 
 func _on_textChange():

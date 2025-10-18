@@ -73,14 +73,18 @@ func Refresh():
 	if TypeData!=null:
 		resizable=TypeData.get("exapndable",false)
 		var _newTit=TypeData.get("name","*")
-		title=_newTit+"("+DATA.get('key',"")+")"
+		var _key=DATA.get('key',"")
+		if _key=="":
+			title=_newTit
+		else:
+			title=_newTit+" ("+_key+")"
 		var _inSize:Vector2
 		var _scale=TypeData.get('size',{x=110,y=60})
 		
 		name=DATA.label
 		_inSize.x=_scale.x
 		_inSize.y=_scale.y
-		if resizable and !G_Conv.Dic_to_Vec2(DATA.size)==Vector2.ZERO:
+		if resizable and !G_Conv.Dic_to_Vec2(DATA.get('size',{}))==Vector2.ZERO:
 			_inSize=G_Conv.Dic_to_Vec2(DATA.size)
 		size=_inSize
 
@@ -88,7 +92,9 @@ func Refresh():
 
 		#if _LinkKey:
 		#	title+="("+node_data.key+")"
-		var _col=TypeData.get("color",[1,1,1,1]).to_array()
+		var _col=TypeData.get("color",[1,1,1,1])
+		if _col is LuaTable:
+			_col=_col.to_array()
 		self_modulate=Color(_col[0],_col[1],_col[2],_col[3])
 	else:
 		Refresh_AsInvalid()

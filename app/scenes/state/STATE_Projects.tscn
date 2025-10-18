@@ -18,10 +18,11 @@ border_color = Color(0.8, 0.8, 0.8, 0.392157)
 [sub_resource type="LabelSettings" id="LabelSettings_h33rn"]
 font_size = 50
 
-[node name="StateProjects" type="Node" node_paths=PackedStringArray("N_ProjList", "N_Dialog_LoadProj", "N_Confirm_RemoveProj")]
+[node name="StateProjects" type="Node" node_paths=PackedStringArray("N_ProjList", "N_Dialog_LoadProj", "N_Dialog_NewProj", "N_Confirm_RemoveProj")]
 script = ExtResource("1_h33rn")
 N_ProjList = NodePath("TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer")
 N_Dialog_LoadProj = NodePath("Dialog_Load")
+N_Dialog_NewProj = NodePath("Dialog_New")
 N_Confirm_RemoveProj = NodePath("Dialog_ConfirmDelete")
 
 [node name="TabContainer" type="TabContainer" parent="."]
@@ -133,11 +134,20 @@ access = 2
 filters = PackedStringArray("*.IDBproj")
 use_native_dialog = true
 
+[node name="Dialog_New" type="FileDialog" parent="."]
+initial_position = 1
+ok_button_text = "Create"
+access = 2
+filters = PackedStringArray("*.IDBproj")
+use_native_dialog = true
+
 [node name="Dialog_ConfirmDelete" type="ConfirmationDialog" parent="."]
 title = "Remove this project?"
 initial_position = 2
 
+[connection signal="pressed" from="TabContainer/Projects/VBoxContainer2/HBoxContainer/btn_new" to="." method="_on_btn_new_pressed"]
 [connection signal="pressed" from="TabContainer/Projects/VBoxContainer2/HBoxContainer/btn_open" to="." method="_on_btn_open_pressed"]
 [connection signal="pressed" from="TabContainer/Settings/VBoxContainer2/btn_openSave" to="." method="_on_btn_open_save_pressed"]
 [connection signal="file_selected" from="Dialog_Load" to="." method="_on_file_dialog_load_file_selected"]
+[connection signal="file_selected" from="Dialog_New" to="." method="_on_dialog_new_file_selected"]
 [connection signal="confirmed" from="Dialog_ConfirmDelete" to="." method="_on_dialog_confirm_delete_confirmed"]

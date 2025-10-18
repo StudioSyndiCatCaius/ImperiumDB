@@ -33,12 +33,17 @@ func focus():
 # Keyboard Inputs
 # =============================================================================
 func _on_i_save_input_begin():
-	var graph: ui_GraphEdit=GRAPH_GetCurrent()
-	if graph:
-		if FileAccess.file_exists(graph.file_path):
-			SAVE_Confirm(graph.file_path,graph)
-		else:
-			SAVE_Request(graph)
+	match(N_TabsMain.current_tab):
+		0:
+			var graph: ui_GraphEdit=GRAPH_GetCurrent()
+			if graph:
+				if FileAccess.file_exists(graph.file_path):
+					SAVE_Confirm(graph.file_path,graph)
+				else:
+					SAVE_Request(graph)
+	var _tab: Control=N_TabsMain.get_current_tab_control()
+	if _tab and _tab.has_method("__SAVE"):
+		_tab.__SAVE()
 
 func _on_i_new_input_begin():
 	var _new = G_Lua.GRAPH_NewDefault()

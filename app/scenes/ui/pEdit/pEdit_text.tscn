@@ -1,12 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://7lxowkufr24u"]
+[gd_scene load_steps=4 format=3 uid="uid://7lxowkufr24u"]
 
+[ext_resource type="StyleBox" uid="uid://c6gds5rtj3hm5" path="res://app/assets/Style/style_panel_param.tres" id="1_2dlhi"]
 [ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_jotfk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jotfk"]
-content_margin_left = 2.0
-content_margin_top = 2.0
-content_margin_right = 2.0
-content_margin_bottom = 2.0
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
 bg_color = Color(0.23113, 0.2291, 0.29, 1)
 border_width_left = 2
 border_width_top = 2
@@ -19,28 +20,36 @@ corner_radius_top_right = 2
 corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 
-[node name="PEditInt" type="HBoxContainer" node_paths=PackedStringArray("N__label", "N_textEdit")]
-custom_minimum_size = Vector2(0, 200)
+[node name="PEditInt" type="PanelContainer" node_paths=PackedStringArray("N__label", "N_textEdit")]
+custom_minimum_size = Vector2(0, 100)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 23.0
+offset_bottom = 100.0
 grow_horizontal = 2
+theme_override_styles/panel = ExtResource("1_2dlhi")
 script = ExtResource("1_jotfk")
-N__label = NodePath("Label")
-N_textEdit = NodePath("edit_text")
+N__label = NodePath("HBoxContainer/Label")
+N_textEdit = NodePath("HBoxContainer/edit_text")
 
-[node name="Label" type="Label" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
 text = "lbl"
 
-[node name="edit_text" type="TextEdit" parent="."]
+[node name="edit_text" type="TextEdit" parent="HBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.6156863)
 theme_override_colors/background_color = Color(0.129412, 0.14902, 0.176471, 0)
+theme_override_constants/outline_size = 3
 theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_jotfk")
+text = "text goes here"
 wrap_mode = 1
 metadata/size = 80.0

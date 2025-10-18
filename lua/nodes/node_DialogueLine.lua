@@ -1,5 +1,5 @@
-return {
-	name="Line",
+ImpDB_Nodes['node_DialogueLine']={
+	name="💬Line",
 	
 	color={0.2,0.8,1,1},
 	size={x=200,y=180},

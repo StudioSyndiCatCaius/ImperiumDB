@@ -3,6 +3,7 @@ extends Node
 
 var l: LuaState
 
+var D_templates={}
 var D_nodes={}
 var D_node_meta={}
 
@@ -46,6 +47,9 @@ var NODE_Default={
 	]
 }
 
+func DATABASE_Get()-> Dictionary:
+	return G_Lua.l.globals.to_dictionary()['_D'].to_dictionary()
+
 func SET(key,value):
 	l.globals.set(key,value)
 
@@ -69,16 +73,36 @@ func _ready():
 	l.open_libraries()
 	
 	l.do_string("""
-		D_nodes={}
-		D_classes={}
+		ImpDB_Nodes={}
+		ImpDB_Templates={}
+		_D={
+			garba={},
+		}
 	""")
 	
 	print("================================================")
 	NODES_LoadAllInPath("res://lua/nodes/")
-		
 	print("--------------")
 	print(str(D_nodes))
 	print("================================================")
+
+# ====================================================================
+# TEMPLATES
+# ====================================================================
+
+func TEMPLATES_ReloadAll():
+	D_templates={}
+	TEMPLATES_LoadAllInPath(G_Project.active_project.GetProjectDir()+"/FlowTemplates/")
+
+func TEMPLATES_LoadAllInPath(path: String):
+	for i in G_File.LIST_AllInDir(path):
+		var _new=l.do_file(i)
+	
+	D_templates=l.globals.ImpDB_Templates.to_dictionary()
+
+# ====================================================================
+# Nodes
+# ====================================================================
 
 func NODES_LoadAllInPath(path: String,group:int=0):
 	var _p=G_File.PathCorrect(path)
@@ -86,11 +110,14 @@ func NODES_LoadAllInPath(path: String,group:int=0):
 		if i.get_extension()=="lua":
 			var _key=i.get_file().get_basename()
 			var _val=l.do_file(i)
-			D_nodes[_key]=_val
-			D_node_meta[_key]={
-				group=group,
-			}
-			print("Loaded: "+_val.name)
+			print('did file restult: '+str(i))
+
+	D_nodes=l.globals.ImpDB_Nodes.to_dictionary()
+
+func NODES_GetKeysAlphabetical() -> Array:
+	var _out=D_nodes.keys()
+	_out.sort()
+	return _out
 
 func NODES_ReloadInternal():
 	D_nodes={}

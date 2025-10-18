@@ -1,7 +1,7 @@
 
 
 return {
-	name="Play Sound",
+	name="🔊 Sound",
 	color={1,0.5,0.5,1},
 	EmptyDelete=true,
 	quick_next="node_DialogueLine",

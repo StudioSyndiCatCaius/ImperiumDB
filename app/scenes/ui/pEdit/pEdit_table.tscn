@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://p83c47nqjpd2"]
+[gd_scene load_steps=5 format=3 uid="uid://p83c47nqjpd2"]
 
+[ext_resource type="StyleBox" uid="uid://c6gds5rtj3hm5" path="res://app/assets/Style/style_panel_param.tres" id="1_7ylv5"]
 [ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_uovu6"]
 [ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="2_yav1r"]
 
@@ -15,7 +16,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="PEditInt" type="HBoxContainer" node_paths=PackedStringArray("N__label", "N_List")]
+[node name="PEditInt" type="PanelContainer" node_paths=PackedStringArray("N__label", "N_List")]
 custom_minimum_size = Vector2(0, 40)
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,25 +24,37 @@ anchor_bottom = 1.0
 offset_bottom = -680.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_7ylv5")
 script = ExtResource("1_uovu6")
-N__label = NodePath("Label")
-N_List = NodePath("edit_list")
+N__label = NodePath("HBoxContainer/Label")
+N_List = NodePath("HBoxContainer/edit_list")
 
-[node name="Label" type="Label" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.6
 text = "lbl"
 
-[node name="edit_list" type="OptionButton" parent="."]
+[node name="edit_list" type="OptionButton" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.36862746)
+theme_override_constants/outline_size = 5
 theme_override_constants/icon_max_width = 60
+theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_uovu6")
+selected = 0
+item_count = 1
+popup/item_0/text = "num"
+popup/item_0/id = 0
 
-[node name="btn_clear" type="Button" parent="."]
+[node name="btn_clear" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 icon = ExtResource("2_yav1r")
 
-[connection signal="item_selected" from="edit_list" to="." method="_on_edit_list_item_selected"]
-[connection signal="pressed" from="btn_clear" to="." method="_on_btn_clear_pressed"]
+[connection signal="item_selected" from="HBoxContainer/edit_list" to="." method="_on_edit_list_item_selected"]
+[connection signal="pressed" from="HBoxContainer/btn_clear" to="." method="_on_btn_clear_pressed"]

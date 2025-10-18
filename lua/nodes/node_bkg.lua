@@ -10,8 +10,8 @@ end
 
 
 
-return {
-	name="Change BKG",
+ImpDB_Nodes['node_bkg']={
+	name="🖼️Change BKG",
 	color={1,1,1,1},
 	EmptyDelete=true,
 	quick_next="node_DialogueLine",

@@ -5,6 +5,12 @@
 		},
 		{
 			"path": "../DungeonsOfLiova/UE/Override"
+		},
+		{
+			"path": "../../PROJECTS/Work/Noiramore/JudithTestClassroom/Content/_ImpDB"
+		},
+		{
+			"path": "../../PROJECTS/ImperiumDB/BalladOfTheCrystals"
 		}
 	],
 	"settings": {}

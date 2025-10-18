@@ -1,5 +1,5 @@
-return {
-	name="Choice",
+ImpDB_Nodes['node_Choice']={
+	name="👁️‍🗨️Choice",
 	color={0,1,0,1},
 	quick_next="node_DialogueLine",
 

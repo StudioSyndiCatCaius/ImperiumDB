@@ -1,21 +1,57 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqb6rudlshexc"]
+[gd_scene load_steps=9 format=3 uid="uid://cqb6rudlshexc"]
 
 [ext_resource type="Script" uid="uid://ditl87xe3cjhe" path="res://app/scenes/ui/ui_tab_entities.gd" id="1_l3afx"]
 [ext_resource type="PackedScene" uid="uid://da8qer3yy0t2p" path="res://app/scenes/ui/ui_FileTree.tscn" id="1_mgc3w"]
+[ext_resource type="PackedScene" uid="uid://ube5h44ginst" path="res://app/scenes/ui/ui_EntityList.tscn" id="2_xu70a"]
+[ext_resource type="PackedScene" uid="uid://dlr7wei0mcpmo" path="res://app/scenes/ui/ui_ParamEdit.tscn" id="4_outf0"]
 
-[node name="entities" type="HBoxContainer" node_paths=PackedStringArray("N_FileTree", "N_TextDump")]
+[sub_resource type="Theme" id="Theme_xu70a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_outf0"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tgvay"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tgvay"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.14133754, 0.15155104, 0.20456627, 0.6745098)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="entities" type="HBoxContainer" node_paths=PackedStringArray("N_Current_label", "N_Tabs", "N_ParamEdit", "N_TextDump")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l3afx")
-N_FileTree = NodePath("PanelContainer/VBoxContainer2/Tree")
+N_Current_label = NodePath("PanelContainer2/VBoxContainer/lbl_curNam")
+N_Tabs = NodePath("PanelContainer/VBoxContainer2/TabContainer")
+N_ParamEdit = NodePath("PanelContainer2/VBoxContainer/PanelContainer/UiParamEdit")
 N_TextDump = NodePath("PanelContainer2/RichTextLabel")
 metadata/_tab_index = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer"]
@@ -25,9 +61,18 @@ layout_mode = 2
 layout_mode = 2
 text = "new_res"
 
-[node name="Tree" type="Tree" parent="PanelContainer/VBoxContainer2"]
+[node name="TabContainer" type="TabContainer" parent="PanelContainer/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
+theme = SubResource("Theme_xu70a")
+theme_override_font_sizes/font_size = 10
+theme_override_styles/panel = SubResource("StyleBoxFlat_outf0")
+theme_override_styles/tabbar_background = SubResource("StyleBoxEmpty_tgvay")
+current_tab = 0
+
+[node name="TabBar" parent="PanelContainer/VBoxContainer2/TabContainer" instance=ExtResource("2_xu70a")]
+layout_mode = 2
+metadata/_tab_index = 0
 
 [node name="UiFileTree" parent="PanelContainer/VBoxContainer2" instance=ExtResource("1_mgc3w")]
 visible = false
@@ -42,3 +87,27 @@ size_flags_horizontal = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer2"]
 layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer2"]
+layout_mode = 2
+
+[node name="lbl_curNam" type="Label" parent="PanelContainer2/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_tgvay")
+
+[node name="UiParamEdit" parent="PanelContainer2/VBoxContainer/PanelContainer" instance=ExtResource("4_outf0")]
+layout_mode = 2
+size_flags_vertical = 3
+key = "params"
+columns = 2
+
+[connection signal="tab_changed" from="PanelContainer/VBoxContainer2/TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="OnSelect" from="PanelContainer/VBoxContainer2/TabContainer/TabBar" to="." method="OnEntitySelect"]

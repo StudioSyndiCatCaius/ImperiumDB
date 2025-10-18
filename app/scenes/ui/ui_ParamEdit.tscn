@@ -1,6 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://dlr7wei0mcpmo"]
+[gd_scene load_steps=9 format=3 uid="uid://dlr7wei0mcpmo"]
 
 [ext_resource type="Script" uid="uid://bc71rp7in0tys" path="res://app/scenes/ui/ui_ParamEdit.gd" id="1_68p0x"]
+[ext_resource type="PackedScene" uid="uid://djbjxip52i52s" path="res://app/scenes/ui/pEdit/pEdit_bool.tscn" id="2_bpp7e"]
+[ext_resource type="PackedScene" uid="uid://3qucqmwuvgah" path="res://app/scenes/ui/pEdit/pEdit_code.tscn" id="3_qfkwu"]
+[ext_resource type="PackedScene" uid="uid://b045fq123icq6" path="res://app/scenes/ui/pEdit/pEdit_int.tscn" id="4_4chng"]
+[ext_resource type="PackedScene" uid="uid://cqt3y6ahvm8cv" path="res://app/scenes/ui/pEdit/pEdit_string.tscn" id="5_u2h40"]
+[ext_resource type="PackedScene" uid="uid://p83c47nqjpd2" path="res://app/scenes/ui/pEdit/pEdit_table.tscn" id="6_76elm"]
+[ext_resource type="PackedScene" uid="uid://7lxowkufr24u" path="res://app/scenes/ui/pEdit/pEdit_text.tscn" id="7_pllt6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpp7e"]
+content_margin_left = 10.0
+content_margin_top = 0.0
+content_margin_right = 10.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.7058824)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [node name="UiParamEdit" type="PanelContainer" node_paths=PackedStringArray("N_container")]
 anchors_preset = 15
@@ -8,13 +26,44 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bpp7e")
 script = ExtResource("1_68p0x")
-N_container = NodePath("ScrollContainer/VBoxContainer")
+N_container = NodePath("ScrollContainer/GridContainer")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PEditInt" parent="ScrollContainer/GridContainer" instance=ExtResource("2_bpp7e")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PEditInt2" parent="ScrollContainer/GridContainer" instance=ExtResource("3_qfkwu")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PEditInt3" parent="ScrollContainer/GridContainer" instance=ExtResource("4_4chng")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PEditInt4" parent="ScrollContainer/GridContainer" instance=ExtResource("5_u2h40")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PEditInt5" parent="ScrollContainer/GridContainer" instance=ExtResource("6_76elm")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PEditInt6" parent="ScrollContainer/GridContainer" instance=ExtResource("7_pllt6")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

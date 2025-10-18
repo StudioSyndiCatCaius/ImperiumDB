@@ -19,11 +19,17 @@ func _exit_tree():
 	if active_project!=null:
 		active_project.__save()
 
+func GetCONFIG() -> Dictionary:
+	return active_project.DATA
+
+func PROJECT_Register(path: String):
+	dic_projects['projects'].push_back(path)
+
 func PROJECT_Load(path: String):
 	print("Loading Project: "+path)
 	if !dic_projects['projects'].has(path):
 		print("  -- path not in project list. Adding now.")
-		dic_projects['projects'].push_back(path)
+		PROJECT_Register(path)
 	
 	#create new project
 	var new_proj =res_project.new()
@@ -34,13 +40,24 @@ func PROJECT_Load(path: String):
 	new_proj.__load(new_proj.DATA)
 	list_projects.push_front(new_proj)
 
-func GetCONFIG() -> Dictionary:
-	return G_Project.active_project.DATA
-
 func PROJECT_Remove(project: res_project):
 	dic_projects['projects'].erase(project.path)
 	list_projects.erase(project)
 
+func PROJECT_Create(path: String):
+	var _nam: String=path.get_file().get_basename()
+	var _path=path.replace(_nam+".IDBproj",_nam+"/"+_nam+".IDBproj")
+	var _dat={
+		name=_nam,
+		external_node_paths=[
+			"{project}/FlowNodes/",
+		],
+		tags=[],
+		tree_expansion={}
+	}
+	G_File.SAVE_Json(_dat,_path)
+	PROJECT_Register(_path)
+	PROJECT_Load(_path)
 
 func PATH_GetRoot() -> String:
 	var str=""
@@ -49,10 +66,16 @@ func PATH_GetRoot() -> String:
 	return str
 
 
-func LOAD(project: res_project):
+func PROJECT_Open(project: res_project):
 	active_project=project
+	
+	for i in G_File.LIST_AllInDir(active_project.GetProjectDir()+
+	"/lua/autorun/"):
+		G_Lua.l.do_file(i)
+		print(" --- project did lua file: "+i)
+	
 	G_Lua.NODES_ReloadAll()
-
+	G_Lua.TEMPLATES_ReloadAll()
 func TABLE_GetItem(table: String, entry: String) ->Dictionary:
 	return active_project.DataTables.get(table,{}).get(entry,{})
 

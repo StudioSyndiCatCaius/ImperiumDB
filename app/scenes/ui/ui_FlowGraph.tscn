@@ -71,6 +71,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_vertical = 3
+key = "params"
 
 [node name="Label" type="Label" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer"]
 layout_mode = 2

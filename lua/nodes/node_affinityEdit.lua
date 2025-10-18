@@ -1,6 +1,6 @@
-return {
-	name="Affinity - Edit",
-	color={0,1,0.1,1},
+ImpDB_Nodes['node_affinityEdit']={
+	name="❤️Affinity Edit",
+	color={0,1,0.7,1},
 	size={x=175,y=100},
 
 	inputs={ {} },

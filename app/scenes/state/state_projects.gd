@@ -3,6 +3,7 @@ extends Node
 @export_category("Links")
 @export var N_ProjList: Node
 @export var N_Dialog_LoadProj: FileDialog
+@export var N_Dialog_NewProj: FileDialog
 @export var N_Confirm_RemoveProj: ConfirmationDialog
 
 @onready var ref_UiProj= preload("res://app/scenes/ui/ui_Project.tscn")
@@ -28,10 +29,9 @@ func LIST_Rebuild():
 		N_ProjList.add_child(new_proj)
 
 func PROJECT_Action(action: int, project: res_project):
-	
 	# ACTION -- LOAD PROJECT
 	if action==0:
-		G_Project.LOAD(project)
+		G_Project.PROJECT_Open(project)
 		get_tree().change_scene_to_file("res://app/scenes/state/STATE_Main.tscn")
 	
 	# ACTION -- DELETE PROJECT
@@ -59,3 +59,16 @@ func _on_dialog_confirm_delete_confirmed():
 
 func _on_btn_open_save_pressed():
 	OS.shell_open(OS.get_user_data_dir())
+
+
+# ===============================================================
+# New Project
+# ===============================================================
+
+func _on_btn_new_pressed():
+	N_Dialog_NewProj.popup()
+
+
+func _on_dialog_new_file_selected(path):
+	G_Project.PROJECT_Create(path)
+	LIST_Refresh()

@@ -67,7 +67,9 @@ func SetExpanded(_expanded: bool):
 	G_Node.Children_ClearAll(N_SubitemList)
 	if is_expanded:
 		print('try load: '+Path_Get())
-		for i in G_File.LIST_AllInDir(Path_Get()):
+		var _files=G_File.LIST_AllInDir(Path_Get())
+		_files=G_File.FILES_SortByExtension(_files)
+		for i in _files:
 			print('adding item: '+i)
 			var new_item: ui_FileTree = ref_self.instantiate()
 			new_item.path=i

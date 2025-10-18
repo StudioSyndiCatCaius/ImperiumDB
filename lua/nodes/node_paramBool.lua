@@ -1,7 +1,7 @@
-return {
-	name="Param - If",
+ImpDB_Nodes['node_paramBool']={
+	name="🏴󠁧󠁢󠁥󠁮󠁧󠁿Param - If",
 	color={1,0,0,1},
-	size={x=175,y=100},
+	size={x=100,y=100},
 
 	inputs={ {} },
 	outputs={ {},{}, },
@@ -11,7 +11,7 @@ return {
 	},
 
 	GetDescription=function(data)
-		return data['params']['param']
+		return data['params']['param']..[[ >= 1 ]]
 	end,
 
 }
