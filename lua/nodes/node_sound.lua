@@ -1,6 +1,6 @@
 
 
-return {
+ImpDB_Nodes['node_sound']={
 	name="🔊 Sound",
 	color={1,0.5,0.5,1},
 	EmptyDelete=true,

@@ -126,13 +126,14 @@ func _on_ui_file_tree_file_double_click(path: String):
 			new_graph=GRAPH_FromFile(path)
 			GRAPH_Open(new_graph,path)
 
-
 func _on_btn_open_root_pressed():
 	OS.shell_open(G_Project.active_project.GetProjectDir())
-
 
 func _on_btn_new_res_pressed():
 	var _newEnt = res_Entity.new()
 	var _savPath=G_Project.PATH_GetRoot()+"/entities/ent.tres"
 	print("Saving: "+str(_newEnt)+" to "+_savPath)
 	G_Resource.Save(_newEnt,_savPath)
+
+func _on_btn_run_scripts_pressed():
+	G_Project.PROJECT_RerunScripts()

@@ -104,6 +104,11 @@ func TEMPLATES_LoadAllInPath(path: String):
 # Nodes
 # ====================================================================
 
+func NODES_RegenLuaTable():
+	var dic=l.globals.to_dictionary()
+	var dic2=dic.ImpDB_Nodes.to_dictionary()
+	D_nodes=dic2
+
 func NODES_LoadAllInPath(path: String,group:int=0):
 	var _p=G_File.PathCorrect(path)
 	for i in G_File.LIST_AllInDir(_p,true):
@@ -111,8 +116,8 @@ func NODES_LoadAllInPath(path: String,group:int=0):
 			var _key=i.get_file().get_basename()
 			var _val=l.do_file(i)
 			print('did file restult: '+str(i))
-
-	D_nodes=l.globals.ImpDB_Nodes.to_dictionary()
+			
+	NODES_RegenLuaTable()
 
 func NODES_GetKeysAlphabetical() -> Array:
 	var _out=D_nodes.keys()

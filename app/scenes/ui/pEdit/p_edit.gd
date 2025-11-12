@@ -49,7 +49,7 @@ func Setup(obj: Dictionary, template: LuaTable):
 			for i in list:
 				var _idx=list.find(i)
 				var _imgPath=G_Project.PATH_GetRoot()+"/image/ico_"+_tbl+"_"+i+".png"
-				var _ico=G_File.LOAD_Texture(_imgPath)
+				var _ico=G_Load.Texture(_imgPath)
 				var _tblData=G_Project.TABLE_GetItem(_tbl,i)
 				
 				N_List.add_item(i)
@@ -60,7 +60,10 @@ func Setup(obj: Dictionary, template: LuaTable):
 					_valIndex=list.find(i)
 		#from files
 		elif paramConfig.has('filePath'):
-			for i in G_File.LIST_AllInDir(paramConfig.get('filePath')):
+			var _filsPth=paramConfig.get('filePath')
+			_filsPth=G_File.PathCorrect(_filsPth)
+			var _files=G_File.LIST_AllInDir(_filsPth)
+			for i in _files:
 				if i.get_extension()==paramConfig.get('fileType'):
 					var key=i.get_file().get_basename()
 					var index=N_List.item_count
@@ -72,7 +75,7 @@ func Setup(obj: Dictionary, template: LuaTable):
 					if paramConfig.get("GetIcon")!=null:
 						var ico_path=paramConfig.GetIcon.invoke(key)
 						if ico_path is String:
-							var newtxt: Texture2D=G_File.LOAD_Texture(ico_path)
+							var newtxt: Texture2D=G_Load.Texture(ico_path)
 							N_List.set_item_icon(index,newtxt)
 		
 		N_List.select(_valIndex)
@@ -81,8 +84,8 @@ func Setup(obj: Dictionary, template: LuaTable):
 	if N_int:
 		var _p=paramData[paramCategory]
 		N_int.step=paramConfig.get('step',0.1)
-		
-		N_int.value=_p.get(paramName,0) as float
+		var _def=paramConfig.get('default',0.0)
+		N_int.value=_p.get(paramName,_def) as float
 		N_int.value_changed.connect(_on_spin_box_value_changed)
 	
 	if N_check:

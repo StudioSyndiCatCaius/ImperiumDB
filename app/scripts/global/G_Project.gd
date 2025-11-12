@@ -1,5 +1,20 @@
 extends Node
 
+
+var project_template={
+	"flow/test.ImpFlow"="",
+	"lua/autorun/data.lua"="
+	_D={
+		characters={
+			Imp={name='Mr Imp'}
+		},
+		items={},
+	}
+	",
+	"image/logo.png"=preload("res://icon.png"),
+}
+
+
 var list_projects: Array[res_project]
 var active_project: res_project
 var dic_projects={}
@@ -22,8 +37,22 @@ func _exit_tree():
 func GetCONFIG() -> Dictionary:
 	return active_project.DATA
 
+func PATH_GetRoot() -> String:
+	var str=""
+	if active_project:
+		str=active_project.path.get_base_dir()
+	return str
+
+# ====================================================================
+# PROJECT
+# ====================================================================
+
 func PROJECT_Register(path: String):
+	var _a: Array=dic_projects['projects']
+	if _a.has(path):
+		dic_projects['projects'].erase(path)
 	dic_projects['projects'].push_back(path)
+
 
 func PROJECT_Load(path: String):
 	print("Loading Project: "+path)
@@ -59,29 +88,36 @@ func PROJECT_Create(path: String):
 	PROJECT_Register(_path)
 	PROJECT_Load(_path)
 
-func PATH_GetRoot() -> String:
-	var str=""
-	if active_project:
-		str=active_project.path.get_base_dir()
-	return str
-
-
 func PROJECT_Open(project: res_project):
 	active_project=project
 	
-	for i in G_File.LIST_AllInDir(active_project.GetProjectDir()+
-	"/lua/autorun/"):
+	PROJECT_RerunScripts()
+	
+	# Load CUSTOM/OVERRIDE lua
+	var _inDir: String=active_project.GetProjectDir()+"/lua/autorun/"
+	for i in G_File.LIST_AllInDir(_inDir,true,true):
 		G_Lua.l.do_file(i)
 		print(" --- project did lua file: "+i)
-	
+	print("here da ting:" +str(G_Lua.l.globals.ImpDB_Nodes.to_dictionary()))
+	G_Lua.NODES_RegenLuaTable()
+
+func PROJECT_RerunScripts():
 	G_Lua.NODES_ReloadAll()
 	G_Lua.TEMPLATES_ReloadAll()
+
+# ====================================================================
+# TABLES
+# ====================================================================
+
 func TABLE_GetItem(table: String, entry: String) ->Dictionary:
 	return active_project.DataTables.get(table,{}).get(entry,{})
 
 func TABLE_GetItemList(table: String) -> PackedStringArray:
 	return active_project.DataTables.get(table,{}).keys()
 
+# ====================================================================
+# USER
+# ====================================================================
 
 func USER_init() -> Dictionary:
 	var _new={
@@ -91,3 +127,14 @@ func USER_init() -> Dictionary:
 	}
 	users.push_back(_new)
 	return _new
+
+# ====================================================================
+# SOUND
+# ====================================================================
+
+func SOUND_PlayExternal(path: String):
+	var _soundPath=G_File.PathCorrect(path)
+	var _SP: AudioStreamPlayer=get_tree().current_scene.get_node("%soundPlayer")
+	var _sound=G_Load.SOUND(_soundPath)
+	_SP.stream=_sound
+	_SP.play()

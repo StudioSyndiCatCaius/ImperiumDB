@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://yo3kw5xm1r1y"]
+[gd_scene load_steps=7 format=3 uid="uid://yo3kw5xm1r1y"]
 
 [ext_resource type="Script" uid="uid://ninltbqxj6cg" path="res://app/scenes/ui/ui_FlowGraph.gd" id="1_pb1ws"]
 [ext_resource type="PackedScene" uid="uid://dlr7wei0mcpmo" path="res://app/scenes/ui/ui_ParamEdit.tscn" id="2_mhv03"]
 [ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="3_m5ua5"]
+[ext_resource type="Texture2D" uid="uid://v1ufeb8xrecf" path="res://app/assets/2D/icons/t_ico_sound.png" id="3_vx2s2"]
 [ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="9_x45cu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_oytv5"]
@@ -55,6 +56,8 @@ size_flags_horizontal = 3
 theme_override_colors/grid_major = Color(0, 0, 0, 0.615686)
 theme_override_colors/grid_minor = Color(1, 1, 1, 0.0509804)
 right_disconnects = true
+connection_lines_curvature = 0.0
+connection_lines_thickness = 3.0
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer"]
 layout_mode = 2
@@ -66,6 +69,11 @@ metadata/_tab_index = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes"]
 layout_mode = 2
+
+[node name="btn_playSound" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+icon = ExtResource("3_vx2s2")
 
 [node name="params" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer" instance=ExtResource("2_mhv03")]
 custom_minimum_size = Vector2(200, 0)
@@ -85,7 +93,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Node ID: "
+text = "Node Key: "
 
 [node name="TextEdit_NodeID" type="TextEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -139,7 +147,25 @@ text = "Fix Connections"
 layout_mode = 2
 text = "Delete Empty"
 
+[node name="btn_RegenNodes" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+layout_mode = 2
+text = "Regenerate Labels"
+
+[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+layout_mode = 2
+
+[node name="btn_SetImportClean" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+layout_mode = 2
+text = "Set Import & Clean"
+
 [node name="i_NextNode" type="Node" parent="." node_paths=PackedStringArray("RequiredVisibleNode")]
+script = ExtResource("3_m5ua5")
+key = 4194309
+Require_CTRL = true
+RequiredVisibleNode = NodePath("..")
+metadata/_custom_type_script = "uid://dmgwd5itujl7q"
+
+[node name="i_NextNode2" type="Node" parent="." node_paths=PackedStringArray("RequiredVisibleNode")]
 script = ExtResource("3_m5ua5")
 key = 4194309
 Require_CTRL = true
@@ -163,6 +189,8 @@ filters = PackedStringArray("*.csv")
 use_native_dialog = true
 
 [node name="N_popup_NodeList" type="PopupMenu" parent="."]
+oversampling_override = 1.0
+max_size = Vector2i(32768, 500)
 theme_override_font_sizes/font_size = 10
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
@@ -175,6 +203,7 @@ theme_override_font_sizes/font_size = 10
 [connection signal="gui_input" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_gui_input"]
 [connection signal="node_deselected" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_deselected"]
 [connection signal="node_selected" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_selected"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/btn_playSound" to="." method="_on_btn_play_sound_pressed"]
 [connection signal="OnParamEdit" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/params" to="." method="_on_params_on_param_edit"]
 [connection signal="text_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer/TextEdit_NodeID" to="." method="_on_text_edit_node_id_text_changed"]
 [connection signal="text_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer/lbl_scriptPath" to="." method="_on_lbl_script_path_text_changed"]
@@ -184,7 +213,10 @@ theme_override_font_sizes/font_size = 10
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_ScriptImport" to="." method="_on_btn_script_import_pressed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_FixCon" to="." method="_on_btn_fix_con_pressed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_DelEmpty" to="." method="_on_btn_del_empty_pressed"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_RegenNodes" to="." method="_on_btn_regen_nodes_pressed"]
+[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_SetImportClean" to="." method="_on_btn_set_import_clean_pressed"]
 [connection signal="InputBegin" from="i_NextNode" to="." method="_INPUT_Next"]
+[connection signal="InputBegin" from="i_NextNode2" to="." method="_INPUT_Next"]
 [connection signal="InputBegin" from="i_SelectAll_Next" to="." method="_on_i_select_all_next_input_begin"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="index_pressed" from="N_popup_NodeList" to="." method="_on_n_popup_node_list_index_pressed"]

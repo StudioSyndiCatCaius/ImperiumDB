@@ -31,6 +31,8 @@ func LIST_Rebuild():
 func PROJECT_Action(action: int, project: res_project):
 	# ACTION -- LOAD PROJECT
 	if action==0:
+		G_Project.list_projects.erase(project)
+		G_Project.list_projects.push_front(project)
 		G_Project.PROJECT_Open(project)
 		get_tree().change_scene_to_file("res://app/scenes/state/STATE_Main.tscn")
 	

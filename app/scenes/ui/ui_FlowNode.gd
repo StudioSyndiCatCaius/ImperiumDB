@@ -16,6 +16,27 @@ var DATA:Dictionary={}
 
 @onready var REF_Pin=preload("res://app/scenes/ui/ui_FlowPin.tscn")
 
+# 0=Label Refresh
+signal OnNodeEvent(event)
+
+func LABEL_Regen(force=false):
+	var st=LABEL_Get()
+	if st=="" or force:
+		LABEL_Set(str(randi_range(0,9999999)))
+
+func LABEL_Get() -> String:
+	return DATA.get('label',"")
+
+func LABEL_Refresh():
+	
+	name=DATA['label']
+	
+	OnNodeEvent.emit('LabelRefresh')
+
+func LABEL_Set(new_label: String):
+	DATA['label']=new_label
+	LABEL_Refresh()
+
 func Setup(node: Dictionary):
 	DATA=node
 	var _basType: String=DATA._template
@@ -69,6 +90,7 @@ func _paramEdited(asset,param,value):
 	Refresh()
 
 func Refresh():
+	LABEL_Regen(false)
 	#if type data is valid
 	if TypeData!=null:
 		resizable=TypeData.get("exapndable",false)
@@ -142,10 +164,18 @@ func ValidateSlotPint(index: int) -> ui_FlowPin:
 	return get_child(index)
 
 func ImportCSV(dat):
-	pass
+	for i in dat:
+		DATA['params'][i]=dat[i]
+	Refresh()
 
 func _on_position_offset_changed():
 	DATA.position=G_Conv.Vec2_to_Dic(position_offset)
 
 func _on_resize_end(new_size):
 	DATA.size=size
+
+func SOUND_Play():
+	var _sound_path=TypeData.get('GetSoundPath')
+	if _sound_path is LuaFunction:
+		var _spath=_sound_path.invoke(DATA)
+		G_Project.SOUND_PlayExternal(_spath)

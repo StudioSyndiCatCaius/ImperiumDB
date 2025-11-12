@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://p83c47nqjpd2"]
+[gd_scene load_steps=6 format=3 uid="uid://p83c47nqjpd2"]
 
 [ext_resource type="StyleBox" uid="uid://c6gds5rtj3hm5" path="res://app/assets/Style/style_panel_param.tres" id="1_7ylv5"]
 [ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_uovu6"]
 [ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="2_yav1r"]
+[ext_resource type="LabelSettings" uid="uid://dxwju7m2hmr1o" path="res://app/assets/Style/style_paramTest.tres" id="3_3pgbf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uovu6"]
 content_margin_left = 8.0
@@ -38,6 +39,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.6
 text = "lbl"
+label_settings = ExtResource("3_3pgbf")
 
 [node name="edit_list" type="OptionButton" parent="HBoxContainer"]
 layout_mode = 2

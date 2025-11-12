@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://djbjxip52i52s"]
+[gd_scene load_steps=4 format=3 uid="uid://djbjxip52i52s"]
 
 [ext_resource type="StyleBox" uid="uid://c6gds5rtj3hm5" path="res://app/assets/Style/style_panel_param.tres" id="1_2ggbs"]
 [ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_l0ma5"]
+[ext_resource type="LabelSettings" uid="uid://dxwju7m2hmr1o" path="res://app/assets/Style/style_paramTest.tres" id="3_rqrwr"]
 
 [node name="PEditInt" type="PanelContainer" node_paths=PackedStringArray("N__label", "N_check")]
 custom_minimum_size = Vector2(0, 40)
@@ -24,6 +25,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 text = "lbl"
+label_settings = ExtResource("3_rqrwr")
 
 [node name="CheckBox" type="CheckBox" parent="HBoxContainer"]
 layout_mode = 2

@@ -20,7 +20,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="UiParamEdit" type="PanelContainer" node_paths=PackedStringArray("N_container")]
+[node name="UiParamEdit" type="PanelContainer" node_paths=PackedStringArray("N_container", "N_CmdContainer")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -28,45 +28,54 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bpp7e")
 script = ExtResource("1_68p0x")
-N_container = NodePath("ScrollContainer/GridContainer")
+N_container = NodePath("VBoxContainer/ScrollContainer/GridContainer")
+N_CmdContainer = NodePath("VBoxContainer/HBoxContainer")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PEditInt" parent="ScrollContainer/GridContainer" instance=ExtResource("2_bpp7e")]
+[node name="PEditInt" parent="VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("2_bpp7e")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PEditInt2" parent="ScrollContainer/GridContainer" instance=ExtResource("3_qfkwu")]
+[node name="PEditInt2" parent="VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("3_qfkwu")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PEditInt3" parent="ScrollContainer/GridContainer" instance=ExtResource("4_4chng")]
+[node name="PEditInt3" parent="VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("4_4chng")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PEditInt4" parent="ScrollContainer/GridContainer" instance=ExtResource("5_u2h40")]
+[node name="PEditInt4" parent="VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("5_u2h40")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PEditInt5" parent="ScrollContainer/GridContainer" instance=ExtResource("6_76elm")]
+[node name="PEditInt5" parent="VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("6_76elm")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PEditInt6" parent="ScrollContainer/GridContainer" instance=ExtResource("7_pllt6")]
+[node name="PEditInt6" parent="VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource("7_pllt6")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
 
 [node name="Label" type="Label" parent="."]
 visible = false

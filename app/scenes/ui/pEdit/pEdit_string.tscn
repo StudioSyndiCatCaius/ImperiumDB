@@ -1,16 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqt3y6ahvm8cv"]
+[gd_scene load_steps=4 format=3 uid="uid://cqt3y6ahvm8cv"]
 
 [ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_pl23h"]
 [ext_resource type="StyleBox" uid="uid://c6gds5rtj3hm5" path="res://app/assets/Style/style_panel_param.tres" id="1_x3q7q"]
+[ext_resource type="LabelSettings" uid="uid://dxwju7m2hmr1o" path="res://app/assets/Style/style_paramTest.tres" id="3_fnts1"]
 
 [node name="PEditInt" type="PanelContainer" node_paths=PackedStringArray("N__label", "N_textEdit")]
-custom_minimum_size = Vector2(0, 30)
-anchors_preset = 15
+custom_minimum_size = Vector2(0, 40)
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -680.0
+offset_bottom = 31.0
 grow_horizontal = 2
-grow_vertical = 2
 theme_override_styles/panel = ExtResource("1_x3q7q")
 script = ExtResource("1_pl23h")
 N__label = NodePath("HBoxContainer/Label")
@@ -25,6 +24,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
 text = "lbl"
+label_settings = ExtResource("3_fnts1")
 
 [node name="TextEdit" type="TextEdit" parent="HBoxContainer"]
 layout_mode = 2

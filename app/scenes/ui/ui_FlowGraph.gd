@@ -154,11 +154,10 @@ func NODE_Add(node: Dictionary) -> ui_GraphNode:
 	if !DATA["nodes"].has(node):
 		DATA["nodes"].push_back(node)
 	
-	var new_node=REF_GraphNode.instantiate()
+	var new_node: ui_GraphNode=REF_GraphNode.instantiate()
 	
 	# init label if none
-	if !node.has('label') or node.get('label')=="":
-		node['label']=str(randi_range(0,9999999))
+	new_node.OnNodeEvent.connect(_on_ui_flow_node_on_node_event)
 	N_Graph.add_child(new_node)
 	new_node.Setup(node)
 	print("Created new node "+str(new_node)+" on graph: "+str(self))
@@ -187,13 +186,15 @@ func _on_graph_edit_disconnection_request(from_node, from_port, to_node, to_port
 # ==================================================================
 func _on_graph_edit_node_selected(node):
 	nodes_selected.push_back(node)
-	N_txtedit_NodeId.text=DATA.label
+	N_txtedit_NodeId.text=DATA.get('key','')
 	N_ParamEdit.OBJECT_Clear()
 	var _multi: bool=nodes_selected.size()>1
 	N_ParamEdit.OBJECT_MultiMode(_multi)
+	N_txtedit_NodeId.text=""
 	if nodes_selected[0] and !_multi:
 		var n=nodes_selected[0]
 		N_ParamEdit.OBJECT_Set(n.DATA,n.TypeData)
+		N_txtedit_NodeId.text=n.LABEL_Get()
 
 func _on_graph_edit_node_deselected(node):
 	N_txtedit_NodeId.text=""
@@ -207,6 +208,7 @@ func _on_graph_edit_duplicate_nodes_request():
 	for i in nodes_selected:
 		if !i.is_queued_for_deletion():
 			var _new =i.DATA.duplicate(true)
+			_new['label']=""
 			var _ui=NODE_Add(_new)
 			_ui.position_offset=i.position_offset+Vector2(10,10)
 			n.push_back(_ui)
@@ -240,10 +242,14 @@ func _on_btn_update_keys_pressed():
 			i.Refresh()
 
 func _on_btn_script_import_pressed():
-	var dat=G_File.CSV_Import(DATA.get("linked_script"))
+	var _script_path=G_Lua.l.globals.to_dictionary().get('IMPDB_SCRIPT_PATH','')
+	var _scriptOvr=DATA.get("linked_script")
+	if _scriptOvr!="":
+		_script_path=_scriptOvr
+	var _csv=G_File.CSV_Import(_script_path)
 	for i in NODES_GetAll():
-		if dat.has(i.key):
-			i.ImportCSV(dat[i.key])
+		if _csv.has(i.DATA.get('key','')):
+			i.ImportCSV(_csv[i.DATA.key])
 	NODES_RefreshAll()
 
 func _on_btn_script_set_pressed():
@@ -286,15 +292,12 @@ func _on_graph_edit_gui_input(event):
 func _on_n_popup_node_list_index_pressed(index):
 	_on_list_nodes_item_activated(index)
 
-
 func _on_btn_fix_con_pressed():
 	CONNECTIONS_Fix()
 
 func _on_text_edit_node_id_text_changed():
 	if NODES_GetSelected()[0]:
-		NODES_GetSelected()[0].node_data.label=N_txtedit_NodeId.text
-		NODES_GetSelected()[0].name=N_txtedit_NodeId.text
-
+		NODES_GetSelected()[0].LABEL_Set(N_txtedit_NodeId.text)
 
 func _on_i_select_all_next_input_begin():
 	var t: Array[ui_GraphNode]=NODES_GetSelected()
@@ -324,3 +327,22 @@ func _on_params_on_param_edit(param, value):
 	var n: Array[ui_GraphNode]=NODES_GetSelected()
 	if n[0]:
 		n[0].Refresh_Description()
+
+func _on_btn_play_sound_pressed():
+	var n: Array[ui_GraphNode]=NODES_GetSelected()
+	if n.size()>0:
+		n[0].SOUND_Play()
+
+func _on_btn_regen_nodes_pressed():
+	for i in NODES_GetAll():
+		i.LABEL_Regen(true)
+
+func _on_ui_flow_node_on_node_event(event):
+	if event=='LabelRefresh':
+		pass
+
+
+func _on_btn_set_import_clean_pressed():
+	_on_btn_update_keys_pressed()
+	_on_btn_script_import_pressed()
+	_on_btn_del_empty_pressed()

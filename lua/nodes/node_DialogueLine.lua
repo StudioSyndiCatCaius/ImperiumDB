@@ -1,3 +1,6 @@
+IMPDB_VOICE_PATH=[[{content}/voices/]]
+IMPDB_VOICE_FORMAT=[[ogg]]
+
 ImpDB_Nodes['node_DialogueLine']={
 	name="💬Line",
 	
@@ -9,7 +12,7 @@ ImpDB_Nodes['node_DialogueLine']={
 
 	quick_next="node_DialogueLine",
 	
-
+	
 	
 	inputs={ {} },
 	outputs={ {}, },
@@ -43,5 +46,20 @@ ImpDB_Nodes['node_DialogueLine']={
 		return [[{project}/image/ico_characters_]]..d['params']['speaker']..[[.png]]
 	end,
 
+	GetSoundPath=function (p)
+		print('teso')
+		print('thiso: '..p['key'])
+		return IMPDB_VOICE_PATH..p['key']..'.'..IMPDB_VOICE_FORMAT
+	end,
 
+	ycmd={
+		PlayVoice=function (p)
+			local pth=IMPDB_VOICE_PATH..p['key']..'.'..IMPDB_VOICE_FORMAT
+			print(pth)
+			return {
+				action="PlaySound",
+				path=pth
+			}
+		end,
+	}
 }

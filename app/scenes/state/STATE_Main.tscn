@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ctjrlx32blsk4"]
+[gd_scene load_steps=13 format=3 uid="uid://ctjrlx32blsk4"]
 
 [ext_resource type="Script" uid="uid://dc38o7eyh2un8" path="res://app/scenes/state/state_main.gd" id="1_2mmce"]
 [ext_resource type="PackedScene" uid="uid://da8qer3yy0t2p" path="res://app/scenes/ui/ui_FileTree.tscn" id="2_j53oe"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://yo3kw5xm1r1y" path="res://app/scenes/ui/ui_FlowGraph.tscn" id="2_nrvy0"]
 [ext_resource type="Texture2D" uid="uid://db8jiorl8ivnr" path="res://app/assets/2D/icons/t_ico_MagniGlass.png" id="3_f2nj0"]
 [ext_resource type="Texture2D" uid="uid://67trfpi1ip13" path="res://icon.svg" id="4_3tr6m"]
+[ext_resource type="Texture2D" uid="uid://ddm8eiltd4gd3" path="res://app/assets/2D/icons/t_ico_Next.png" id="4_cuc4e"]
 [ext_resource type="PackedScene" uid="uid://dlb3v1t3bl27p" path="res://app/scenes/ui/ui_LogDisplay.tscn" id="4_mggx4"]
 [ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="5_mud24"]
 [ext_resource type="PackedScene" uid="uid://bjysjg1rmufb5" path="res://app/scenes/tabs/SubTab_tables.tscn" id="6_dhbk0"]
@@ -64,6 +65,11 @@ text = "Project Name Here"
 layout_mode = 2
 text = "Open Folder"
 icon = ExtResource("3_f2nj0")
+
+[node name="btn_RunScripts" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+tooltip_text = "Rerun Scripts"
+icon = ExtResource("4_cuc4e")
 
 [node name="Control" type="Control" parent="Control/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
@@ -168,7 +174,11 @@ title = "Return to Project selection?"
 initial_position = 1
 size = Vector2i(300, 100)
 
+[node name="soundPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_OpenRoot" to="." method="_on_btn_open_root_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_RunScripts" to="." method="_on_btn_run_scripts_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_quit2" to="." method="_on_btn_quit_pressed"]
 [connection signal="FileDoubleClick" from="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree" to="." method="_on_ui_file_tree_file_double_click"]
 [connection signal="tree_exiting" from="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree" to="." method="_on_ui_file_tree_tree_exiting"]

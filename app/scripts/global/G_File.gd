@@ -146,49 +146,37 @@ func FILES_SortByExtension(paths: PackedStringArray) -> PackedStringArray:
 	
 	return result
 
-func LIST_AllInDir(_path: String, include_full_path: bool = true) -> Array[String]:
-	var result: Array[String] = []
-	var path: String=PathCorrect(_path)
-	# Check if the directory exists
-	if not DirAccess.dir_exists_absolute(path):
-		print("Directory does not exist: ", path)
-		return result
-	
-	# Make sure path ends with a slash for path joining
-	if not path.ends_with("/"):
-		path += "/"
-	
-	# Open the directory
-	var dir = DirAccess.open(path)
+func LIST_AllInDir(_path: String, include_full_path: bool = true, recursive: bool = false) -> Array[String]:
+	var items: Array[String] = []
+	var dir = DirAccess.open(_path)
+	_path=PathCorrect(_path)
 	if dir == null:
-		print("Failed to open directory: ", path)
-		print("Error: ", error_string(DirAccess.get_open_error()))
-		return result
+		push_error("Failed to open directory: " + _path)
+		return items
 	
-	# Start listing the content
 	dir.list_dir_begin()
+	var item_name = dir.get_next()
 	
-	while true:
-		var file_name = dir.get_next()
-		
-		# If we've reached the end of the list, break the loop
-		if file_name == "":
-			break
+	while item_name != "":
+		# Skip hidden files and navigation directories
+		if item_name != "." and item_name != "..":
+			var full_path = _path.path_join(item_name)
 			
-		# Skip "." and ".." directories
-		if file_name == "." or file_name == "..":
-			continue
+			# Add the item (file or folder) to the list
+			if include_full_path:
+				items.append(full_path)
+			else:
+				items.append(item_name)
+			
+			# If it's a directory and recursive is enabled, get items from subdirectory
+			if dir.current_is_dir() and recursive:
+				var subdir_items = LIST_AllInDir(full_path, include_full_path, recursive)
+				items.append_array(subdir_items)
 		
-		# Add the item to the result array (with full path if requested)
-		if include_full_path:
-			result.append(path + file_name)
-		else:
-			result.append(file_name)
+		item_name = dir.get_next()
 	
-	# End the listing process
 	dir.list_dir_end()
-	
-	return result
+	return items
 
 
 func CSV_Import(csv_file_path: String) -> Dictionary:

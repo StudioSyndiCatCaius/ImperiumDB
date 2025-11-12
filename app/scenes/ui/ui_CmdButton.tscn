@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://buamwdtipnewr"]
+
+[ext_resource type="Script" uid="uid://03nkeyubkwq8" path="res://app/scenes/ui/ui_cmdButton.gd" id="1_4tpps"]
+
+[node name="Button" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+script = ExtResource("1_4tpps")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

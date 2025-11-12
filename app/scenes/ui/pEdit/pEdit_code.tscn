@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://3qucqmwuvgah"]
+[gd_scene load_steps=6 format=3 uid="uid://3qucqmwuvgah"]
 
 [ext_resource type="Script" uid="uid://dlwr2w2a4vygl" path="res://app/scenes/ui/pEdit/p_edit.gd" id="1_8estc"]
 [ext_resource type="StyleBox" uid="uid://c6gds5rtj3hm5" path="res://app/assets/Style/style_panel_param.tres" id="1_gmriv"]
 [ext_resource type="PackedScene" uid="uid://dd6yosq7h7cpa" path="res://app/scenes/ui/ui_ScriptBlock.tscn" id="2_o1ewk"]
+[ext_resource type="LabelSettings" uid="uid://dxwju7m2hmr1o" path="res://app/assets/Style/style_paramTest.tres" id="3_5y171"]
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_gmriv"]
 number_color = Color(9.72241e-06, 0.926886, 0.44227, 1)
@@ -17,10 +18,10 @@ keyword_colors = {
 }
 
 [node name="PEditInt" type="PanelContainer" node_paths=PackedStringArray("N__label", "N_textEdit")]
-custom_minimum_size = Vector2(0, 75)
+custom_minimum_size = Vector2(0, 50)
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 100.0
+offset_bottom = 78.0
 grow_horizontal = 2
 theme_override_styles/panel = ExtResource("1_gmriv")
 script = ExtResource("1_8estc")
@@ -36,8 +37,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.4
 text = "lbl"
+label_settings = ExtResource("3_5y171")
 
 [node name="edit_code" parent="HBoxContainer" instance=ExtResource("2_o1ewk")]
+custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 size_flags_horizontal = 3
 syntax_highlighter = SubResource("CodeHighlighter_gmriv")
