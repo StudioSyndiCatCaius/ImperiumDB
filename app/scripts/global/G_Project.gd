@@ -138,3 +138,26 @@ func SOUND_PlayExternal(path: String):
 	var _sound=G_Load.SOUND(_soundPath)
 	_SP.stream=_sound
 	_SP.play()
+
+
+# ====================================================================
+# Raw Script
+# ====================================================================
+func SCRIPT_GetDirectionTextByLineKey() -> Dictionary[String,String]:
+	var out: Dictionary[String,String]={}
+	
+	var _script_path=G_Lua.l.globals.to_dictionary().get('IMPDB_SCRIPT_PATH','')
+	var direction_text=""
+	var data = G_File.CSV_ImportArray(_script_path)
+	
+	for k in data:
+		var new_dir=k.get('direction',"")
+		if !new_dir.is_empty():
+			direction_text+=new_dir+"\n --- \n"
+			
+		var line_key=k.get('key',"")
+		# if on new line
+		if !line_key.is_empty():
+			out[line_key]=direction_text
+			direction_text=""
+	return out

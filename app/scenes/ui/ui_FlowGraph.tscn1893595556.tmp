@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://yo3kw5xm1r1y"]
+[gd_scene load_steps=7 format=3 uid="uid://yo3kw5xm1r1y"]
 
 [ext_resource type="Script" uid="uid://ninltbqxj6cg" path="res://app/scenes/ui/ui_FlowGraph.gd" id="1_pb1ws"]
 [ext_resource type="PackedScene" uid="uid://dlr7wei0mcpmo" path="res://app/scenes/ui/ui_ParamEdit.tscn" id="2_mhv03"]
@@ -8,19 +8,6 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_oytv5"]
 font_size = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vx2s2"]
-content_margin_left = 5.0
-content_margin_top = 5.0
-content_margin_right = 5.0
-content_margin_bottom = 5.0
-bg_color = Color(0.033853278, 0.033853278, 0.033853274, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-corner_detail = 5
-shadow_color = Color(0, 0, 0, 0.3137255)
 
 [node name="UiFlowGraph" type="PanelContainer" node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeId", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist")]
 anchors_preset = 15
@@ -34,7 +21,7 @@ N_ParamEdit = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContai
 N_NodeList = NodePath("VBoxContainer/HSplitContainer2/list_nodes")
 N_lbl_scriptPath = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer/lbl_scriptPath")
 N_txtedit_NodeId = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer/TextEdit_NodeID")
-N_txtedit_NodeDir = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Direction/txtEdit_Dir")
+N_txtedit_NodeDir = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Direction")
 N_Dlg_csv = NodePath("FileDialog")
 N_Spin_KeyOffset = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/spin_OffsetKey")
 N_popup_Nodelist = NodePath("N_popup_NodeList")
@@ -75,10 +62,9 @@ connection_lines_thickness = 3.0
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer"]
 layout_mode = 2
-current_tab = 2
+current_tab = 0
 
 [node name="Nodes" type="PanelContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 0
 
@@ -177,18 +163,10 @@ layout_mode = 2
 layout_mode = 2
 text = "Set Import & Clean"
 
-[node name="Direction" type="PanelContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer"]
+[node name="Direction" type="TextEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer"]
+visible = false
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_vx2s2")
 metadata/_tab_index = 2
-
-[node name="txtEdit_Dir" type="TextEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Direction"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.9349402, 0.8800169, 0.61536884, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
-theme_override_font_sizes/font_size = 12
-text = "TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR "
-wrap_mode = 1
 
 [node name="i_NextNode" type="Node" parent="." node_paths=PackedStringArray("RequiredVisibleNode")]
 script = ExtResource("3_m5ua5")
@@ -248,7 +226,6 @@ theme_override_font_sizes/font_size = 10
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_DelEmpty" to="." method="_on_btn_del_empty_pressed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_RegenNodes" to="." method="_on_btn_regen_nodes_pressed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_SetImportClean" to="." method="_on_btn_set_import_clean_pressed"]
-[connection signal="text_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Direction/txtEdit_Dir" to="." method="_on_txt_edit_dir_text_changed"]
 [connection signal="InputBegin" from="i_NextNode" to="." method="_INPUT_Next"]
 [connection signal="InputBegin" from="i_NextNode2" to="." method="_INPUT_Next"]
 [connection signal="InputBegin" from="i_SelectAll_Next" to="." method="_on_i_select_all_next_input_begin"]

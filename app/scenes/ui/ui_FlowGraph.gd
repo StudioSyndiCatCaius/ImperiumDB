@@ -25,6 +25,7 @@ var DATA={
 @export var N_NodeList: ItemList
 @export var N_lbl_scriptPath: TextEdit
 @export var N_txtedit_NodeId: TextEdit
+@export var N_txtedit_NodeDir: TextEdit
 @export var N_Dlg_csv: FileDialog
 @export var N_Spin_KeyOffset: SpinBox
 @export var N_popup_Nodelist: PopupMenu
@@ -34,7 +35,7 @@ var DATA={
 signal OnNodeSelected(ui_GraphNode)
 
 func _ready():
-	pass
+	N_txtedit_NodeDir.text=""
 	GRAPH_Load(G_Lua.GRAPH_NewDefault())
 	
 	# add selectable nodes
@@ -167,6 +168,12 @@ func NODE_Add(node: Dictionary) -> ui_GraphNode:
 func NODE_Remove(node: ui_GraphNode):
 	node.queue_free()
 
+func NODE_GetByParam(param: String, value) -> ui_GraphNode:
+	for n in NODES_GetAll():
+		if n.DATA.get(param)==value:
+			return n
+	return null
+
 func CONNECTIONS_Fix():
 	pass
 	#current_graph.connections.clear()
@@ -188,6 +195,8 @@ func _on_graph_edit_node_selected(node):
 	nodes_selected.push_back(node)
 	N_txtedit_NodeId.text=DATA.get('key','')
 	N_ParamEdit.OBJECT_Clear()
+	N_txtedit_NodeDir.text=node.DATA.get('direction',"")
+	
 	var _multi: bool=nodes_selected.size()>1
 	N_ParamEdit.OBJECT_MultiMode(_multi)
 	N_txtedit_NodeId.text=""
@@ -198,6 +207,7 @@ func _on_graph_edit_node_selected(node):
 
 func _on_graph_edit_node_deselected(node):
 	N_txtedit_NodeId.text=""
+	N_txtedit_NodeDir.text=""
 	if nodes_selected.has(node):
 		N_ParamEdit.OBJECT_MultiMode(false)
 		nodes_selected.erase(node)
@@ -241,15 +251,41 @@ func _on_btn_update_keys_pressed():
 			_num+=1
 			i.Refresh()
 
+
 func _on_btn_script_import_pressed():
-	var _script_path=G_Lua.l.globals.to_dictionary().get('IMPDB_SCRIPT_PATH','')
+	var _script_path=SCRIPT_GetPath()
 	var _scriptOvr=DATA.get("linked_script")
 	if _scriptOvr!="":
 		_script_path=_scriptOvr
 	var _csv=G_File.CSV_Import(_script_path)
+	
+	#write csv values to individual flow nodes
 	for i in NODES_GetAll():
 		if _csv.has(i.DATA.get('key','')):
 			i.ImportCSV(_csv[i.DATA.key])
+	
+	_on_btn_d_irection_import_pressed()
+
+func SCRIPT_GetPath() -> String:
+	return G_Lua.l.globals.to_dictionary().get('IMPDB_SCRIPT_PATH','')
+
+func _on_btn_d_irection_import_pressed():
+	var _script_path=SCRIPT_GetPath()
+	var direction_text=""
+	var data = G_File.CSV_ImportArray(_script_path)
+	
+	# Add breakpoint on next line and check data value
+	print("Data is null: ", data == null)
+	print("Data type: ", typeof(data))
+	print("Got ", data.size(), " rows")
+	print("First row: ", data[0])
+	
+	var line_dir_map: Dictionary= G_Project.SCRIPT_GetDirectionTextByLineKey()
+	for i in line_dir_map:
+		var target_node: ui_GraphNode=NODE_GetByParam('key',i)
+		if target_node:
+			target_node.DIRECTION_Set(line_dir_map.get(i,""))
+	
 	NODES_RefreshAll()
 
 func _on_btn_script_set_pressed():
@@ -346,3 +382,11 @@ func _on_btn_set_import_clean_pressed():
 	_on_btn_update_keys_pressed()
 	_on_btn_script_import_pressed()
 	_on_btn_del_empty_pressed()
+
+
+func _on_txt_edit_dir_text_changed():
+	var no: Array[ui_GraphNode] =NODES_GetSelected()
+	if no.size()>0:
+		var n: ui_GraphNode=no[0]
+		if n:
+			n.DATA['direction']=N_txtedit_NodeDir.text

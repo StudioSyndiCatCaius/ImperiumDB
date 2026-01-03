@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ctjrlx32blsk4"]
+[gd_scene load_steps=14 format=3 uid="uid://ctjrlx32blsk4"]
 
 [ext_resource type="Script" uid="uid://dc38o7eyh2un8" path="res://app/scenes/state/state_main.gd" id="1_2mmce"]
 [ext_resource type="PackedScene" uid="uid://da8qer3yy0t2p" path="res://app/scenes/ui/ui_FileTree.tscn" id="2_j53oe"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bjysjg1rmufb5" path="res://app/scenes/tabs/SubTab_tables.tscn" id="6_dhbk0"]
 [ext_resource type="PackedScene" uid="uid://cqb6rudlshexc" path="res://app/scenes/ui/ui_TAB_Entities.tscn" id="8_dd25g"]
 [ext_resource type="PackedScene" uid="uid://vqbpr2mnmjra" path="res://app/scenes/ui/ui_TAB_ModelViewer.tscn" id="10_dd25g"]
+[ext_resource type="PackedScene" uid="uid://cd6vc15fa8a8j" path="res://app/scenes/ui/ui_TAB_Commands.tscn" id="12_tpdju"]
 
 [node name="StateProjects" type="Node" node_paths=PackedStringArray("N_TabsMain", "N_TabGraphs", "N_ProjName", "N_Dialog_save", "N_Dialog_confirm_quit", "N_TreeRoot", "N_img_logo")]
 script = ExtResource("1_2mmce")
@@ -150,6 +151,11 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
+
+[node name="Commands" parent="Control/VBoxContainer/TABS_Main" instance=ExtResource("12_tpdju")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 4
 
 [node name="i_save" type="Node" parent="."]
 script = ExtResource("5_mud24")

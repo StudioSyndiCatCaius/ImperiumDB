@@ -14,6 +14,8 @@ var LIST_pins: Array[ui_FlowPin]
 var TypeData: LuaTable
 var DATA:Dictionary={}
 
+
+
 @onready var REF_Pin=preload("res://app/scenes/ui/ui_FlowPin.tscn")
 
 # 0=Label Refresh
@@ -36,6 +38,12 @@ func LABEL_Refresh():
 func LABEL_Set(new_label: String):
 	DATA['label']=new_label
 	LABEL_Refresh()
+
+func DIRECTION_Set(text: String):
+	DATA['direction']=text
+
+func DIRECTION_Get() -> String:
+	return DATA.get('direction',"")
 
 func Setup(node: Dictionary):
 	DATA=node

@@ -34,7 +34,7 @@ N_ParamEdit = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContai
 N_NodeList = NodePath("VBoxContainer/HSplitContainer2/list_nodes")
 N_lbl_scriptPath = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer/lbl_scriptPath")
 N_txtedit_NodeId = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer/TextEdit_NodeID")
-N_txtedit_NodeDir = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Direction/txtEdit_Dir")
+N_txtedit_NodeDir = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/PanelContainer/txtEdit_Dir")
 N_Dlg_csv = NodePath("FileDialog")
 N_Spin_KeyOffset = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/spin_OffsetKey")
 N_popup_Nodelist = NodePath("N_popup_NodeList")
@@ -177,12 +177,12 @@ layout_mode = 2
 layout_mode = 2
 text = "Set Import & Clean"
 
-[node name="Direction" type="PanelContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer"]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vx2s2")
 metadata/_tab_index = 2
 
-[node name="txtEdit_Dir" type="TextEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Direction"]
+[node name="txtEdit_Dir" type="TextEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/PanelContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9349402, 0.8800169, 0.61536884, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
@@ -248,7 +248,6 @@ theme_override_font_sizes/font_size = 10
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_DelEmpty" to="." method="_on_btn_del_empty_pressed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_RegenNodes" to="." method="_on_btn_regen_nodes_pressed"]
 [connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_SetImportClean" to="." method="_on_btn_set_import_clean_pressed"]
-[connection signal="text_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Direction/txtEdit_Dir" to="." method="_on_txt_edit_dir_text_changed"]
 [connection signal="InputBegin" from="i_NextNode" to="." method="_INPUT_Next"]
 [connection signal="InputBegin" from="i_NextNode2" to="." method="_INPUT_Next"]
 [connection signal="InputBegin" from="i_SelectAll_Next" to="." method="_on_i_select_all_next_input_begin"]

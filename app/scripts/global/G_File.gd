@@ -3,9 +3,8 @@ extends Node
 
 signal OnFilesUpdated
 
-@export var csv_imports={
-	
-}
+@export var csv_imports={}
+@export var csv_arrays={}
 
 # ==============================================================================
 # Json
@@ -224,6 +223,71 @@ func CSV_Import(csv_file_path: String) -> Dictionary:
 		# Add the entry to the result dictionary
 		result[entry_key] = entry_values
 	csv_imports[csv_file_path]=result
+	return result
+
+func CSV_ImportArray(csv_file_path: String):
+	var result = []
+	
+	var file = FileAccess.open(csv_file_path, FileAccess.READ)
+	if file == null:
+		push_error("Failed to open file: " + csv_file_path)
+		return result
+	
+	var content = file.get_as_text()
+	file.close()
+	
+	var lines = content.split("\n")
+	if lines.size() == 0:
+		return result
+	
+	# Parse header
+	var headers = parse_csv_line(lines[0])
+	
+	# Parse data rows
+	for i in range(1, lines.size()):
+		var line = lines[i].strip_edges()
+		if line.is_empty():
+			continue
+		
+		var values = parse_csv_line(line)
+		var row_dict = {}
+		
+		for j in range(min(headers.size(), values.size())):
+			row_dict[headers[j]] = values[j]
+		
+		result.append(row_dict)
+	
+	print("CSV loaded: ", result.size(), " rows")
+	return result
+
+func parse_csv_line(line: String) -> Array:
+	var result = []
+	var current_field = ""
+	var in_quotes = false
+	var i = 0
+	
+	while i < line.length():
+		var c = line[i]
+		
+		if c == '"':
+			if in_quotes and i + 1 < line.length() and line[i + 1] == '"':
+				# Double quote inside quoted field = escaped quote
+				current_field += '"'
+				i += 1
+			else:
+				# Toggle quote mode
+				in_quotes = !in_quotes
+		elif c == ',' and !in_quotes:
+			# End of field
+			result.append(current_field.strip_edges())
+			current_field = ""
+		else:
+			current_field += c
+		
+		i += 1
+	
+	# Add the last field
+	result.append(current_field.strip_edges())
 	return result
 
 
