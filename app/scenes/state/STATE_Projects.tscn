@@ -123,7 +123,13 @@ expand_icon = true
 
 [node name="set" parent="TabContainer/Settings/VBoxContainer2" instance=ExtResource("5_r66i8")]
 layout_mode = 2
-Name = "hide_path"
+param_name = "hide_path"
+display_name = "Hide Project Paths?"
+
+[node name="set_Autoload" parent="TabContainer/Settings/VBoxContainer2" instance=ExtResource("5_r66i8")]
+layout_mode = 2
+param_name = "autoload_last_project"
+display_name = "Autoload last project?"
 
 [node name="Dialog_Load" type="FileDialog" parent="."]
 title = "Open a File"

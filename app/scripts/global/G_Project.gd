@@ -54,8 +54,10 @@ func PROJECT_Register(path: String):
 	dic_projects['projects'].push_back(path)
 
 
-func PROJECT_Load(path: String):
+func PROJECT_Load(path: String) -> res_project:
 	print("Loading Project: "+path)
+	if !FileAccess.file_exists(path):
+		return null
 	if !dic_projects['projects'].has(path):
 		print("  -- path not in project list. Adding now.")
 		PROJECT_Register(path)
@@ -68,6 +70,7 @@ func PROJECT_Load(path: String):
 	new_proj.DATA=G_File.LOAD_Json(path)
 	new_proj.__load(new_proj.DATA)
 	list_projects.push_front(new_proj)
+	return new_proj
 
 func PROJECT_Remove(project: res_project):
 	dic_projects['projects'].erase(project.path)

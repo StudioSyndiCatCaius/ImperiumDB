@@ -5,7 +5,8 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8tqva"]
 bg_color = Color(0.6, 0.6, 0.6, 0.0392157)
 
-[node name="UiProjectSetting" type="PanelContainer"]
+[node name="UiProjectSetting" type="PanelContainer" node_paths=PackedStringArray("N_lbl_name")]
+custom_minimum_size = Vector2(0, 50)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -13,6 +14,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_8tqva")
 script = ExtResource("1_h40rn")
+N_lbl_name = NodePath("HBoxContainer/Label")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -26,7 +28,7 @@ text = "lab"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CheckButton" type="CheckButton" parent="HBoxContainer/Control"]
+[node name="CheckButton" type="CheckBox" parent="HBoxContainer/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

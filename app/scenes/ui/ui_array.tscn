@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://crukyfp1b4ra7"]
+
+[ext_resource type="Script" uid="uid://f74r6xbtu2d6" path="res://app/scenes/ui/ui_array.gd" id="1_vgjs3"]
+
+[node name="UiArray" type="PanelContainer" node_paths=PackedStringArray("N_ItemList", "N_SpinBox")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vgjs3")
+N_ItemList = NodePath("VBoxContainer/N_ItemList")
+N_SpinBox = NodePath("VBoxContainer/HBoxContainer/N_SpinBox")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="N_ItemList" type="ItemList" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "[Size]"
+
+[node name="N_SpinBox" type="SpinBox" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 999.0
+rounded = true
+alignment = 2
+
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/N_SpinBox" to="." method="_on_n_spin_box_value_changed"]

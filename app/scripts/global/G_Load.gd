@@ -39,6 +39,11 @@ func GLTF(path: String) -> Node:
 	var scene = gltf_document.generate_scene(gltf_state)
 	return scene
 
+func Texture_Icon(path: String):
+	var _imgPath=G_Project.PATH_GetRoot()+"/image/"+path+".png"
+	return G_Load.Texture(_imgPath)
+	
+
 func SOUND(path: String) -> AudioStream:
 	if LOADED_SOUNDS.has(path):
 		return LOADED_SOUNDS[path]

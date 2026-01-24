@@ -11,6 +11,9 @@ extends Node
 var target_proj: res_project
 
 func _ready():
+	#if launching from command line project input:
+	# PROJECT_TryReloadLast()
+	
 	LIST_Rebuild()
 
 func LIST_Refresh():
@@ -28,6 +31,19 @@ func LIST_Rebuild():
 		new_proj.OnAction.connect(PROJECT_Action)
 		N_ProjList.add_child(new_proj)
 
+func PROJECT_TryReloadLast():
+	var cmd_args: PackedStringArray=OS.get_cmdline_args()
+	if cmd_args.size()>0:
+		var cmd_projPath=cmd_args[0]
+		if !cmd_projPath.is_empty():
+			var _tempProj: res_project=PROJECT_GetFromPath(cmd_projPath)
+			if _tempProj!=null:
+				PROJECT_Action(0,_tempProj)
+
+func PROJECT_GetFromPath(path: String) -> res_project:
+	return G_Project.PROJECT_Load(path)
+
+## 0= Load | 1=Delete
 func PROJECT_Action(action: int, project: res_project):
 	# ACTION -- LOAD PROJECT
 	if action==0:

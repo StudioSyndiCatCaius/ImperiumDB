@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://yo3kw5xm1r1y"]
+[gd_scene load_steps=9 format=3 uid="uid://yo3kw5xm1r1y"]
 
 [ext_resource type="Script" uid="uid://ninltbqxj6cg" path="res://app/scenes/ui/ui_FlowGraph.gd" id="1_pb1ws"]
 [ext_resource type="PackedScene" uid="uid://dlr7wei0mcpmo" path="res://app/scenes/ui/ui_ParamEdit.tscn" id="2_mhv03"]
 [ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="3_m5ua5"]
 [ext_resource type="Texture2D" uid="uid://v1ufeb8xrecf" path="res://app/assets/2D/icons/t_ico_sound.png" id="3_vx2s2"]
+[ext_resource type="PackedScene" uid="uid://bhat55834aisb" path="res://app/scenes/ui/ui_Screenplay.tscn" id="5_ctigr"]
 [ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="9_x45cu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_oytv5"]
@@ -22,49 +23,55 @@ corner_radius_bottom_left = 5
 corner_detail = 5
 shadow_color = Color(0, 0, 0, 0.3137255)
 
-[node name="UiFlowGraph" type="PanelContainer" node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeId", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist")]
+[node name="UiFlowGraph" type="PanelContainer" node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeId", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist", "N_screenplay")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_pb1ws")
-N_Graph = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit")
-N_ParamEdit = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/params")
-N_NodeList = NodePath("VBoxContainer/HSplitContainer2/list_nodes")
-N_lbl_scriptPath = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer/lbl_scriptPath")
-N_txtedit_NodeId = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer/TextEdit_NodeID")
-N_txtedit_NodeDir = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Direction/txtEdit_Dir")
+N_Graph = NodePath("TabContainer/Graph/HSplitContainer2/HSplitContainer/GraphEdit")
+N_ParamEdit = NodePath("TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/params")
+N_NodeList = NodePath("TabContainer/Graph/HSplitContainer2/list_nodes")
+N_lbl_scriptPath = NodePath("TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer/lbl_scriptPath")
+N_txtedit_NodeId = NodePath("TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer/TextEdit_NodeID")
+N_txtedit_NodeDir = NodePath("TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Direction/txtEdit_Dir")
 N_Dlg_csv = NodePath("FileDialog")
-N_Spin_KeyOffset = NodePath("VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/spin_OffsetKey")
+N_Spin_KeyOffset = NodePath("TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/spin_OffsetKey")
 N_popup_Nodelist = NodePath("N_popup_NodeList")
+N_screenplay = NodePath("TabContainer/Screenplay")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+current_tab = 0
+
+[node name="Graph" type="VBoxContainer" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Graph"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="btn_close" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="btn_close" type="Button" parent="TabContainer/Graph/HBoxContainer"]
 layout_mode = 2
 text = "Close Graph"
 icon = ExtResource("9_x45cu")
 
-[node name="HSplitContainer2" type="HSplitContainer" parent="VBoxContainer"]
+[node name="HSplitContainer2" type="HSplitContainer" parent="TabContainer/Graph"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="list_nodes" type="ItemList" parent="VBoxContainer/HSplitContainer2"]
+[node name="list_nodes" type="ItemList" parent="TabContainer/Graph/HSplitContainer2"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 10
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/HSplitContainer2"]
+[node name="HSplitContainer" type="HSplitContainer" parent="TabContainer/Graph/HSplitContainer2"]
 layout_mode = 2
 split_offset = -400
 
-[node name="GraphEdit" type="GraphEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer"]
+[node name="GraphEdit" type="GraphEdit" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/grid_major = Color(0, 0, 0, 0.615686)
@@ -73,122 +80,127 @@ right_disconnects = true
 connection_lines_curvature = 0.0
 connection_lines_thickness = 3.0
 
-[node name="TabContainer" type="TabContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer"]
+[node name="TabContainer" type="TabContainer" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer"]
 layout_mode = 2
-current_tab = 2
+current_tab = 0
 
-[node name="Nodes" type="PanelContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer"]
-visible = false
+[node name="Nodes" type="PanelContainer" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer"]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes"]
 layout_mode = 2
 
-[node name="btn_playSound" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer"]
+[node name="btn_playSound" type="Button" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 icon = ExtResource("3_vx2s2")
 
-[node name="params" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer" instance=ExtResource("2_mhv03")]
+[node name="params" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer" instance=ExtResource("2_mhv03")]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_vertical = 3
 key = "params"
 
-[node name="Label" type="Label" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer"]
+[node name="Label" type="Label" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer"]
 layout_mode = 2
 text = "script"
 label_settings = SubResource("LabelSettings_oytv5")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Node Key: "
 
-[node name="TextEdit_NodeID" type="TextEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer"]
+[node name="TextEdit_NodeID" type="TextEdit" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/background_color = Color(0, 0, 0, 1)
 text = "-"
 
-[node name="Import" type="PanelContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer"]
+[node name="Import" type="PanelContainer" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer"]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import"]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="lbl_scriptPath" type="TextEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer"]
+[node name="lbl_scriptPath" type="TextEdit" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 9
 text = "sfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfaf"
 
-[node name="btn_ScriptSet" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="btn_ScriptSet" type="Button" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 text = "Set Script"
 
-[node name="spin_OffsetKey" type="SpinBox" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="spin_OffsetKey" type="SpinBox" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 rounded = true
 prefix = "Key Offset   "
 
-[node name="btn_UpdateKeys" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="btn_UpdateKeys" type="Button" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 text = "Update Keys"
 
-[node name="btn_ScriptImport" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="btn_ScriptImport" type="Button" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 text = "Import Script"
 
-[node name="btn_dIRECTIONImport" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="btn_dIRECTIONImport" type="Button" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 text = "Import Directions"
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 
-[node name="btn_FixCon" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="btn_FixCon" type="Button" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 text = "Fix Connections"
 
-[node name="btn_DelEmpty" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="btn_DelEmpty" type="Button" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 text = "Delete Empty"
 
-[node name="btn_RegenNodes" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="btn_RegenNodes" type="Button" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 text = "Regenerate Labels"
 
-[node name="HSeparator2" type="HSeparator" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 
-[node name="btn_SetImportClean" type="Button" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
+[node name="btn_SetImportClean" type="Button" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer"]
 layout_mode = 2
 text = "Set Import & Clean"
 
-[node name="Direction" type="PanelContainer" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer"]
+[node name="Direction" type="PanelContainer" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vx2s2")
 metadata/_tab_index = 2
 
-[node name="txtEdit_Dir" type="TextEdit" parent="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Direction"]
+[node name="txtEdit_Dir" type="TextEdit" parent="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Direction"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9349402, 0.8800169, 0.61536884, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 12
 text = "TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR "
 wrap_mode = 1
+
+[node name="Screenplay" parent="TabContainer" instance=ExtResource("5_ctigr")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="i_NextNode" type="Node" parent="." node_paths=PackedStringArray("RequiredVisibleNode")]
 script = ExtResource("3_m5ua5")
@@ -226,29 +238,30 @@ max_size = Vector2i(32768, 500)
 theme_override_font_sizes/font_size = 10
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/btn_close" to="." method="_on_btn_close_pressed"]
-[connection signal="item_activated" from="VBoxContainer/HSplitContainer2/list_nodes" to="." method="_on_list_nodes_item_activated"]
-[connection signal="connection_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]
-[connection signal="delete_nodes_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
-[connection signal="disconnection_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
-[connection signal="duplicate_nodes_request" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_duplicate_nodes_request"]
-[connection signal="gui_input" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_gui_input"]
-[connection signal="node_deselected" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_deselected"]
-[connection signal="node_selected" from="VBoxContainer/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_selected"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/btn_playSound" to="." method="_on_btn_play_sound_pressed"]
-[connection signal="OnParamEdit" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/params" to="." method="_on_params_on_param_edit"]
-[connection signal="text_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer/TextEdit_NodeID" to="." method="_on_text_edit_node_id_text_changed"]
-[connection signal="text_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer/lbl_scriptPath" to="." method="_on_lbl_script_path_text_changed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_ScriptSet" to="." method="_on_btn_script_set_pressed"]
-[connection signal="value_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/spin_OffsetKey" to="." method="_on_spin_offset_key_value_changed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_UpdateKeys" to="." method="_on_btn_update_keys_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_ScriptImport" to="." method="_on_btn_script_import_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_dIRECTIONImport" to="." method="_on_btn_d_irection_import_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_FixCon" to="." method="_on_btn_fix_con_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_DelEmpty" to="." method="_on_btn_del_empty_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_RegenNodes" to="." method="_on_btn_regen_nodes_pressed"]
-[connection signal="pressed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_SetImportClean" to="." method="_on_btn_set_import_clean_pressed"]
-[connection signal="text_changed" from="VBoxContainer/HSplitContainer2/HSplitContainer/TabContainer/Direction/txtEdit_Dir" to="." method="_on_txt_edit_dir_text_changed"]
+[connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="pressed" from="TabContainer/Graph/HBoxContainer/btn_close" to="." method="_on_btn_close_pressed"]
+[connection signal="item_activated" from="TabContainer/Graph/HSplitContainer2/list_nodes" to="." method="_on_list_nodes_item_activated"]
+[connection signal="connection_request" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]
+[connection signal="delete_nodes_request" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
+[connection signal="disconnection_request" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
+[connection signal="duplicate_nodes_request" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_duplicate_nodes_request"]
+[connection signal="gui_input" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_gui_input"]
+[connection signal="node_deselected" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_deselected"]
+[connection signal="node_selected" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_selected"]
+[connection signal="pressed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/btn_playSound" to="." method="_on_btn_play_sound_pressed"]
+[connection signal="OnParamEdit" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/params" to="." method="_on_params_on_param_edit"]
+[connection signal="text_changed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Nodes/VBoxContainer/HBoxContainer/TextEdit_NodeID" to="." method="_on_text_edit_node_id_text_changed"]
+[connection signal="text_changed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/PanelContainer/lbl_scriptPath" to="." method="_on_lbl_script_path_text_changed"]
+[connection signal="pressed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_ScriptSet" to="." method="_on_btn_script_set_pressed"]
+[connection signal="value_changed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/spin_OffsetKey" to="." method="_on_spin_offset_key_value_changed"]
+[connection signal="pressed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_UpdateKeys" to="." method="_on_btn_update_keys_pressed"]
+[connection signal="pressed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_ScriptImport" to="." method="_on_btn_script_import_pressed"]
+[connection signal="pressed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_dIRECTIONImport" to="." method="_on_btn_d_irection_import_pressed"]
+[connection signal="pressed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_FixCon" to="." method="_on_btn_fix_con_pressed"]
+[connection signal="pressed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_DelEmpty" to="." method="_on_btn_del_empty_pressed"]
+[connection signal="pressed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_RegenNodes" to="." method="_on_btn_regen_nodes_pressed"]
+[connection signal="pressed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Import/VBoxContainer/btn_SetImportClean" to="." method="_on_btn_set_import_clean_pressed"]
+[connection signal="text_changed" from="TabContainer/Graph/HSplitContainer2/HSplitContainer/TabContainer/Direction/txtEdit_Dir" to="." method="_on_txt_edit_dir_text_changed"]
 [connection signal="InputBegin" from="i_NextNode" to="." method="_INPUT_Next"]
 [connection signal="InputBegin" from="i_NextNode2" to="." method="_INPUT_Next"]
 [connection signal="InputBegin" from="i_SelectAll_Next" to="." method="_on_i_select_all_next_input_begin"]

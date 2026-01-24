@@ -29,6 +29,7 @@ var DATA={
 @export var N_Dlg_csv: FileDialog
 @export var N_Spin_KeyOffset: SpinBox
 @export var N_popup_Nodelist: PopupMenu
+@export var N_screenplay: ui_Screenplay
 
 @onready var REF_GraphNode=preload("res://app/scenes/ui/ui_FlowNode.tscn")
 
@@ -37,7 +38,7 @@ signal OnNodeSelected(ui_GraphNode)
 func _ready():
 	N_txtedit_NodeDir.text=""
 	GRAPH_Load(G_Lua.GRAPH_NewDefault())
-	
+	N_screenplay.graph=self
 	# add selectable nodes
 	N_NodeList.clear()
 	var _NodeKeys=G_Lua.NODES_GetKeysAlphabetical()
@@ -377,7 +378,6 @@ func _on_ui_flow_node_on_node_event(event):
 	if event=='LabelRefresh':
 		pass
 
-
 func _on_btn_set_import_clean_pressed():
 	_on_btn_update_keys_pressed()
 	_on_btn_script_import_pressed()
@@ -390,3 +390,8 @@ func _on_txt_edit_dir_text_changed():
 		var n: ui_GraphNode=no[0]
 		if n:
 			n.DATA['direction']=N_txtedit_NodeDir.text
+
+
+func _on_tab_container_tab_changed(tab):
+	if tab==1:
+		N_screenplay.REBUILD()
