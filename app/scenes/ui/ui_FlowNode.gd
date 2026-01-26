@@ -14,12 +14,13 @@ var LIST_pins: Array[ui_FlowPin]
 var TypeData: LuaTable
 var DATA:Dictionary={}
 
-
-
 @onready var REF_Pin=preload("res://app/scenes/ui/ui_FlowPin.tscn")
 
 # 0=Label Refresh
 signal OnNodeEvent(event)
+
+func _ready() -> void:
+	G_Node.Children_ClearAll(self)
 
 func LABEL_Regen(force=false):
 	var st=LABEL_Get()
@@ -30,9 +31,7 @@ func LABEL_Get() -> String:
 	return DATA.get('label',"")
 
 func LABEL_Refresh():
-	
 	name=DATA['label']
-	
 	OnNodeEvent.emit('LabelRefresh')
 
 func LABEL_Set(new_label: String):
@@ -44,6 +43,9 @@ func DIRECTION_Set(text: String):
 
 func DIRECTION_Get() -> String:
 	return DATA.get('direction',"")
+
+func getSectionCount() -> int:
+	return TypeData.to_dictionary().get('section_count',)
 
 func Setup(node: Dictionary):
 	DATA=node
@@ -66,6 +68,7 @@ func Setup(node: Dictionary):
 	#get node typedata
 	if G_Lua.D_nodes.has(_newType):
 		TypeData=G_Lua.D_nodes[_newType]
+		PIN_fix(get_child(0),0)
 		if TypeData!=null:
 			if DATA.position is Vector2:
 				position_offset=DATA.position
@@ -80,17 +83,18 @@ func Setup(node: Dictionary):
 					i.queue_free()
 			
 			for i in range(TypeData.inputs.to_array().size()):
-				print(" doing inputs ")
 				var pin=TypeData.inputs.to_array()[i]
 				ValidateSlotPint(i)
 				set_slot_enabled_left(i,true)
 			
 			for i in range(TypeData.outputs.to_array().size()):
-				print(" doing outputs ")
 				var pin=TypeData.outputs.to_array()[i]
 				ValidateSlotPint(i)
 				set_slot_enabled_right(i,true)
-				
+			
+			for i in range(TypeData.get('section_count',1)+1):
+				ValidateSlotPint(i)
+			
 		Refresh()
 	return
 
@@ -138,31 +142,39 @@ func Refresh_AsInvalid():
 func Refresh_Description():
 	# text
 	var type_dic=TypeData.to_dictionary()
+	for i in get_children():
+		i._refresh()
+
+func PIN_fix(d: ui_FlowPin, index : int):
+	d.NODE_DATA=DATA
+	d.NODE_TEMPLATE=TypeData.to_dictionary()
+	d.pin_index=index
+	d.SECTION_DATA=TypeData.get('sections',{}).get(index,{})
 	
-	if TypeData.get("GetDescription")!=null:
-		var result=TypeData.GetDescription.invoke(DATA)
-		if result is String:
-			ValidateSlotPint(0).set_descript(result,
-			type_dic.get('description_size',12))
-	
-	if TypeData.get("GetIcon")!=null:
-		var result=TypeData.GetIcon.invoke(DATA)
-		if result is String:
-			ValidateSlotPint(0).set_icon(G_File.LOAD_Texture(result),
-			type_dic.get('icon_size',50))
+	if d.SECTION_DATA is LuaTable:
+		d.SECTION_DATA=d.SECTION_DATA.to_dictionary()
 
 func ValidateSlotPint(index: int) -> ui_FlowPin:
+	
 	while get_child(index)==null:
 		var new_pin: ui_FlowPin=REF_Pin.instantiate()
+		PIN_fix(new_pin,index)
+		var pin_num=0
+		
+		var SizeSlotsToArray=func(a : LuaTable):
+			if a.to_array().size()>index:
+				new_pin.pin_in=a.to_array()[index].to_dictionary()
+				var array_size: int=a.to_array().size()
+				if pin_num<array_size:
+					pin_num=array_size
+		
 		#new_pin
 		# setup pinds
 		if TypeData:
 			var _inputs=TypeData.get("inputs",[])
 			var _outputs=TypeData.get("outputs",[])
-			if _inputs.to_array().size()>index:
-				new_pin.pin_in=_inputs.to_array()[index].to_dictionary()
-			if _outputs.to_array().size()>index:
-				new_pin.pin_out=_outputs.to_array()[index].to_dictionary()
+			SizeSlotsToArray.call(_inputs)
+			SizeSlotsToArray.call(_outputs)
 		else:
 			new_pin.pin_in={}
 			new_pin.pin_out={}
@@ -186,4 +198,4 @@ func SOUND_Play():
 	var _sound_path=TypeData.get('GetSoundPath')
 	if _sound_path is LuaFunction:
 		var _spath=_sound_path.invoke(DATA)
-		G_Project.SOUND_PlayExternal(_spath)
+		G.SOUND_PlayExternal(_spath)

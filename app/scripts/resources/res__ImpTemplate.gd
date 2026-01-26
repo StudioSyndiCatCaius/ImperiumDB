@@ -5,4 +5,4 @@ class_name res__ImpTemplate
 var path_subfolder="/*/"
 
 func PATH_Get():
-	return G_Project.PATH_GetRoot()+path_subfolder
+	return G.PATH_GetRoot()+path_subfolder

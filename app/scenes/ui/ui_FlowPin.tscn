@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cowsypvdc8sib"]
+[gd_scene format=3 uid="uid://cowsypvdc8sib"]
 
 [ext_resource type="Script" uid="uid://cxx6nna8wfhlf" path="res://app/scenes/ui/ui_FlowPin.gd" id="1_0unwo"]
 [ext_resource type="Texture2D" uid="uid://bhmawjg5g0mrd" path="res://icon.png" id="2_mmbcl"]
@@ -24,7 +24,7 @@ content_margin_right = 2.0
 content_margin_bottom = 1.0
 bg_color = Color(0, 0, 0, 0.243137)
 
-[node name="UiFlowPin" type="PanelContainer" node_paths=PackedStringArray("N_text", "N_lbl_in", "N_lbl_out", "N_icon")]
+[node name="UiFlowPin" type="PanelContainer" unique_id=298272189 node_paths=PackedStringArray("N_text", "N_lbl_in", "N_lbl_out", "N_icon")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -39,23 +39,24 @@ N_lbl_in = NodePath("VBoxContainer/lb_in")
 N_lbl_out = NodePath("VBoxContainer/lb_out")
 N_icon = NodePath("VBoxContainer/PanelContainer/VBoxContainer/TextureRect")
 
-[node name="VBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="HBoxContainer" parent="." unique_id=1164109435]
 layout_mode = 2
 
-[node name="lb_in" type="Label" parent="VBoxContainer"]
+[node name="lb_in" type="Label" parent="VBoxContainer" unique_id=1431510889]
 layout_mode = 2
 text = "-"
 label_settings = SubResource("LabelSettings_0unwo")
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=876952371]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_mmbcl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=1516705243]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PanelContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=210510474]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -63,15 +64,16 @@ size_flags_vertical = 0
 texture = ExtResource("2_mmbcl")
 expand_mode = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer/VBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=1192836532]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/normal_font_size = 10
-text = " "
+bbcode_enabled = true
+text = "[i]safasf asf a"
 autowrap_mode = 2
 
-[node name="lb_out" type="Label" parent="VBoxContainer"]
+[node name="lb_out" type="Label" parent="VBoxContainer" unique_id=2059851550]
 layout_mode = 2
 text = "-"
 label_settings = SubResource("LabelSettings_0unwo")

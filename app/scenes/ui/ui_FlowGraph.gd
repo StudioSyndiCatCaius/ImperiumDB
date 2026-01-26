@@ -175,6 +175,11 @@ func NODE_GetByParam(param: String, value) -> ui_GraphNode:
 			return n
 	return null
 
+func NODE_RefreshCurrent():
+	var n: Array[ui_GraphNode]=NODES_GetSelected()
+	if n[0]:
+		n[0].Refresh_Description()
+
 func CONNECTIONS_Fix():
 	pass
 	#current_graph.connections.clear()
@@ -281,7 +286,7 @@ func _on_btn_d_irection_import_pressed():
 	print("Got ", data.size(), " rows")
 	print("First row: ", data[0])
 	
-	var line_dir_map: Dictionary= G_Project.SCRIPT_GetDirectionTextByLineKey()
+	var line_dir_map: Dictionary= G.SCRIPT_GetDirectionTextByLineKey()
 	for i in line_dir_map:
 		var target_node: ui_GraphNode=NODE_GetByParam('key',i)
 		if target_node:
@@ -290,7 +295,7 @@ func _on_btn_d_irection_import_pressed():
 	NODES_RefreshAll()
 
 func _on_btn_script_set_pressed():
-	N_Dlg_csv.root_subfolder=G_Project.PATH_GetRoot()
+	N_Dlg_csv.root_subfolder=G.PATH_GetRoot()
 	N_Dlg_csv.popup()
 
 func _on_file_dialog_file_selected(path):
@@ -360,10 +365,10 @@ func _on_btn_del_empty_pressed():
 
 
 func _on_params_on_param_edit(param, value):
-	print('argo')
-	var n: Array[ui_GraphNode]=NODES_GetSelected()
-	if n[0]:
-		n[0].Refresh_Description()
+	NODE_RefreshCurrent()
+
+
+
 
 func _on_btn_play_sound_pressed():
 	var n: Array[ui_GraphNode]=NODES_GetSelected()
@@ -390,6 +395,7 @@ func _on_txt_edit_dir_text_changed():
 		var n: ui_GraphNode=no[0]
 		if n:
 			n.DATA['direction']=N_txtedit_NodeDir.text
+			n.Refresh_Description()
 
 
 func _on_tab_container_tab_changed(tab):

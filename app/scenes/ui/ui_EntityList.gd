@@ -11,7 +11,7 @@ signal OnSelect(name: String, path: String)
 func SETUP(template: String):
 	name=template
 	template_name=template
-	entity_paths=G_Project.active_project.GetProjectDir()+"/entities/"+template+"/"
+	entity_paths=G.active_project.GetProjectDir()+"/entities/"+template+"/"
 	N_tree.clear()
 	REFRESH()
 

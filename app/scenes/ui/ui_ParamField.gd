@@ -56,13 +56,13 @@ func _ready():
 	if field_data.type==5:
 
 		N_edit_list.clear()
-		var list=G_Project.TABLE_GetItemList(field_data.table)
+		var list=G.TABLE_GetItemList(field_data.table)
 		var _valIndex=-1
 		for i in list:
 			var _idx=list.find(i)
-			var _imgPath=G_Project.PATH_GetRoot()+"/image/ico_"+field_data.table+"_"+i+".png"
+			var _imgPath=G.PATH_GetRoot()+"/image/ico_"+field_data.table+"_"+i+".png"
 			var _ico=G_File.LOAD_Texture(_imgPath)
-			var _tblData=G_Project.TABLE_GetItem(field_data.table,i)
+			var _tblData=G.TABLE_GetItem(field_data.table,i)
 			
 			N_edit_list.add_item(i)
 			N_edit_list.set_item_tooltip(_idx,_tblData.get("description",""))

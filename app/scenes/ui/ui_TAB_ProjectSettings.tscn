@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://c07qwskyhadj"]
+
+[ext_resource type="Script" uid="uid://cn4emc3aa572p" path="res://app/scenes/ui/ui_tab_projectSsettings.gd" id="1_fm2j3"]
+
+[node name="UiTabProjectSettings" type="PanelContainer" unique_id=1794218794]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fm2j3")

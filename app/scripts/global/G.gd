@@ -15,22 +15,26 @@ var project_template={
 }
 
 
+var b_FirstOpen=false
+
 var list_projects: Array[res_project]
 var active_project: res_project
-var dic_projects={}
+var DATA_global={
+	projects=[]
+}
 var path_SaveProj="user://projects.json"
 
 var users=[]
 
 func _ready():
-	dic_projects=G_File.LOAD_Json(path_SaveProj)
-	for _path in dic_projects.get("projects",[]):
+	DATA_global=G_File.LOAD_Json(path_SaveProj,DATA_global)
+	for _path in DATA_global.get("projects",[]):
 		PROJECT_Load(_path)
 	if active_project==null and list_projects.size()>0:
 		active_project=list_projects[0]
 
 func _exit_tree():
-	G_File.SAVE_Json(dic_projects,path_SaveProj)
+	G_File.SAVE_Json(DATA_global,path_SaveProj)
 	if active_project!=null:
 		active_project.__save()
 
@@ -47,18 +51,27 @@ func PATH_GetRoot() -> String:
 # PROJECT
 # ====================================================================
 
-func PROJECT_Register(path: String):
-	var _a: Array=dic_projects['projects']
-	if _a.has(path):
-		dic_projects['projects'].erase(path)
-	dic_projects['projects'].push_back(path)
 
+func PROJECT_Register(path: String):
+	if !DATA_global.has('projects'):
+		DATA_global['projects']=[]
+	
+	var _a: Array=DATA_global['projects']
+	if _a.has(path):
+		DATA_global['projects'].erase(path)
+	DATA_global['projects'].push_back(path)
+
+func PROJECT_GetFromPath(path: String):
+	for i in list_projects:
+		if i.path==path:
+			return i
+	return null
 
 func PROJECT_Load(path: String) -> res_project:
 	print("Loading Project: "+path)
 	if !FileAccess.file_exists(path):
 		return null
-	if !dic_projects['projects'].has(path):
+	if !DATA_global['projects'].has(path):
 		print("  -- path not in project list. Adding now.")
 		PROJECT_Register(path)
 	
@@ -73,7 +86,7 @@ func PROJECT_Load(path: String) -> res_project:
 	return new_proj
 
 func PROJECT_Remove(project: res_project):
-	dic_projects['projects'].erase(project.path)
+	DATA_global['projects'].erase(project.path)
 	list_projects.erase(project)
 
 func PROJECT_Create(path: String):
@@ -93,6 +106,7 @@ func PROJECT_Create(path: String):
 
 func PROJECT_Open(project: res_project):
 	active_project=project
+	DATA_global['last_project']=project.path
 	
 	PROJECT_RerunScripts()
 	

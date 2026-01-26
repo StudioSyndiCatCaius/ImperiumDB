@@ -14,7 +14,7 @@ func _ready():
 		N_List_Table.add_item(i)
 
 func DatTable():
-	return G_Project.active_project.DataTables;
+	return G.active_project.DataTables;
 
 func _on_item_list_item_selected(index):
 	current_table=DatTable().keys()[index]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://be6llttf77wh3"]
+[gd_scene format=3 uid="uid://be6llttf77wh3"]
 
 [ext_resource type="Script" uid="uid://c1u0egab4m38y" path="res://app/scenes/ui/ui_FlowNode.gd" id="1_nfslp"]
 [ext_resource type="PackedScene" uid="uid://cowsypvdc8sib" path="res://app/scenes/ui/ui_FlowPin.tscn" id="2_wsxfo"]
@@ -48,7 +48,7 @@ corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_detail = 5
 
-[node name="UiFlowNode" type="GraphNode"]
+[node name="UiFlowNode" type="GraphNode" unique_id=1684306640]
 custom_minimum_size = Vector2(100, 50)
 offset_right = 306.0
 offset_bottom = 144.0
@@ -68,7 +68,7 @@ slot/0/right_icon = null
 slot/0/draw_stylebox = true
 script = ExtResource("1_nfslp")
 
-[node name="UiFlowPin" parent="." instance=ExtResource("2_wsxfo")]
+[node name="UiFlowPin" parent="." unique_id=1727782302 instance=ExtResource("2_wsxfo")]
 layout_mode = 2
 
 [connection signal="position_offset_changed" from="." to="." method="_on_position_offset_changed"]

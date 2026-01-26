@@ -14,13 +14,13 @@ extends Node
 
 
 func _ready():
-	if G_Project.active_project==null:
-		G_Project.active_project=G_Project.list_projects[0]
+	if G.active_project==null:
+		G.active_project=G.list_projects[0]
 
 	#Setup Linked Nodes
-	N_ProjName.text=G_Project.active_project.name
-	N_Dialog_save.root_subfolder=G_Project.PATH_GetRoot()+"/flow/"
-	N_img_logo.texture=G_Project.active_project.image
+	N_ProjName.text=G.active_project.name
+	N_Dialog_save.root_subfolder=G.PATH_GetRoot()+"/flow/"
+	N_img_logo.texture=G.active_project.image
 	
 	#setup first graph
 	G_Node.Children_ClearAll(N_TabGraphs)
@@ -71,7 +71,9 @@ func GRAPH_Open(graph: Dictionary,path:String=""):
 	var new_graph: ui_GraphEdit =REF_GraphEdit.instantiate()
 	new_graph.DATA=graph
 	N_TabGraphs.add_child(new_graph)
-	N_TabGraphs.current_tab+=1
+	for i in N_TabGraphs.get_child_count():
+		if N_TabGraphs.get_child(i)==new_graph:
+			N_TabGraphs.current_tab=i
 	if path!="":
 		new_graph.file_path=path
 	new_graph.GRAPH_Load(graph)
@@ -127,13 +129,13 @@ func _on_ui_file_tree_file_double_click(path: String):
 			GRAPH_Open(new_graph,path)
 
 func _on_btn_open_root_pressed():
-	OS.shell_open(G_Project.active_project.GetProjectDir())
+	OS.shell_open(G.active_project.GetProjectDir())
 
 func _on_btn_new_res_pressed():
 	var _newEnt = res_Entity.new()
-	var _savPath=G_Project.PATH_GetRoot()+"/entities/ent.tres"
+	var _savPath=G.PATH_GetRoot()+"/entities/ent.tres"
 	print("Saving: "+str(_newEnt)+" to "+_savPath)
 	G_Resource.Save(_newEnt,_savPath)
 
 func _on_btn_run_scripts_pressed():
-	G_Project.PROJECT_RerunScripts()
+	G.PROJECT_RerunScripts()

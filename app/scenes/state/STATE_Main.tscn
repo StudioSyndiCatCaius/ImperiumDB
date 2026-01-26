@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ctjrlx32blsk4"]
+[gd_scene format=3 uid="uid://ctjrlx32blsk4"]
 
 [ext_resource type="Script" uid="uid://dc38o7eyh2un8" path="res://app/scenes/state/state_main.gd" id="1_2mmce"]
 [ext_resource type="PackedScene" uid="uid://da8qer3yy0t2p" path="res://app/scenes/ui/ui_FileTree.tscn" id="2_j53oe"]
@@ -10,11 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://dlb3v1t3bl27p" path="res://app/scenes/ui/ui_LogDisplay.tscn" id="4_mggx4"]
 [ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="5_mud24"]
 [ext_resource type="PackedScene" uid="uid://bjysjg1rmufb5" path="res://app/scenes/tabs/SubTab_tables.tscn" id="6_dhbk0"]
-[ext_resource type="PackedScene" uid="uid://cqb6rudlshexc" path="res://app/scenes/ui/ui_TAB_Entities.tscn" id="8_dd25g"]
-[ext_resource type="PackedScene" uid="uid://vqbpr2mnmjra" path="res://app/scenes/ui/ui_TAB_ModelViewer.tscn" id="10_dd25g"]
+[ext_resource type="PackedScene" uid="uid://c07qwskyhadj" path="res://app/scenes/ui/ui_TAB_ProjectSettings.tscn" id="11_cuc4e"]
 [ext_resource type="PackedScene" uid="uid://cd6vc15fa8a8j" path="res://app/scenes/ui/ui_TAB_Commands.tscn" id="12_tpdju"]
 
-[node name="StateProjects" type="Node" node_paths=PackedStringArray("N_TabsMain", "N_TabGraphs", "N_ProjName", "N_Dialog_save", "N_Dialog_confirm_quit", "N_TreeRoot", "N_img_logo")]
+[node name="StateProjects" type="Node" unique_id=541109926 node_paths=PackedStringArray("N_TabsMain", "N_TabGraphs", "N_ProjName", "N_Dialog_save", "N_Dialog_confirm_quit", "N_TreeRoot", "N_img_logo")]
 script = ExtResource("1_2mmce")
 N_TabsMain = NodePath("Control/VBoxContainer/TABS_Main")
 N_TabGraphs = NodePath("Control/VBoxContainer/TABS_Main/Flow/TABS_FlowGraph")
@@ -24,7 +23,7 @@ N_Dialog_confirm_quit = NodePath("dlg_confirm_quit")
 N_TreeRoot = NodePath("Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree")
 N_img_logo = NodePath("Control/VBoxContainer/HBoxContainer2/Container/img_logo")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=334936988]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,7 +31,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=637861605]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,17 +39,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=19626585]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="Container" type="BoxContainer" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="Container" type="BoxContainer" parent="Control/VBoxContainer/HBoxContainer2" unique_id=71790782]
 clip_contents = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="img_logo" type="TextureRect" parent="Control/VBoxContainer/HBoxContainer2/Container"]
+[node name="img_logo" type="TextureRect" parent="Control/VBoxContainer/HBoxContainer2/Container" unique_id=1301241275]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -58,129 +57,128 @@ texture = ExtResource("4_3tr6m")
 expand_mode = 2
 stretch_mode = 6
 
-[node name="txt_projName" type="Label" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="txt_projName" type="Label" parent="Control/VBoxContainer/HBoxContainer2" unique_id=1965734167]
 layout_mode = 2
 text = "Project Name Here"
 
-[node name="btn_OpenRoot" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="btn_OpenRoot" type="Button" parent="Control/VBoxContainer/HBoxContainer2" unique_id=1922656875]
 layout_mode = 2
 text = "Open Folder"
 icon = ExtResource("3_f2nj0")
 
-[node name="btn_RunScripts" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="btn_RunScripts" type="Button" parent="Control/VBoxContainer/HBoxContainer2" unique_id=707654564]
 layout_mode = 2
 tooltip_text = "Rerun Scripts"
 icon = ExtResource("4_cuc4e")
 
-[node name="Control" type="Control" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="Control" type="Control" parent="Control/VBoxContainer/HBoxContainer2" unique_id=336739778]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.5
 
-[node name="PanelContainer" parent="Control/VBoxContainer/HBoxContainer2" instance=ExtResource("4_mggx4")]
+[node name="PanelContainer" parent="Control/VBoxContainer/HBoxContainer2" unique_id=1320847009 instance=ExtResource("4_mggx4")]
 layout_mode = 2
 
-[node name="btn_quit2" type="Button" parent="Control/VBoxContainer/HBoxContainer2"]
+[node name="btn_quit2" type="Button" parent="Control/VBoxContainer/HBoxContainer2" unique_id=1888412918]
 layout_mode = 2
 icon = ExtResource("2_klkow")
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer" unique_id=1056140924]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/PanelContainer" unique_id=1859158132]
 layout_mode = 2
 
-[node name="menu_file" type="MenuButton" parent="Control/VBoxContainer/PanelContainer/HBoxContainer"]
+[node name="menu_file" type="MenuButton" parent="Control/VBoxContainer/PanelContainer/HBoxContainer" unique_id=208157602]
 layout_mode = 2
 text = "File"
 item_count = 1
 popup/item_0/id = 0
 
-[node name="TABS_Main" type="TabContainer" parent="Control/VBoxContainer"]
+[node name="TABS_Main" type="TabContainer" parent="Control/VBoxContainer" unique_id=1150674555]
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
 
-[node name="Flow" type="HSplitContainer" parent="Control/VBoxContainer/TABS_Main"]
+[node name="Flow" type="HSplitContainer" parent="Control/VBoxContainer/TABS_Main" unique_id=1678989707]
 layout_mode = 2
 size_flags_vertical = 3
+split_offsets = PackedInt32Array(200)
+split_offset = 200
 metadata/_tab_index = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/TABS_Main/Flow"]
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/TABS_Main/Flow" unique_id=1035321633]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer" unique_id=662407927]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer" unique_id=207391693]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2" unique_id=1411161082]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="UiFileTree" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer" instance=ExtResource("2_j53oe")]
+[node name="UiFileTree" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer" unique_id=1710064516 instance=ExtResource("2_j53oe")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 path = "/flow/"
 is_project_relative = true
 
-[node name="TABS_FlowGraph" type="TabContainer" parent="Control/VBoxContainer/TABS_Main/Flow"]
+[node name="TABS_FlowGraph" type="TabContainer" parent="Control/VBoxContainer/TABS_Main/Flow" unique_id=413469746]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 10
 current_tab = 0
 
-[node name="UiFlowGraph" parent="Control/VBoxContainer/TABS_Main/Flow/TABS_FlowGraph" instance=ExtResource("2_nrvy0")]
+[node name="UiFlowGraph" parent="Control/VBoxContainer/TABS_Main/Flow/TABS_FlowGraph" unique_id=1808333635 instance=ExtResource("2_nrvy0")]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="entities" parent="Control/VBoxContainer/TABS_Main" instance=ExtResource("8_dd25g")]
+[node name="tables" parent="Control/VBoxContainer/TABS_Main" unique_id=1819948933 instance=ExtResource("6_dhbk0")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 1
 
-[node name="tables" parent="Control/VBoxContainer/TABS_Main" instance=ExtResource("6_dhbk0")]
+[node name="Commands" parent="Control/VBoxContainer/TABS_Main" unique_id=920357069 instance=ExtResource("12_tpdju")]
 visible = false
 layout_mode = 2
+metadata/_tab_index = 2
 
-[node name="ModelViewer" parent="Control/VBoxContainer/TABS_Main" instance=ExtResource("10_dd25g")]
+[node name="Settings" parent="Control/VBoxContainer/TABS_Main" unique_id=1794218794 instance=ExtResource("11_cuc4e")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
 
-[node name="Commands" parent="Control/VBoxContainer/TABS_Main" instance=ExtResource("12_tpdju")]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 4
-
-[node name="i_save" type="Node" parent="."]
+[node name="i_save" type="Node" parent="." unique_id=2065267968]
 script = ExtResource("5_mud24")
 key = 83
 Require_CTRL = true
 metadata/_custom_type_script = "uid://dmgwd5itujl7q"
 
-[node name="i_new" type="Node" parent="."]
+[node name="i_new" type="Node" parent="." unique_id=1881266209]
 script = ExtResource("5_mud24")
 key = 78
 Require_CTRL = true
 metadata/_custom_type_script = "uid://dmgwd5itujl7q"
 
-[node name="dialog_SAVE" type="FileDialog" parent="."]
+[node name="dialog_SAVE" type="FileDialog" parent="." unique_id=897541757]
 access = 2
 root_subfolder = "res://save"
 filters = PackedStringArray("*.ImpFlow")
 use_native_dialog = true
 
-[node name="dlg_confirm_quit" type="ConfirmationDialog" parent="."]
+[node name="dlg_confirm_quit" type="ConfirmationDialog" parent="." unique_id=27003000]
 title = "Return to Project selection?"
 initial_position = 1
 size = Vector2i(300, 100)
 
-[node name="soundPlayer" type="AudioStreamPlayer" parent="."]
+[node name="soundPlayer" type="AudioStreamPlayer" parent="." unique_id=1878395095]
 unique_name_in_owner = true
 
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_OpenRoot" to="." method="_on_btn_open_root_pressed"]

@@ -17,7 +17,7 @@ var autocomplete_functions = [
 func _ready():
 	autocomplete_functions=[]
 	
-	for i in G_Project.TABLE_GetItemList("script"):
+	for i in G.TABLE_GetItemList("script"):
 		var args=i.split("(")[0]
 		var input=i.split(")")[0]
 		var t={

@@ -3,12 +3,12 @@ extends Control
 
 func _on_btn_write_all_dir_pressed():
 	
-	var line_dir_map: Dictionary=G_Project.SCRIPT_GetDirectionTextByLineKey()
+	var line_dir_map: Dictionary=G.SCRIPT_GetDirectionTextByLineKey()
 	
 	print("  --------------------------------------------------------------- ")
 	print("			WRITING DIRECTIONS TO FILES")
 	print(" --- ")
-	var ar= G_File.LIST_AllInDir(G_Project.PATH_GetRoot()+"/flow/",true,true)
+	var ar= G_File.LIST_AllInDir(G.PATH_GetRoot()+"/flow/",true,true)
 	for f in ar:
 		if f.get_extension()=="ImpFlow":
 			#print("		Opening File: "+str(f))

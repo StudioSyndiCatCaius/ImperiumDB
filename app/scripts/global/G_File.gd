@@ -9,18 +9,19 @@ signal OnFilesUpdated
 # ==============================================================================
 # Json
 # ==============================================================================
-func LOAD_Json(path: String) -> Dictionary:
+func LOAD_Json(path: String, default: Dictionary={}) -> Dictionary:
+	
 	print("___ Loading Json: "+path+"___")
 	if not FileAccess.file_exists(path):
 		print("File doesn't exist: " + path)
-		return {}
+		return default
 	
 	 # Open the file
 	var file = FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		print("Error opening file: " + path)
 		print("Error code: " + str(FileAccess.get_open_error()))
-		return {}
+		return default
 		
 	# Read the content as text
 	var json_text = file.get_as_text()
@@ -31,7 +32,7 @@ func LOAD_Json(path: String) -> Dictionary:
 	# Check for errors
 	if error != OK:
 		print("JSON Parse Error: ", json.get_error_message(), " at line ", json.get_error_line())
-		return {}
+		return default
 	
 	# Get and return the data
 	var data = json.get_data()
@@ -70,7 +71,7 @@ func SAVE_Json(data: Dictionary, file_path: String):
 # ==============================================================================
 func PathCorrect(path: String):
 	var st: String=path
-	st=st.replace("{project}",G_Project.PATH_GetRoot())
+	st=st.replace("{project}",G.PATH_GetRoot())
 	return st
 
 func LOAD_String(_file_path: String) -> String:

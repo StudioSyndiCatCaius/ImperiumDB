@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdr5j31pt6q4r"]
+[gd_scene format=3 uid="uid://bdr5j31pt6q4r"]
 
 [ext_resource type="Script" uid="uid://qw1rwupq5cl0" path="res://app/scenes/state/state_projects.gd" id="1_h33rn"]
 [ext_resource type="PackedScene" uid="uid://cacamryng1men" path="res://app/scenes/ui/ui_Project.tscn" id="2_io15f"]
@@ -18,14 +18,14 @@ border_color = Color(0.8, 0.8, 0.8, 0.392157)
 [sub_resource type="LabelSettings" id="LabelSettings_h33rn"]
 font_size = 50
 
-[node name="StateProjects" type="Node" node_paths=PackedStringArray("N_ProjList", "N_Dialog_LoadProj", "N_Dialog_NewProj", "N_Confirm_RemoveProj")]
+[node name="StateProjects" type="Node" unique_id=773206013 node_paths=PackedStringArray("N_ProjList", "N_Dialog_LoadProj", "N_Dialog_NewProj", "N_Confirm_RemoveProj")]
 script = ExtResource("1_h33rn")
 N_ProjList = NodePath("TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer")
 N_Dialog_LoadProj = NodePath("Dialog_Load")
 N_Dialog_NewProj = NodePath("Dialog_New")
 N_Confirm_RemoveProj = NodePath("Dialog_ConfirmDelete")
 
-[node name="TabContainer" type="TabContainer" parent="."]
+[node name="TabContainer" type="TabContainer" parent="." unique_id=957714197]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -33,105 +33,105 @@ grow_horizontal = 2
 grow_vertical = 2
 current_tab = 0
 
-[node name="Projects" type="PanelContainer" parent="TabContainer"]
+[node name="Projects" type="PanelContainer" parent="TabContainer" unique_id=1097390190]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_h33rn")
 metadata/_tab_index = 0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Projects"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Projects" unique_id=1618324409]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="TabContainer/Projects/VBoxContainer2"]
+[node name="Label" type="Label" parent="TabContainer/Projects/VBoxContainer2" unique_id=1037123083]
 layout_mode = 2
 text = "Imperium DB"
 label_settings = SubResource("LabelSettings_h33rn")
 horizontal_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="TabContainer/Projects/VBoxContainer2"]
+[node name="PanelContainer" type="PanelContainer" parent="TabContainer/Projects/VBoxContainer2" unique_id=1395677009]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Projects/VBoxContainer2/PanelContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Projects/VBoxContainer2/PanelContainer" unique_id=738860769]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer" unique_id=658237588]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="UiProject" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_io15f")]
+[node name="UiProject" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" unique_id=470067350 instance=ExtResource("2_io15f")]
 layout_mode = 2
 
-[node name="UiProject2" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_io15f")]
+[node name="UiProject2" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1537515959 instance=ExtResource("2_io15f")]
 layout_mode = 2
 
-[node name="UiProject3" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_io15f")]
+[node name="UiProject3" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" unique_id=477220455 instance=ExtResource("2_io15f")]
 layout_mode = 2
 
-[node name="UiProject4" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_io15f")]
+[node name="UiProject4" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1436820000 instance=ExtResource("2_io15f")]
 layout_mode = 2
 
-[node name="UiProject5" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_io15f")]
+[node name="UiProject5" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" unique_id=923257947 instance=ExtResource("2_io15f")]
 layout_mode = 2
 
-[node name="UiProject6" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_io15f")]
+[node name="UiProject6" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" unique_id=656192579 instance=ExtResource("2_io15f")]
 layout_mode = 2
 
-[node name="UiProject7" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_io15f")]
+[node name="UiProject7" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" unique_id=250656818 instance=ExtResource("2_io15f")]
 layout_mode = 2
 
-[node name="UiProject8" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_io15f")]
+[node name="UiProject8" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" unique_id=331006315 instance=ExtResource("2_io15f")]
 layout_mode = 2
 
-[node name="UiProject9" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_io15f")]
+[node name="UiProject9" parent="TabContainer/Projects/VBoxContainer2/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1415923604 instance=ExtResource("2_io15f")]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Projects/VBoxContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Projects/VBoxContainer2" unique_id=1758230312]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="btn_new" type="Button" parent="TabContainer/Projects/VBoxContainer2/HBoxContainer"]
+[node name="btn_new" type="Button" parent="TabContainer/Projects/VBoxContainer2/HBoxContainer" unique_id=819612518]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "New Project
 "
 expand_icon = true
 
-[node name="btn_open" type="Button" parent="TabContainer/Projects/VBoxContainer2/HBoxContainer"]
+[node name="btn_open" type="Button" parent="TabContainer/Projects/VBoxContainer2/HBoxContainer" unique_id=1649839705]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Open Project"
 icon = ExtResource("3_m8sq3")
 expand_icon = true
 
-[node name="Settings" type="PanelContainer" parent="TabContainer"]
+[node name="Settings" type="PanelContainer" parent="TabContainer" unique_id=1153776162]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_h33rn")
 metadata/_tab_index = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Settings"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Settings" unique_id=1684423400]
 layout_mode = 2
 
-[node name="btn_openSave" type="Button" parent="TabContainer/Settings/VBoxContainer2"]
+[node name="btn_openSave" type="Button" parent="TabContainer/Settings/VBoxContainer2" unique_id=747289414]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Open user save data"
 expand_icon = true
 
-[node name="set" parent="TabContainer/Settings/VBoxContainer2" instance=ExtResource("5_r66i8")]
+[node name="set" parent="TabContainer/Settings/VBoxContainer2" unique_id=2098344849 instance=ExtResource("5_r66i8")]
 layout_mode = 2
 param_name = "hide_path"
 display_name = "Hide Project Paths?"
 
-[node name="set_Autoload" parent="TabContainer/Settings/VBoxContainer2" instance=ExtResource("5_r66i8")]
+[node name="set_Autoload" parent="TabContainer/Settings/VBoxContainer2" unique_id=512601625 instance=ExtResource("5_r66i8")]
 layout_mode = 2
 param_name = "autoload_last_project"
 display_name = "Autoload last project?"
 
-[node name="Dialog_Load" type="FileDialog" parent="."]
+[node name="Dialog_Load" type="FileDialog" parent="." unique_id=1957248846]
 title = "Open a File"
 initial_position = 1
 ok_button_text = "Open"
@@ -140,14 +140,14 @@ access = 2
 filters = PackedStringArray("*.IDBproj")
 use_native_dialog = true
 
-[node name="Dialog_New" type="FileDialog" parent="."]
+[node name="Dialog_New" type="FileDialog" parent="." unique_id=1567726040]
 initial_position = 1
 ok_button_text = "Create"
 access = 2
 filters = PackedStringArray("*.IDBproj")
 use_native_dialog = true
 
-[node name="Dialog_ConfirmDelete" type="ConfirmationDialog" parent="."]
+[node name="Dialog_ConfirmDelete" type="ConfirmationDialog" parent="." unique_id=1875279353]
 title = "Remove this project?"
 initial_position = 2
 

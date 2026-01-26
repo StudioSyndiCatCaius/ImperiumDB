@@ -11,7 +11,7 @@ enum _type {BOOL, INT}
 @export var N_lbl_name: Label
 
 @onready var N_TypeRoot: Control=$HBoxContainer/Control
-@onready var N_checkBox: CheckBox=$HBoxContainer/Control/CheckButton
+@onready var N_checkBox: CheckButton=$HBoxContainer/Control/CheckButton
 @onready var N_SpinBox: SpinBox=$HBoxContainer/Control/SpinBox
 
 
@@ -20,19 +20,19 @@ func _ready():
 	G_Node.Children_SetVisible_All(N_TypeRoot,false)
 	pass
 	if type==_type.BOOL:
-		N_checkBox.toggle_mode=G_Project.dic_projects.get(param_name,false)
+		N_checkBox.button_pressed=G.DATA_global.get(param_name,false)
 		N_TypeRoot.get_child(0).visible=true
 	if type==_type.INT:
-		N_SpinBox.value=G_Project.dic_projects.get(param_name,0)
+		N_SpinBox.value=G.DATA_global.get(param_name,0)
 		N_TypeRoot.get_child(1).visible=true
 
 
 func _on_spin_box_value_changed(value):
 	if type==_type.INT:
 		print('')
-		#G_Project.dic_projects[param_name]=value
+		G.DATA_global[param_name]=value
 
 func _on_check_button_toggled(toggled_on):
 	if type==_type.BOOL:
 		print('')
-		# G_Project.dic_projects[param_name]=toggled_on
+		G.DATA_global[param_name]=toggled_on

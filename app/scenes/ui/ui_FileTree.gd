@@ -42,14 +42,14 @@ var is_folder: bool
 
 func _ready():
 	G_File.OnFilesUpdated.connect(_ReloadPath)
-	is_expanded=G_Project.active_project.tree_expansion.get(path,false)
+	is_expanded=G.active_project.tree_expansion.get(path,false)
 	N_SubitemRoot.visible=false
 	_ReloadPath()
 
 
 func Path_Get() -> String:
 	if is_project_relative:
-		return G_Project.PATH_GetRoot()+path
+		return G.PATH_GetRoot()+path
 	return path
 
 func _ReloadPath():
@@ -62,7 +62,7 @@ func _ReloadPath():
 
 func SetExpanded(_expanded: bool):
 	is_expanded=_expanded
-	G_Project.active_project.tree_expansion[path]=is_expanded
+	G.active_project.tree_expansion[path]=is_expanded
 	N_SubitemRoot.visible=is_expanded
 	G_Node.Children_ClearAll(N_SubitemList)
 	if is_expanded:

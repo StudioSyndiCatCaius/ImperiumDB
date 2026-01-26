@@ -68,6 +68,8 @@ func CONV(input):
 	return out
 
 
+
+
 func _ready():
 	l=LuaState.new()
 	l.open_libraries()
@@ -92,7 +94,7 @@ func _ready():
 
 func TEMPLATES_ReloadAll():
 	D_templates={}
-	TEMPLATES_LoadAllInPath(G_Project.active_project.GetProjectDir()+"/FlowTemplates/")
+	TEMPLATES_LoadAllInPath(G.active_project.GetProjectDir()+"/FlowTemplates/")
 
 func TEMPLATES_LoadAllInPath(path: String):
 	for i in G_File.LIST_AllInDir(path):
@@ -130,7 +132,7 @@ func NODES_ReloadInternal():
 
 func NODES_ReloadAll():
 	NODES_ReloadInternal()
-	for i in G_Project.GetCONFIG().get("external_node_paths",[]):
+	for i in G.GetCONFIG().get("external_node_paths",[]):
 		NODES_LoadAllInPath(i,1)
 
 func NODE_Generate(type: String) -> Dictionary:

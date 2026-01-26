@@ -43,14 +43,14 @@ func Setup(obj: Dictionary, template: LuaTable):
 				list=_keys
 				list.sort()
 			else:
-				list=G_Project.TABLE_GetItemList(_tbl)
+				list=G.TABLE_GetItemList(_tbl)
 		#from csv
 		if _tbl:
 			for i in list:
 				var _idx=list.find(i)
-				var _imgPath=G_Project.PATH_GetRoot()+"/image/ico_"+_tbl+"_"+i+".png"
+				var _imgPath=G.PATH_GetRoot()+"/image/ico_"+_tbl+"_"+i+".png"
 				var _ico=G_Load.Texture(_imgPath)
-				var _tblData=G_Project.TABLE_GetItem(_tbl,i)
+				var _tblData=G.TABLE_GetItem(_tbl,i)
 				
 				N_List.add_item(i)
 				N_List.set_item_tooltip(_idx,_tblData.get("description",""))

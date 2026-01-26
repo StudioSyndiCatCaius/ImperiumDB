@@ -40,7 +40,7 @@ func GLTF(path: String) -> Node:
 	return scene
 
 func Texture_Icon(path: String):
-	var _imgPath=G_Project.PATH_GetRoot()+"/image/"+path+".png"
+	var _imgPath=G.PATH_GetRoot()+"/image/"+path+".png"
 	return G_Load.Texture(_imgPath)
 	
 

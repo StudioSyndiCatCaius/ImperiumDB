@@ -12,9 +12,13 @@ var target_proj: res_project
 
 func _ready():
 	#if launching from command line project input:
-	# PROJECT_TryReloadLast()
+	if !G.b_FirstOpen:
+		G.b_FirstOpen=true
+		if !PROJECT_TryLoad_Last():
+			LIST_Rebuild()
+	else:
+		LIST_Rebuild()
 	
-	LIST_Rebuild()
 
 func LIST_Refresh():
 	for i in N_ProjList.get_children():
@@ -25,13 +29,20 @@ func LIST_Rebuild():
 	print("Rebuilding Projects list")
 	G_Node.Children_ClearAll(N_ProjList)
 	
-	for i in G_Project.list_projects:
+	for i in G.list_projects:
 		var new_proj: ui_Project=ref_UiProj.instantiate()
 		new_proj.project=i
 		new_proj.OnAction.connect(PROJECT_Action)
 		N_ProjList.add_child(new_proj)
 
-func PROJECT_TryReloadLast():
+func PROJECT_TryLoad_Last():
+	var i=G.PROJECT_GetFromPath(G.DATA_global.get('last_project',""))
+	if i:
+		PROJECT_Action(0,i)
+		return true
+	return false
+
+func PROJECT_TryLoad_CommandLine():
 	var cmd_args: PackedStringArray=OS.get_cmdline_args()
 	if cmd_args.size()>0:
 		var cmd_projPath=cmd_args[0]
@@ -41,15 +52,15 @@ func PROJECT_TryReloadLast():
 				PROJECT_Action(0,_tempProj)
 
 func PROJECT_GetFromPath(path: String) -> res_project:
-	return G_Project.PROJECT_Load(path)
+	return G.PROJECT_Load(path)
 
 ## 0= Load | 1=Delete
 func PROJECT_Action(action: int, project: res_project):
 	# ACTION -- LOAD PROJECT
 	if action==0:
-		G_Project.list_projects.erase(project)
-		G_Project.list_projects.push_front(project)
-		G_Project.PROJECT_Open(project)
+		G.list_projects.erase(project)
+		G.list_projects.push_front(project)
+		G.PROJECT_Open(project)
 		get_tree().change_scene_to_file("res://app/scenes/state/STATE_Main.tscn")
 	
 	# ACTION -- DELETE PROJECT
@@ -62,11 +73,11 @@ func _on_btn_open_pressed():
 	N_Dialog_LoadProj.visible=true
 
 func _on_file_dialog_load_file_selected(path):
-	G_Project.PROJECT_Load(path)
+	G.PROJECT_Load(path)
 	LIST_Rebuild()
 
 func _on_dialog_confirm_delete_confirmed():
-	G_Project.PROJECT_Remove(target_proj)
+	G.PROJECT_Remove(target_proj)
 	LIST_Rebuild()
 
 
@@ -88,5 +99,5 @@ func _on_btn_new_pressed():
 
 
 func _on_dialog_new_file_selected(path):
-	G_Project.PROJECT_Create(path)
+	G.PROJECT_Create(path)
 	LIST_Refresh()
