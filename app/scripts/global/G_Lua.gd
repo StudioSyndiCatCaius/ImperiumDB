@@ -53,7 +53,7 @@ func DATABASE_Get()-> Dictionary:
 func SET(key,value):
 	l.globals.set(key,value)
 
-func CONV(input):
+func CONV(input, recursive: bool=false):
 	var out={}
 	if input is Dictionary:
 		out=input
@@ -62,15 +62,13 @@ func CONV(input):
 	else:
 		return input
 	
-	for i in out:
-		out[i]=CONV(out[i])
+	if recursive:
+		for i in out:
+			out[i]=CONV(out[i])
 	
 	return out
 
-
-
-
-func _ready():
+func INIT():
 	l=LuaState.new()
 	l.open_libraries()
 	
@@ -83,10 +81,20 @@ func _ready():
 	""")
 	
 	print("================================================")
-	NODES_LoadAllInPath("res://lua/nodes/")
+	NODES_LoadAllInPath("res://lua/autorun/nodes/")
+	AutorunPath("res://lua/autorun/")
 	print("--------------")
 	print(str(D_nodes))
 	print("================================================")
+
+
+func AutorunPath(path: String):
+	var list=G_File.LIST_AllInDir(path,true,true)
+	
+	for i in list:
+		if i.get_extension()=="lua":
+			l.do_file(i)
+
 
 # ====================================================================
 # TEMPLATES

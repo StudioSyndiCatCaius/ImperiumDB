@@ -105,28 +105,28 @@ text = "Open Project"
 icon = ExtResource("3_m8sq3")
 expand_icon = true
 
-[node name="Settings" type="PanelContainer" parent="TabContainer" unique_id=1153776162]
+[node name="⚙️Settings" type="PanelContainer" parent="TabContainer" unique_id=1153776162]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_h33rn")
 metadata/_tab_index = 1
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/Settings" unique_id=1684423400]
+[node name="VBoxContainer2" type="VBoxContainer" parent="TabContainer/⚙️Settings" unique_id=1684423400]
 layout_mode = 2
 
-[node name="btn_openSave" type="Button" parent="TabContainer/Settings/VBoxContainer2" unique_id=747289414]
+[node name="btn_openSave" type="Button" parent="TabContainer/⚙️Settings/VBoxContainer2" unique_id=747289414]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Open user save data"
 expand_icon = true
 
-[node name="set" parent="TabContainer/Settings/VBoxContainer2" unique_id=2098344849 instance=ExtResource("5_r66i8")]
+[node name="set" parent="TabContainer/⚙️Settings/VBoxContainer2" unique_id=2098344849 instance=ExtResource("5_r66i8")]
 layout_mode = 2
 param_name = "hide_path"
 display_name = "Hide Project Paths?"
 
-[node name="set_Autoload" parent="TabContainer/Settings/VBoxContainer2" unique_id=512601625 instance=ExtResource("5_r66i8")]
+[node name="set_Autoload" parent="TabContainer/⚙️Settings/VBoxContainer2" unique_id=512601625 instance=ExtResource("5_r66i8")]
 layout_mode = 2
 param_name = "autoload_last_project"
 display_name = "Autoload last project?"
@@ -153,7 +153,7 @@ initial_position = 2
 
 [connection signal="pressed" from="TabContainer/Projects/VBoxContainer2/HBoxContainer/btn_new" to="." method="_on_btn_new_pressed"]
 [connection signal="pressed" from="TabContainer/Projects/VBoxContainer2/HBoxContainer/btn_open" to="." method="_on_btn_open_pressed"]
-[connection signal="pressed" from="TabContainer/Settings/VBoxContainer2/btn_openSave" to="." method="_on_btn_open_save_pressed"]
+[connection signal="pressed" from="TabContainer/⚙️Settings/VBoxContainer2/btn_openSave" to="." method="_on_btn_open_save_pressed"]
 [connection signal="file_selected" from="Dialog_Load" to="." method="_on_file_dialog_load_file_selected"]
 [connection signal="file_selected" from="Dialog_New" to="." method="_on_dialog_new_file_selected"]
 [connection signal="confirmed" from="Dialog_ConfirmDelete" to="." method="_on_dialog_confirm_delete_confirmed"]

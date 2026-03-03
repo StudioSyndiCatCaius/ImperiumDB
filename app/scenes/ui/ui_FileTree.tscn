@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://da8qer3yy0t2p"]
+[gd_scene format=3 uid="uid://da8qer3yy0t2p"]
 
 [ext_resource type="Script" uid="uid://dtl3wst86vgj7" path="res://app/scenes/ui/ui_FileTree.gd" id="1_rafb5"]
 [ext_resource type="Texture2D" uid="uid://dullmjmvl2s2h" path="res://app/assets/2D/icons/Icon_Folder_T.PNG" id="2_ad5mi"]
@@ -9,9 +9,10 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rafb5"]
 bg_color = Color(0.187176, 0.187176, 0.187176, 1)
 border_width_left = 10
-border_color = Color(0.325441, 0.325441, 0.325441, 1)
+border_color = Color(0.32915837, 0.3291584, 0.3291584, 1)
+corner_radius_top_right = 1
 
-[node name="UiFileTreeItem" type="VBoxContainer" node_paths=PackedStringArray("N_BtnOpen", "N_BtnExpand", "N_SubitemRoot", "N_SubitemList", "N_timer_dblClk", "N_popup_file", "N_popup_folder", "N_confirm_delete", "N_TxtEdit_name", "N_lbl_fileCount")]
+[node name="UiFileTreeItem" type="VBoxContainer" unique_id=1166053082 node_paths=PackedStringArray("N_BtnOpen", "N_BtnExpand", "N_SubitemRoot", "N_SubitemList", "N_timer_dblClk", "N_popup_file", "N_popup_folder", "N_confirm_delete", "N_TxtEdit_name", "N_lbl_fileCount")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -31,10 +32,10 @@ N_confirm_delete = NodePath("confrim_delete")
 N_TxtEdit_name = NodePath("HBoxContainer/Button/Tedit_name")
 N_lbl_fileCount = NodePath("HBoxContainer/Button/lbl_fileCount")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1714425403]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="HBoxContainer"]
+[node name="Button" type="Button" parent="HBoxContainer" unique_id=180105907]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -42,7 +43,7 @@ theme_override_font_sizes/font_size = 10
 text = "sdf"
 alignment = 0
 
-[node name="Tedit_name" type="TextEdit" parent="HBoxContainer/Button"]
+[node name="Tedit_name" type="TextEdit" parent="HBoxContainer/Button" unique_id=1412921641]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -56,7 +57,7 @@ theme_override_colors/background_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10
 text = "afasf"
 
-[node name="lbl_fileCount" type="Label" parent="HBoxContainer/Button"]
+[node name="lbl_fileCount" type="Label" parent="HBoxContainer/Button" unique_id=2077643510]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -72,33 +73,33 @@ theme_override_colors/font_color = Color(1, 1, 1, 0.34902)
 theme_override_font_sizes/font_size = 9
 text = "50"
 
-[node name="btn_open" type="Button" parent="HBoxContainer"]
+[node name="btn_open" type="Button" parent="HBoxContainer" unique_id=1417232977]
 layout_mode = 2
 icon = ExtResource("4_tlf0m")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1988639032]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_rafb5")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=660946943]
 layout_mode = 2
 
-[node name="Timer_dblClick" type="Timer" parent="."]
+[node name="Timer_dblClick" type="Timer" parent="." unique_id=2125441267]
 wait_time = 0.2
 
-[node name="i_RightMousee" type="Node" parent="."]
+[node name="i_RightMousee" type="Node" parent="." unique_id=1379178384]
 script = ExtResource("5_0q2ni")
 metadata/_custom_type_script = "uid://dmgwd5itujl7q"
 
-[node name="popup_folder" type="PopupMenu" parent="."]
+[node name="popup_folder" type="PopupMenu" parent="." unique_id=657885495]
 item_count = 2
 item_0/text = "New Folder"
 item_0/id = 0
 item_1/text = "Rename"
 item_1/id = 1
 
-[node name="popup_file" type="PopupMenu" parent="."]
+[node name="popup_file" type="PopupMenu" parent="." unique_id=1131548207]
 auto_translate_mode = 1
 item_count = 3
 item_0/text = "Duplicate"
@@ -108,7 +109,7 @@ item_1/id = 1
 item_2/text = "Rename"
 item_2/id = 2
 
-[node name="confrim_delete" type="ConfirmationDialog" parent="."]
+[node name="confrim_delete" type="ConfirmationDialog" parent="." unique_id=197833284]
 title = "Delete this Flow?"
 initial_position = 2
 

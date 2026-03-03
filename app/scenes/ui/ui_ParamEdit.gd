@@ -57,7 +57,7 @@ func OBJECT_Set(_obj: Dictionary, _template: LuaTable):
 			newp.paramName=i
 			newp.paramCategory=key
 			newp.paramConfig=plist[i]
-			newp.Setup(_obj,_template)
+			newp.Setup(_obj)
 			newp.OnParamEdit.connect(_op)
 			newp.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 			N_container.add_child(newp)

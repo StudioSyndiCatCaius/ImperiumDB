@@ -22,12 +22,14 @@ var active_project: res_project
 var DATA_global={
 	projects=[]
 }
+
 var path_SaveProj="user://projects.json"
 
 var users=[]
 
 func _ready():
 	DATA_global=G_File.LOAD_Json(path_SaveProj,DATA_global)
+	G_Lua.INIT()
 	for _path in DATA_global.get("projects",[]):
 		PROJECT_Load(_path)
 	if active_project==null and list_projects.size()>0:
@@ -130,7 +132,25 @@ func TABLE_GetItem(table: String, entry: String) ->Dictionary:
 	return active_project.DataTables.get(table,{}).get(entry,{})
 
 func TABLE_GetItemList(table: String) -> PackedStringArray:
-	return active_project.DataTables.get(table,{}).keys()
+	var _keys: PackedStringArray=active_project.DataTables.get(table,{}).keys()
+	var _ap_keys: PackedStringArray=active_project.DATA.get('tables',{}).get(table,[])
+	_keys.append_array(_ap_keys)
+	return _keys
+
+
+# ====================================================================
+# NodeTemapltes
+# ====================================================================
+
+func FlowTemplate_GetData(id: String):
+	var imps=G_Lua.CONV(G_Lua.l.globals.ImpDB_FlowTemplates,true)
+	
+	return imps.get(id,{})
+
+func FlowTemplate_GetKeys():
+	var tbl=G_Lua.l.globals.ImpDB_FlowTemplates
+	var imps=G_Lua.CONV(tbl)
+	return imps.keys()
 
 # ====================================================================
 # USER
@@ -160,21 +180,52 @@ func SOUND_PlayExternal(path: String):
 # ====================================================================
 # Raw Script
 # ====================================================================
+var imported_csv={}
+func CSV_get(path: String):
+	if imported_csv.has(path):
+		return imported_csv[path]
+	var dic=G_File.CSV_Import(path)
+	imported_csv[path]=dic
+	return dic
+
+@export var import_script_directions={}
+@export var import_csv={}
+
 func SCRIPT_GetDirectionTextByLineKey() -> Dictionary[String,String]:
 	var out: Dictionary[String,String]={}
 	
-	var _script_path=G_Lua.l.globals.to_dictionary().get('IMPDB_SCRIPT_PATH','')
-	var direction_text=""
+	var _script_path=G.active_project.DATA.get('linked_script',"")
+	var _last_scene=""
+	var _last_key=""
+	var _last_direction=""
 	var data = G_File.CSV_ImportArray(_script_path)
-	
-	for k in data:
-		var new_dir=k.get('direction',"")
-		if !new_dir.is_empty():
-			direction_text+=new_dir+"\n --- \n"
+	import_csv=data
+	#iterate through csv lines
+	for _csv_lin in data:
+		var new_dir=_csv_lin.get('direction',"")
+		var _new_scene=_csv_lin.get('scene',"")
+		var line_key=_csv_lin.get('key',"")
+		
+		#if starting new scene
+		if _new_scene!="" and _new_scene!=_last_scene:
+			#mak 'last_scene' as thise new scene
+			_last_scene=_new_scene
 			
-		var line_key=k.get('key',"")
-		# if on new line
-		if !line_key.is_empty():
-			out[line_key]=direction_text
-			direction_text=""
+			#append last direction to last line key & reset direction text
+			var _temp_dir=out.get(_last_key,"")
+			_temp_dir=_temp_dir+_last_direction
+			out[_last_key]=_temp_dir
+			_last_direction=""
+		# ELSE if on life
+		else:
+			
+			#pile up direction text until we get new line key
+			if !new_dir.is_empty():
+				_last_direction+=new_dir+"\n --- \n"
+			
+			# if on new key
+			if !line_key.is_empty():
+				out[line_key]=_last_direction
+				_last_key=line_key
+				_last_direction=""
 	return out

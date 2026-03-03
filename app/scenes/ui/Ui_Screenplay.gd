@@ -26,6 +26,6 @@ func NODES_GetOrder() -> Array[ui_GraphNode]:
 	var out: Array[ui_GraphNode]
 	
 	if graph:
-		out=graph.NODES_GetAll()
+		out=graph.NODES_GetSortedOrder()
 	
 	return out

@@ -10,13 +10,18 @@ extends Node
 @export var N_TreeRoot: ui_FileTree
 @export var N_img_logo: TextureRect
 
+@export var n_window_playtest: Window
+@export var n_playtest: STATE_playtest
+@export var n_block_color: ColorRect
+
+
 @onready var REF_GraphEdit:=preload("res://app/scenes/ui/ui_FlowGraph.tscn")
 
 
 func _ready():
 	if G.active_project==null:
 		G.active_project=G.list_projects[0]
-
+	
 	#Setup Linked Nodes
 	N_ProjName.text=G.active_project.name
 	N_Dialog_save.root_subfolder=G.PATH_GetRoot()+"/flow/"
@@ -25,7 +30,8 @@ func _ready():
 	#setup first graph
 	G_Node.Children_ClearAll(N_TabGraphs)
 	GRAPH_Open(G_Lua.GRAPH_NewDefault())
-
+	
+	
 func focus():
 	return get_viewport().gui_get_focus_owner()
 
@@ -67,6 +73,18 @@ func SAVE_Confirm(path : String, obj=null):
 			object_to_save.SAVE(path)
 	GRAPH_GetCurrent().GRAPH_Refresh()
 
+func GRAPH_OnEvent(graph: ui_GraphEdit, event: StringName, meta: Dictionary):
+	print("Graph event: "+event+" on '"+str(graph)+"'")
+	
+	if event=="playtest":
+		n_playtest.linked_graph=graph
+		n_window_playtest.popup()
+		n_block_color.visible=true
+		n_block_color.mouse_filter=Control.MOUSE_FILTER_STOP
+
+func PLAYTEST_IsActive():
+	return n_window_playtest.visibile
+
 func GRAPH_Open(graph: Dictionary,path:String=""):
 	var new_graph: ui_GraphEdit =REF_GraphEdit.instantiate()
 	new_graph.DATA=graph
@@ -76,10 +94,12 @@ func GRAPH_Open(graph: Dictionary,path:String=""):
 			N_TabGraphs.current_tab=i
 	if path!="":
 		new_graph.file_path=path
+	new_graph.OnGraphEvent.connect(GRAPH_OnEvent)
 	new_graph.GRAPH_Load(graph)
 
 func GRAPH_FromFile(file: String) -> Dictionary:
-	return G_File.LOAD_Json(file)
+	var j=G_File.LOAD_Json(file)
+	return j
 
 func GRAPH_GetCurrent() -> ui_GraphEdit:
 	return N_TabGraphs.get_current_tab_control()
@@ -137,5 +157,17 @@ func _on_btn_new_res_pressed():
 	print("Saving: "+str(_newEnt)+" to "+_savPath)
 	G_Resource.Save(_newEnt,_savPath)
 
-func _on_btn_run_scripts_pressed():
+func CMD_RerunScripts():
 	G.PROJECT_RerunScripts()
+
+func CMD_ReloadTables():
+	pass # Replace with function body.
+
+# ===============================================================
+# MENU
+# ===============================================================
+
+func PLAYTEST_Stop():
+	n_window_playtest.visible=false
+	n_block_color.visible=false
+	n_block_color.mouse_filter=Control.MOUSE_FILTER_IGNORE

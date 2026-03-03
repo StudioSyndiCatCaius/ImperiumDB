@@ -8,20 +8,26 @@
 [ext_resource type="Texture2D" uid="uid://67trfpi1ip13" path="res://icon.svg" id="4_3tr6m"]
 [ext_resource type="Texture2D" uid="uid://ddm8eiltd4gd3" path="res://app/assets/2D/icons/t_ico_Next.png" id="4_cuc4e"]
 [ext_resource type="PackedScene" uid="uid://dlb3v1t3bl27p" path="res://app/scenes/ui/ui_LogDisplay.tscn" id="4_mggx4"]
+[ext_resource type="Texture2D" uid="uid://dcjotfayujy0e" path="res://app/assets/2D/icons/t_ico_ScriptReload.png" id="5_elbk2"]
 [ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="5_mud24"]
 [ext_resource type="PackedScene" uid="uid://bjysjg1rmufb5" path="res://app/scenes/tabs/SubTab_tables.tscn" id="6_dhbk0"]
+[ext_resource type="Theme" uid="uid://c0k1s5ql2mwpy" path="res://app/assets/Style/theme_tabs.theme" id="7_tpdju"]
 [ext_resource type="PackedScene" uid="uid://c07qwskyhadj" path="res://app/scenes/ui/ui_TAB_ProjectSettings.tscn" id="11_cuc4e"]
 [ext_resource type="PackedScene" uid="uid://cd6vc15fa8a8j" path="res://app/scenes/ui/ui_TAB_Commands.tscn" id="12_tpdju"]
+[ext_resource type="PackedScene" uid="uid://vikod448v4xn" path="res://app/scenes/state/STATE_playtest.tscn" id="14_68dqp"]
 
-[node name="StateProjects" type="Node" unique_id=541109926 node_paths=PackedStringArray("N_TabsMain", "N_TabGraphs", "N_ProjName", "N_Dialog_save", "N_Dialog_confirm_quit", "N_TreeRoot", "N_img_logo")]
+[node name="StateProjects" type="Node" unique_id=541109926 node_paths=PackedStringArray("N_TabsMain", "N_TabGraphs", "N_ProjName", "N_Dialog_save", "N_Dialog_confirm_quit", "N_TreeRoot", "N_img_logo", "n_window_playtest", "n_playtest", "n_block_color")]
 script = ExtResource("1_2mmce")
 N_TabsMain = NodePath("Control/VBoxContainer/TABS_Main")
-N_TabGraphs = NodePath("Control/VBoxContainer/TABS_Main/Flow/TABS_FlowGraph")
+N_TabGraphs = NodePath("Control/VBoxContainer/TABS_Main/💬Flow/TABS_FlowGraph")
 N_ProjName = NodePath("Control/VBoxContainer/HBoxContainer2/txt_projName")
 N_Dialog_save = NodePath("dialog_SAVE")
 N_Dialog_confirm_quit = NodePath("dlg_confirm_quit")
-N_TreeRoot = NodePath("Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree")
+N_TreeRoot = NodePath("Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree")
 N_img_logo = NodePath("Control/VBoxContainer/HBoxContainer2/Container/img_logo")
+n_window_playtest = NodePath("n_window_playtest")
+n_playtest = NodePath("n_window_playtest/n_playtest")
+n_block_color = NodePath("n_blockColor")
 
 [node name="Control" type="Control" parent="." unique_id=334936988]
 layout_mode = 3
@@ -71,6 +77,13 @@ layout_mode = 2
 tooltip_text = "Rerun Scripts"
 icon = ExtResource("4_cuc4e")
 
+[node name="btn_ReloadTables" type="Button" parent="Control/VBoxContainer/HBoxContainer2" unique_id=326418761]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "Reload Tables"
+icon = ExtResource("5_elbk2")
+expand_icon = true
+
 [node name="Control" type="Control" parent="Control/VBoxContainer/HBoxContainer2" unique_id=336739778]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -99,58 +112,59 @@ popup/item_0/id = 0
 [node name="TABS_Main" type="TabContainer" parent="Control/VBoxContainer" unique_id=1150674555]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("7_tpdju")
 current_tab = 0
 
-[node name="Flow" type="HSplitContainer" parent="Control/VBoxContainer/TABS_Main" unique_id=1678989707]
+[node name="💬Flow" type="HSplitContainer" parent="Control/VBoxContainer/TABS_Main" unique_id=1678989707]
 layout_mode = 2
 size_flags_vertical = 3
 split_offsets = PackedInt32Array(200)
 split_offset = 200
 metadata/_tab_index = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/TABS_Main/Flow" unique_id=1035321633]
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/TABS_Main/💬Flow" unique_id=1035321633]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer" unique_id=662407927]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer" unique_id=662407927]
 layout_mode = 2
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer" unique_id=207391693]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer" unique_id=207391693]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2" unique_id=1411161082]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer/VBoxContainer2" unique_id=1411161082]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="UiFileTree" parent="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer" unique_id=1710064516 instance=ExtResource("2_j53oe")]
+[node name="UiFileTree" parent="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer/VBoxContainer2/ScrollContainer" unique_id=1710064516 instance=ExtResource("2_j53oe")]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 path = "/flow/"
 is_project_relative = true
 
-[node name="TABS_FlowGraph" type="TabContainer" parent="Control/VBoxContainer/TABS_Main/Flow" unique_id=413469746]
+[node name="TABS_FlowGraph" type="TabContainer" parent="Control/VBoxContainer/TABS_Main/💬Flow" unique_id=413469746]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 10
 current_tab = 0
 
-[node name="UiFlowGraph" parent="Control/VBoxContainer/TABS_Main/Flow/TABS_FlowGraph" unique_id=1808333635 instance=ExtResource("2_nrvy0")]
+[node name="UiFlowGraph" parent="Control/VBoxContainer/TABS_Main/💬Flow/TABS_FlowGraph" unique_id=1808333635 instance=ExtResource("2_nrvy0")]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="tables" parent="Control/VBoxContainer/TABS_Main" unique_id=1819948933 instance=ExtResource("6_dhbk0")]
+[node name="📋tables" parent="Control/VBoxContainer/TABS_Main" unique_id=1819948933 instance=ExtResource("6_dhbk0")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="Commands" parent="Control/VBoxContainer/TABS_Main" unique_id=920357069 instance=ExtResource("12_tpdju")]
+[node name="⚙️Settings" parent="Control/VBoxContainer/TABS_Main" unique_id=1794218794 instance=ExtResource("11_cuc4e")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="Settings" parent="Control/VBoxContainer/TABS_Main" unique_id=1794218794 instance=ExtResource("11_cuc4e")]
+[node name="Commands" parent="Control/VBoxContainer/TABS_Main" unique_id=920357069 instance=ExtResource("12_tpdju")]
 visible = false
 layout_mode = 2
 metadata/_tab_index = 3
@@ -181,13 +195,36 @@ size = Vector2i(300, 100)
 [node name="soundPlayer" type="AudioStreamPlayer" parent="." unique_id=1878395095]
 unique_name_in_owner = true
 
+[node name="n_window_playtest" type="Window" parent="." unique_id=1770926899]
+oversampling_override = 1.0
+title = "Playtest"
+initial_position = 3
+size = Vector2i(1280, 720)
+current_screen = 0
+visible = false
+popup_window = true
+
+[node name="n_playtest" parent="n_window_playtest" unique_id=639357761 instance=ExtResource("14_68dqp")]
+
+[node name="n_blockColor" type="ColorRect" parent="." unique_id=1560595409]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.14, 0.14, 0.14, 0.57254905)
+
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_OpenRoot" to="." method="_on_btn_open_root_pressed"]
-[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_RunScripts" to="." method="_on_btn_run_scripts_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_RunScripts" to="." method="CMD_RerunScripts"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_ReloadTables" to="." method="CMD_ReloadTables"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_quit2" to="." method="_on_btn_quit_pressed"]
-[connection signal="FileDoubleClick" from="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree" to="." method="_on_ui_file_tree_file_double_click"]
-[connection signal="tree_exiting" from="Control/VBoxContainer/TABS_Main/Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree" to="." method="_on_ui_file_tree_tree_exiting"]
+[connection signal="FileDoubleClick" from="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree" to="." method="_on_ui_file_tree_file_double_click"]
+[connection signal="tree_exiting" from="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer/VBoxContainer2/ScrollContainer/UiFileTree" to="." method="_on_ui_file_tree_tree_exiting"]
 [connection signal="InputBegin" from="i_save" to="." method="_on_i_save_input_begin"]
 [connection signal="InputBegin" from="i_new" to="." method="_on_i_new_input_begin"]
 [connection signal="confirmed" from="dialog_SAVE" to="." method="_on_dialog_save_confirmed"]
 [connection signal="file_selected" from="dialog_SAVE" to="." method="_on_dialog_save_file_selected"]
 [connection signal="confirmed" from="dlg_confirm_quit" to="." method="_on_dlg_confirm_quit_confirmed"]
+[connection signal="close_requested" from="n_window_playtest" to="." method="PLAYTEST_Stop"]

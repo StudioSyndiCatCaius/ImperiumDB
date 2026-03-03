@@ -19,7 +19,7 @@ ImpDB_Nodes['node_luaScript']={
 ImpDB_Nodes['node_luaIf']={
 	name="🔵Lua If",
 	color={1,0,0,1},
-	size={x=175,y=100},
+	size={x=175,y=120},
 
 	inputs={ {} },
 	outputs={ {},{}, },
@@ -28,8 +28,18 @@ ImpDB_Nodes['node_luaIf']={
 		condition={ type='code', },
 	},
 
-	GetDescription=function(data)
-		return data['params']['condition']
-	end,
+	sections={
+		{
+			title='true',
+			
+			GetDescription=function(data)
+				return data['params']['condition']
+			end,
+		},
+		{
+			title='false'
+		},
+	},
+
 
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5l5560tvagvq"]
+[gd_scene format=3 uid="uid://b5l5560tvagvq"]
 
 [ext_resource type="Script" uid="uid://dbqxismjwnx1n" path="res://app/scenes/ui/Ui_ScreenplayNode.gd" id="1_2wbun"]
 
@@ -14,22 +14,42 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3hr06"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.07, 0.07, 0.07, 0.7529412)
+
 [sub_resource type="LabelSettings" id="LabelSettings_3hi72"]
 font_color = Color(0.97, 0.8419601, 0.64989996, 0.6784314)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3hi72"]
+content_margin_left = 5.0
+content_margin_top = 3.0
+content_margin_right = 0.0
+content_margin_bottom = 3.0
+bg_color = Color(1, 1, 1, 0.09803922)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [sub_resource type="LabelSettings" id="LabelSettings_3hr06"]
+font_size = 17
 font_color = Color(0.60822564, 0.7669531, 0.86784303, 1)
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_2wbun"]
-font_size = 18
+font_size = 21
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 shadow_color = Color(0, 0, 0, 0.78431374)
 shadow_offset = Vector2(2, 2)
 
-[node name="Ui_ScreenplayNode" type="PanelContainer" node_paths=PackedStringArray("N_lbl_dir", "N_lbl_spk", "N_lbl_lin", "N_ico")]
+[node name="Ui_ScreenplayNode" type="PanelContainer" unique_id=1139716779 node_paths=PackedStringArray("N_lbl_dir", "N_lbl_spk", "N_lbl_lin", "N_ico", "n_panel_dir")]
 custom_minimum_size = Vector2(0, 50)
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,42 +58,59 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_2wbun")
 script = ExtResource("1_2wbun")
-N_lbl_dir = NodePath("HBoxContainer/VBoxContainer/lbl_dir")
-N_lbl_spk = NodePath("HBoxContainer/VBoxContainer/lbl_speaker")
-N_lbl_lin = NodePath("HBoxContainer/VBoxContainer/lbl_line")
-N_ico = NodePath("HBoxContainer/TextureRect")
+N_lbl_dir = NodePath("VBoxContainer/n_panel_dir/lbl_dir")
+N_lbl_spk = NodePath("VBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer/lbl_speaker")
+N_lbl_lin = NodePath("VBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/lbl_line")
+N_ico = NodePath("VBoxContainer/PanelContainer/HBoxContainer/TextureRect")
+n_panel_dir = NodePath("VBoxContainer/n_panel_dir")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1670011615]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+[node name="n_panel_dir" type="PanelContainer" parent="VBoxContainer" unique_id=2116291372]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_3hr06")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="lbl_dir" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="lbl_dir" type="Label" parent="VBoxContainer/n_panel_dir" unique_id=338772383]
 layout_mode = 2
 text = "SPEAKER"
 label_settings = SubResource("LabelSettings_3hi72")
 horizontal_alignment = 2
 autowrap_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=2109888820]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=523422519]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PanelContainer/HBoxContainer" unique_id=574505593]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/HBoxContainer" unique_id=2017226199]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer/PanelContainer/HBoxContainer/VBoxContainer" unique_id=1403873162]
 self_modulate = Color(1, 1, 1, 0.4117647)
 layout_mode = 2
 
-[node name="lbl_speaker" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/PanelContainer/HBoxContainer/VBoxContainer" unique_id=108471246]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3hi72")
+
+[node name="lbl_speaker" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/VBoxContainer/PanelContainer" unique_id=1271687059]
 layout_mode = 2
 size_flags_vertical = 1
 text = "line text. line text. line text. line text. line text. line text. line text. line text. line text. line text. "
 label_settings = SubResource("LabelSettings_3hr06")
 autowrap_mode = 2
 
-[node name="lbl_line" type="Label" parent="HBoxContainer/VBoxContainer"]
+[node name="lbl_line" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer/VBoxContainer" unique_id=782960245]
 layout_mode = 2
 text = "SPEAKER"
 label_settings = SubResource("LabelSettings_2wbun")

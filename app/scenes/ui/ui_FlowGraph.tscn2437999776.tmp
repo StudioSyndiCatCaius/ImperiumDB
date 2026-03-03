@@ -26,7 +26,7 @@ corner_radius_bottom_left = 5
 corner_detail = 5
 shadow_color = Color(0, 0, 0, 0.3137255)
 
-[node name="UiFlowGraph" type="PanelContainer" unique_id=800245775 node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist", "N_screenplay", "n_flow_template", "parm_BindList")]
+[node name="UiFlowGraph" type="PanelContainer" unique_id=800245775 node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist", "N_screenplay", "n_flow_template", "parm_st_id", "parm_st_key")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -43,7 +43,8 @@ N_Spin_KeyOffset = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitConta
 N_popup_Nodelist = NodePath("N_popup_NodeList")
 N_screenplay = NodePath("TabContainer/📜Screenplay")
 n_flow_template = NodePath("TabContainer/🪢Graph/HBoxContainer/n_FlowTemplate")
-parm_BindList = [NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer/parmSt_id"), NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer/parmSt_key")]
+parm_st_id = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer/parmSt_id")
+parm_st_key = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer/parmSt_key")
 
 [node name="TabContainer" type="TabContainer" parent="." unique_id=1047816591]
 layout_mode = 2
@@ -137,7 +138,7 @@ layout_mode = 2
 [node name="parmSt_id" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer" unique_id=175299392 instance=ExtResource("7_p8sk6")]
 layout_mode = 2
 size_flags_horizontal = 3
-paramName = "label"
+paramName = "id"
 
 [node name="parmSt_key" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer" unique_id=1106765642 instance=ExtResource("7_p8sk6")]
 layout_mode = 2

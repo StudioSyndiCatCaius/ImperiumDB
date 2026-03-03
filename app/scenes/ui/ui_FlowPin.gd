@@ -10,6 +10,7 @@ var pin_out: Dictionary
 var pin_index: int = 0
 
 @export var N_text: RichTextLabel
+@export var N_lbl_title: Label
 @export var N_lbl_in: Label
 @export var N_lbl_out: Label
 @export var N_icon: TextureRect
@@ -23,6 +24,8 @@ func _ready():
 
 
 func getSectionCall(call) -> LuaFunction:
+	if SECTION_DATA is LuaTable:
+		SECTION_DATA=SECTION_DATA.to_dictionary()
 
 	if SECTION_DATA.has(call):
 		return SECTION_DATA[call]
@@ -51,7 +54,8 @@ func getSectionParam_texture(param: String) -> Texture2D:
 
 func _refresh():
 	
-		
+	N_lbl_title.text=SECTION_DATA.get('title',"")
+	N_lbl_title.visible=!N_lbl_title.text.is_empty()
 
 	var txt=getSectionParam_string("GetDescription")
 

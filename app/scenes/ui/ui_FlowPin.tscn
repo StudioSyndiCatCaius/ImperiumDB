@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cowsypvdc8sib"]
+[gd_scene load_steps=7 format=3 uid="uid://cowsypvdc8sib"]
 
 [ext_resource type="Script" uid="uid://cxx6nna8wfhlf" path="res://app/scenes/ui/ui_FlowPin.gd" id="1_0unwo"]
 [ext_resource type="Texture2D" uid="uid://bhmawjg5g0mrd" path="res://icon.png" id="2_mmbcl"]
@@ -17,6 +17,12 @@ corner_radius_bottom_left = 1
 [sub_resource type="LabelSettings" id="LabelSettings_0unwo"]
 font_size = 10
 
+[sub_resource type="LabelSettings" id="LabelSettings_mmbcl"]
+font_size = 10
+font_color = Color(0.7205694, 0.81078553, 0.8815964, 1)
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmbcl"]
 content_margin_left = 2.0
 content_margin_top = 1.0
@@ -24,7 +30,7 @@ content_margin_right = 2.0
 content_margin_bottom = 1.0
 bg_color = Color(0, 0, 0, 0.243137)
 
-[node name="UiFlowPin" type="PanelContainer" unique_id=298272189 node_paths=PackedStringArray("N_text", "N_lbl_in", "N_lbl_out", "N_icon")]
+[node name="UiFlowPin" type="PanelContainer" node_paths=PackedStringArray("N_text", "N_lbl_title", "N_lbl_in", "N_lbl_out", "N_icon")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -34,29 +40,40 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0unwo")
 script = ExtResource("1_0unwo")
-N_text = NodePath("VBoxContainer/PanelContainer/VBoxContainer/RichTextLabel")
+N_text = NodePath("VBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/RichTextLabel")
+N_lbl_title = NodePath("VBoxContainer/VBoxContainer/lbl_title")
 N_lbl_in = NodePath("VBoxContainer/lb_in")
 N_lbl_out = NodePath("VBoxContainer/lb_out")
-N_icon = NodePath("VBoxContainer/PanelContainer/VBoxContainer/TextureRect")
+N_icon = NodePath("VBoxContainer/VBoxContainer/PanelContainer/VBoxContainer/TextureRect")
 
-[node name="VBoxContainer" type="HBoxContainer" parent="." unique_id=1164109435]
+[node name="VBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="lb_in" type="Label" parent="VBoxContainer" unique_id=1431510889]
+[node name="lb_in" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "-"
 label_settings = SubResource("LabelSettings_0unwo")
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=876952371]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lbl_title" type="Label" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "asdasdasd"
+label_settings = SubResource("LabelSettings_mmbcl")
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_mmbcl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=1516705243]
+[node name="VBoxContainer" type="HBoxContainer" parent="VBoxContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=210510474]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -64,7 +81,7 @@ size_flags_vertical = 0
 texture = ExtResource("2_mmbcl")
 expand_mode = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=1192836532]
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/VBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -73,7 +90,7 @@ bbcode_enabled = true
 text = "[i]safasf asf a"
 autowrap_mode = 2
 
-[node name="lb_out" type="Label" parent="VBoxContainer" unique_id=2059851550]
+[node name="lb_out" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "-"
 label_settings = SubResource("LabelSettings_0unwo")

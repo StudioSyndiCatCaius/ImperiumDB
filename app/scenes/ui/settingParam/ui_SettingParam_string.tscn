@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://t7nekx10fssd"]
+
+[ext_resource type="Script" uid="uid://dkdwjrgckh3ya" path="res://app/scenes/ui/settingParam/ui_setting_param.gd" id="1_ohme7"]
+
+[node name="param_string" type="HBoxContainer" unique_id=29278151 node_paths=PackedStringArray("N_txtEdit", "n_label")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+script = ExtResource("1_ohme7")
+N_txtEdit = NodePath("TextEdit")
+n_label = NodePath("n_Label")
+
+[node name="n_Label" type="Label" parent="." unique_id=674926495]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "nam here"
+
+[node name="TextEdit" type="TextEdit" parent="." unique_id=1183582121]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/background_color = Color(0, 0, 0, 0.47843137)
+
+[connection signal="text_changed" from="TextEdit" to="." method="_on_text_edit_text_changed"]

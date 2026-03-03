@@ -1,11 +1,54 @@
 [gd_scene format=3 uid="uid://c07qwskyhadj"]
 
 [ext_resource type="Script" uid="uid://cn4emc3aa572p" path="res://app/scenes/ui/ui_tab_projectSsettings.gd" id="1_fm2j3"]
+[ext_resource type="PackedScene" uid="uid://t7nekx10fssd" path="res://app/scenes/ui/settingParam/ui_SettingParam_string.tscn" id="2_1tx5a"]
 
-[node name="UiTabProjectSettings" type="PanelContainer" unique_id=1794218794]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1tx5a"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="UiTabProjectSettings" type="PanelContainer" unique_id=968286417]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1tx5a")
 script = ExtResource("1_fm2j3")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1594424132]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer" unique_id=1226706178]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="p_linkedScript" parent="ScrollContainer/VBoxContainer" unique_id=2026250347 instance=ExtResource("2_1tx5a")]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+param_name = "linked_script"
+display_name = "Linked Script (csv)"
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VBoxContainer" unique_id=1671936466]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/VBoxContainer" unique_id=1190202632]
+layout_mode = 2
+columns = 2
+
+[node name="p_linkedScript" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=29278151 instance=ExtResource("2_1tx5a")]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+param_name = "extra_flow_paths"
+display_name = "Additional Data Paths"

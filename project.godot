@@ -31,12 +31,17 @@ G_Log="*res://app/scripts/global/G_Log.gd"
 G_Load="*res://app/scripts/global/G_Load.gd"
 G_Lua="*res://app/scripts/global/G_Lua.gd"
 TOML="*res://addons/not_full_toml_yet/parser_writer.gd"
-G="*uid://c00pvdcd10ste"
+G="*res://app/scripts/global/G.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/subwindows/embed_subwindows=false
+
+[dotnet]
+
+project/assembly_name="ImperiumDB"
 
 [editor_plugins]
 

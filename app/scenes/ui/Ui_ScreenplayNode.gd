@@ -6,6 +6,9 @@ extends Control
 @export var N_lbl_lin: Label
 @export var N_ico: TextureRect
 
+@export var n_panel_dir: PanelContainer
+
+
 var node: ui_GraphNode
 
 func _ready():
@@ -29,3 +32,5 @@ func _ready():
 		N_lbl_dir.text=txt_dir
 		N_lbl_lin.text=txt_line
 		N_lbl_spk.text=txt_speaker
+		if txt_dir.is_empty():
+			n_panel_dir.visible=false

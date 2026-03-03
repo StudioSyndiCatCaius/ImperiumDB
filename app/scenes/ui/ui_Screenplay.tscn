@@ -1,14 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhat55834aisb"]
+[gd_scene format=3 uid="uid://bhat55834aisb"]
 
 [ext_resource type="Script" uid="uid://bcnli28byc2wa" path="res://app/scenes/ui/Ui_Screenplay.gd" id="1_2b357"]
 [ext_resource type="PackedScene" uid="uid://b5l5560tvagvq" path="res://app/scenes/ui/ui_ScreenplayNode.tscn" id="2_todek"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_todek"]
-content_margin_left = 10.0
+content_margin_left = 100.0
 content_margin_top = 10.0
-content_margin_right = 10.0
+content_margin_right = 100.0
 content_margin_bottom = 10.0
-bg_color = Color(0.18000486, 0.1800049, 0.18000478, 1)
+bg_color = Color(0.04755766, 0.047557645, 0.047557645, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2b357"]
 content_margin_left = 5.0
@@ -21,7 +21,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Ui_Screenplay" type="PanelContainer" node_paths=PackedStringArray("N_listBox")]
+[node name="Ui_Screenplay" type="PanelContainer" unique_id=328257413 node_paths=PackedStringArray("N_listBox")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -31,66 +31,66 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_todek")
 script = ExtResource("1_2b357")
 N_listBox = NodePath("VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1740794895]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=83636455]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_2b357")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/PanelContainer" unique_id=1654101882]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/ScrollContainer" unique_id=1541080077]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Ui_ScreenplayNode" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=949784235 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode2" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode2" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=2080666816 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode3" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode3" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=988083914 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode4" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode4" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1033118467 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode5" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode5" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=68949479 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode6" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode6" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=380159741 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode7" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode7" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1302306199 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode8" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode8" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=614492613 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode9" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode9" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=861366176 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode10" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode10" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=654242882 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode11" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode11" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=763467942 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode12" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode12" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1041594067 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode13" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode13" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1076042659 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode14" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode14" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1190099954 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode15" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode15" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=1691600842 instance=ExtResource("2_todek")]
 layout_mode = 2
 
-[node name="Ui_ScreenplayNode16" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_todek")]
+[node name="Ui_ScreenplayNode16" parent="VBoxContainer/PanelContainer/ScrollContainer/VBoxContainer" unique_id=331561830 instance=ExtResource("2_todek")]
 layout_mode = 2

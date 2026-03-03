@@ -1,11 +1,11 @@
 IMPDB_VOICE_PATH=[[{content}/voices/]]
 IMPDB_VOICE_FORMAT=[[ogg]]
 
-ImpDB_Nodes['node_DialogueLine']={
+local a={
 	name="💬Line",
 	
 	color={0.2,0.8,1,1},
-	size={x=210,y=200},
+	size={x=210,y=250},
 
 	EmptyDelete=true,
 	UseLinkKey=true,
@@ -13,9 +13,7 @@ ImpDB_Nodes['node_DialogueLine']={
 	quick_next="node_DialogueLine",
 	
 	
-	section_count=2,
-
-	
+	section_count=3,
 
 	inputs={ {} },
 	outputs={ {}, },
@@ -39,6 +37,7 @@ ImpDB_Nodes['node_DialogueLine']={
 
 	sections={
 		{
+			title="Text",
 			GetDescription=function (data,index)
 				local spkr=""
 				local txt=""
@@ -54,13 +53,27 @@ ImpDB_Nodes['node_DialogueLine']={
 			
 		},
 		{
+			title="Direction",
 			GetDescription=function (data,index)
 				return data['direction']
 			end,
+			IsVisible=function (data)
+				return data['direction']~=""
+			end,
 
 			text_italic=true,
-			text_ratio=0.5,
+			text_ratio=0.7,
 			text_color={r=1,g=0.9,b=0.7,a=0.5}			
+		},
+		{
+			title="lua",
+			GetDescription=function (data,index)
+				return data['params']['script']
+			end,
+
+			text_italic=true,
+			text_ratio=0.4,
+			text_color={r=0.5,g=0.5,b=1,a=0.8}			
 		},
 	},
 
@@ -81,3 +94,6 @@ ImpDB_Nodes['node_DialogueLine']={
 		end,
 	}
 }
+
+
+ImpDB_Nodes['node_DialogueLine']=a

@@ -142,6 +142,19 @@ ImpDB_Nodes['node_OncePerSave']={
 		condition={type='code'}
 	},
 
+	sections={
+		{
+			GetDescription=function (self)
+				return "FIRST TIME"
+			end
+		},
+		{
+			GetDescription=function (self)
+				return "THEN"
+			end
+		},
+	},
+
 	GetDescription=function (self)
 		return self['params']['condition']
 	end

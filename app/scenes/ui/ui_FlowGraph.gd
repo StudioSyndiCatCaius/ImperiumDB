@@ -3,6 +3,7 @@ class_name ui_GraphEdit
 
 var nodes_selected: Array[ui_GraphNode]
 var importkeyoffset=0
+var _NodeKeys: PackedStringArray
 
 var node_group_icons=[
 	"",
@@ -24,33 +25,59 @@ var DATA={
 @export var N_ParamEdit: ui_ParamEdit
 @export var N_NodeList: ItemList
 @export var N_lbl_scriptPath: TextEdit
-@export var N_txtedit_NodeId: TextEdit
 @export var N_txtedit_NodeDir: TextEdit
 @export var N_Dlg_csv: FileDialog
 @export var N_Spin_KeyOffset: SpinBox
 @export var N_popup_Nodelist: PopupMenu
 @export var N_screenplay: ui_Screenplay
+@export var n_flow_template: OptionButton
+
+@export var parm_BindList: Array[ui_pEdit]
 
 @onready var REF_GraphNode=preload("res://app/scenes/ui/ui_FlowNode.tscn")
 
 signal OnNodeSelected(ui_GraphNode)
+signal OnGraphEvent(ui_GraphEdit, StringName, Dictionary)
 
 func _ready():
 	N_txtedit_NodeDir.text=""
 	GRAPH_Load(G_Lua.GRAPH_NewDefault())
 	N_screenplay.graph=self
+	
+	for i in parm_BindList:
+		i.OnParamEdit.connect(PARAM_OnEdit)
+	
+	n_flow_template.add_item("")
+	for i in G.FlowTemplate_GetKeys():
+		n_flow_template.add_item(i)
+	
+	NodeList_Rebuild()
+
+
+func NodeList_Rebuild():
 	# add selectable nodes
 	N_NodeList.clear()
-	var _NodeKeys=G_Lua.NODES_GetKeysAlphabetical()
+	_NodeKeys=G_Lua.NODES_GetKeysAlphabetical()
+	
+	var template_list=G.FlowTemplate_GetKeys()
+	var _tmp=DATA.get('template',"")
+	if template_list.has(_tmp):
+		var temp_data=G.FlowTemplate_GetData(_tmp)
+		var node_list=temp_data.get('nodes').to_array()
+		_NodeKeys=node_list
+	
 	for i in _NodeKeys:
-		var dat=G_Lua.D_nodes[i].get("name","*no name")
-		var _nodeMeta=G_Lua.D_node_meta.get(i,{})
-		var _m_group=_nodeMeta.get('group',0)
-		var texture: Texture2D=null
-		if node_group_icons.size()>_m_group:
-			texture=load(node_group_icons[_m_group])
-		N_popup_Nodelist.add_item(dat)
-		var ind=N_NodeList.add_item(dat,texture)
+		if G_Lua.D_nodes.has(i):
+			var dat=G_Lua.D_nodes[i].get("name","*no name")
+			var _nodeMeta=G_Lua.D_node_meta.get(i,{})
+			var _m_group=_nodeMeta.get('group',0)
+			var texture: Texture2D=null
+			if node_group_icons.size()>_m_group:
+				texture=load(node_group_icons[_m_group])
+			N_popup_Nodelist.add_item(dat)
+			var ind=N_NodeList.add_item(dat,texture)
+	
+
 
 func SAVE(path: String):
 	file_path=path
@@ -124,13 +151,71 @@ func NODES_RefreshAll():
 		if i.has_method("Refresh"):
 			i.Refresh()
 
+func NODES_GetSortedOrder() -> Array[ui_GraphNode]:
+	var sort_values: Dictionary[ui_GraphNode,int]
+	
+	var nodes_to_check:Array[ui_GraphNode]=[]
+	var start_node: ui_GraphNode=NODE_GetByType('node_Start')
+	
+	var InterateNodeCheck = func(start: ui_GraphNode):
+		var _start_val=sort_values.get(start,0)
+		
+		#remvoe checked node from list of TO check
+		if nodes_to_check.has(start):
+			nodes_to_check.erase(start)
+		
+		#iterate over connected output nodes
+		var output_nodes:Array[ui_GraphNode]=NODES_GetConnected_Output(start)
+		for i in output_nodes:
+			#if node has not already been givien a sort number
+			if !sort_values.has(i):
+				var loc_index:int=output_nodes.find(i)
+				var new_index=_start_val+(loc_index*1000)+1
+				#asign node with sort number
+				sort_values[i]=new_index
+				nodes_to_check.push_back(i)
+	
+	# add sort numbers to all nodes starting from START
+	if start_node:
+		nodes_to_check.push_back(start_node)
+		sort_values[start_node]=0
+		
+		while !nodes_to_check.is_empty():
+			for i in nodes_to_check:
+				InterateNodeCheck.call(i)
+	
+	# finally, sort into array based on sort number
+	# Get the keys as an array
+	var sorted_keys: Array[ui_GraphNode] = sort_values.keys()
+
+	# Sort by the dictionary values (ascending order)
+	sorted_keys.sort_custom(func(a, b): return sort_values[a] < sort_values[b])
+	
+	return sorted_keys
+	
+
+func NODES_GetConnected_Output(start: ui_GraphNode) -> Array[ui_GraphNode]:
+	var out:Array[ui_GraphNode]=[]
+	
+	var con_list:Array[Dictionary]=N_Graph.get_connection_list_from_node(start.name)
+	
+	for i in con_list:
+		if i['from_node']==start.name:
+			var _path: StringName=i['to_node']
+			var _child=G_Node.Child_GetByName(N_Graph,_path)
+			out.push_back(_child)
+
+	return out
+
+
+
 func NODES_GetSelected() -> Array[ui_GraphNode]:
 	var out:Array[ui_GraphNode]=[]
 	for i in nodes_selected:
 		if i and !i.is_queued_for_deletion() and i is ui_GraphNode:
 			out.push_back(i)
 	return out
-	
+
 func NODES_SetAllSelected(selected: bool):
 	nodes_selected=[]
 	for i in get_children():
@@ -169,6 +254,12 @@ func NODE_Add(node: Dictionary) -> ui_GraphNode:
 func NODE_Remove(node: ui_GraphNode):
 	node.queue_free()
 
+func NODE_GetByType(type: String) -> ui_GraphNode:
+	for n in NODES_GetAll():
+		if n.node_type==type:
+			return n
+	return null
+
 func NODE_GetByParam(param: String, value) -> ui_GraphNode:
 	for n in NODES_GetAll():
 		if n.DATA.get(param)==value:
@@ -186,6 +277,9 @@ func CONNECTIONS_Fix():
 	#for i in N_Graph.connections:
 	#	current_graph.CONNECTION_AddFromDic(i)
 
+func PARAM_OnEdit(param: String, value):
+	NODE_RefreshCurrent()
+
 func _on_graph_edit_connection_request(from_node, from_port, to_node, to_port):
 	N_Graph.connect_node(from_node,from_port,to_node,to_port)
 	CONNECTIONS_Fix()
@@ -199,25 +293,31 @@ func _on_graph_edit_disconnection_request(from_node, from_port, to_node, to_port
 # ==================================================================
 func _on_graph_edit_node_selected(node):
 	nodes_selected.push_back(node)
-	N_txtedit_NodeId.text=DATA.get('key','')
 	N_ParamEdit.OBJECT_Clear()
 	N_txtedit_NodeDir.text=node.DATA.get('direction',"")
 	
 	var _multi: bool=nodes_selected.size()>1
 	N_ParamEdit.OBJECT_MultiMode(_multi)
-	N_txtedit_NodeId.text=""
+	
+	
 	if nodes_selected[0] and !_multi:
 		var n=nodes_selected[0]
 		N_ParamEdit.OBJECT_Set(n.DATA,n.TypeData)
-		N_txtedit_NodeId.text=n.LABEL_Get()
+		
+		for i in parm_BindList:
+			i.Setup(n.DATA)
+
 
 func _on_graph_edit_node_deselected(node):
-	N_txtedit_NodeId.text=""
 	N_txtedit_NodeDir.text=""
 	if nodes_selected.has(node):
 		N_ParamEdit.OBJECT_MultiMode(false)
 		nodes_selected.erase(node)
 		N_ParamEdit.OBJECT_Clear()
+		
+		for i in parm_BindList:
+			i.OBJECT={}
+			i.Value_CLEAR()
 
 func _on_graph_edit_duplicate_nodes_request():
 	var n=[]
@@ -231,7 +331,7 @@ func _on_graph_edit_duplicate_nodes_request():
 			
 
 func _on_list_nodes_item_activated(index):
-	var _nodeType=G_Lua.NODES_GetKeysAlphabetical()[index]
+	var _nodeType=_NodeKeys[index]
 	var _node=G_Lua.NODE_Generate(_nodeType)
 	
 	_node.position=N_Graph.scroll_offset*(1/N_Graph.zoom)+get_local_mouse_position()
@@ -273,24 +373,15 @@ func _on_btn_script_import_pressed():
 	_on_btn_d_irection_import_pressed()
 
 func SCRIPT_GetPath() -> String:
-	return G_Lua.l.globals.to_dictionary().get('IMPDB_SCRIPT_PATH','')
+	return G.active_project.DATA.get('linked_script',"")
 
 func _on_btn_d_irection_import_pressed():
-	var _script_path=SCRIPT_GetPath()
-	var direction_text=""
-	var data = G_File.CSV_ImportArray(_script_path)
+
+	var line_dir_map: Dictionary=G.SCRIPT_GetDirectionTextByLineKey()
 	
-	# Add breakpoint on next line and check data value
-	print("Data is null: ", data == null)
-	print("Data type: ", typeof(data))
-	print("Got ", data.size(), " rows")
-	print("First row: ", data[0])
-	
-	var line_dir_map: Dictionary= G.SCRIPT_GetDirectionTextByLineKey()
-	for i in line_dir_map:
-		var target_node: ui_GraphNode=NODE_GetByParam('key',i)
-		if target_node:
-			target_node.DIRECTION_Set(line_dir_map.get(i,""))
+	for i in NODES_GetAll():
+		if i:
+			i.DATA['direction']=line_dir_map.get(i.DATA.get('key',""),"")
 	
 	NODES_RefreshAll()
 
@@ -337,9 +428,6 @@ func _on_n_popup_node_list_index_pressed(index):
 func _on_btn_fix_con_pressed():
 	CONNECTIONS_Fix()
 
-func _on_text_edit_node_id_text_changed():
-	if NODES_GetSelected()[0]:
-		NODES_GetSelected()[0].LABEL_Set(N_txtedit_NodeId.text)
 
 func _on_i_select_all_next_input_begin():
 	var t: Array[ui_GraphNode]=NODES_GetSelected()
@@ -401,3 +489,16 @@ func _on_txt_edit_dir_text_changed():
 func _on_tab_container_tab_changed(tab):
 	if tab==1:
 		N_screenplay.REBUILD()
+
+
+func _on_btn_debug_pressed():
+	print(NODES_GetSortedOrder())
+
+
+func _on_n_flow_template_item_selected(index):
+	DATA['template']=n_flow_template.get_item_text(index)
+	NodeList_Rebuild()
+
+
+func _on_btn_playtest_pressed():
+	OnGraphEvent.emit(self,'playtest',{})

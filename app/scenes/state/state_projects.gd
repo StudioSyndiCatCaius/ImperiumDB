@@ -18,7 +18,7 @@ func _ready():
 			LIST_Rebuild()
 	else:
 		LIST_Rebuild()
-	
+
 
 func LIST_Refresh():
 	for i in N_ProjList.get_children():

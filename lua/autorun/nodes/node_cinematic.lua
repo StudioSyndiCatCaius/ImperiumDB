@@ -1,4 +1,4 @@
-ImpDB_Nodes['node_cinematic']={
+ImpDB_Nodes['node_Cinematic']={
 	name="🎞️Cinematic",
 	color={1,0,0,1},
 	size={x=100,y=60},

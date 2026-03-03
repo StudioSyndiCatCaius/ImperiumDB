@@ -5,7 +5,6 @@ class_name res_project
 @export var path=""
 @export var tags: PackedStringArray
 @export var image: Texture2D
-@export var tree_expansion={}
 @export var DataTables={}
 var DATA={}
 
@@ -16,14 +15,12 @@ func __save() :
 	var out=DATA
 	out['name']=name
 	out['tags']=tags
-	out['tree_expansion']=tree_expansion
 	G_File.SAVE_Json(out,path)
 
 	
 func __load(data: Dictionary):
 	name=data.get("name","")
 	tags=data.get("tags",[])
-	tree_expansion=data.get("tree_expansion",{})
 	var img_path=path.replace(".IDBproj",".png")
 	print("projpath is: "+GetProjectDir())
 	image=G_File.LOAD_Texture(img_path)

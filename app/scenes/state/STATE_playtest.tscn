@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://vikod448v4xn"]
+
+[ext_resource type="Script" uid="uid://cn3niyihuc7iq" path="res://app/scenes/state/state_playtest.gd" id="1_22xgb"]
+[ext_resource type="StyleBox" uid="uid://bhmi7qudx5kre" path="res://app/assets/Style/style_panel_playtest.tres" id="2_7jhd1"]
+
+[node name="StatePlaytest" type="Control" unique_id=811089474 node_paths=PackedStringArray("lbl_spkr", "lbl_line")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_22xgb")
+lbl_spkr = NodePath("VBoxContainer/lbl_spkr")
+lbl_line = NodePath("VBoxContainer/lbl_line")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=969961554]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 97.0
+offset_top = 509.0
+offset_right = -94.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="lbl_spkr" type="Label" parent="VBoxContainer" unique_id=1303065043]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/normal = ExtResource("2_7jhd1")
+text = "name here"
+
+[node name="lbl_line" type="Label" parent="VBoxContainer" unique_id=110399963]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = ExtResource("2_7jhd1")
+text = "text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here text here "
+autowrap_mode = 2
