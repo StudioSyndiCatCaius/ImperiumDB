@@ -33,6 +33,7 @@ var DATA={
 @export var n_flow_template: OptionButton
 @export var col_creating_screen: ColorRect
 @export var N_txtedit_GraphDesc: TextEdit
+@export var N_txtedit_NodeFilter: TextEdit
 
 @export var parm_BindList: Array[ui_pEdit]
 
@@ -127,6 +128,8 @@ func GRAPH_Refresh():
 	N_txtedit_GraphDesc.text=DATA.get("description","")
 
 func GRAPH_Load(graph: Dictionary):
+	if N_txtedit_NodeFilter:
+		N_txtedit_NodeFilter.text = ""
 	DATA=graph
 	
 	## CORRECT OLD NODE DATA
@@ -567,3 +570,20 @@ func _on_btn_export_csv_pressed():
 
 func _on_text_edit_graph_desc_text_changed():
 	DATA.description=N_txtedit_GraphDesc.text
+
+
+func _on_node_filter_text_changed():
+	NODES_FilterByValue(N_txtedit_NodeFilter.text)
+
+func NODES_FilterByValue(text: String):
+	for node in NODES_GetAll():
+		if text.is_empty():
+			node.modulate = Color.WHITE
+		else:
+			var params: Dictionary = node.DATA.get('params', {})
+			var matched := false
+			for key in params:
+				if str(params[key]).contains(text):
+					matched = true
+					break
+			node.modulate = Color.WHITE if matched else Color(1.0, 1.0, 1.0, 0.1)
