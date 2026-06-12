@@ -14,6 +14,7 @@ var node_group_icons=[
 	"",
 	"res://app/assets/2D/icons/t_ico_PlusGreen.png",
 ]
+var _group_icon_cache: Array[Texture2D] = []
 
 var file_path=""
 #savable data for the currently loaded graph
@@ -51,6 +52,8 @@ signal OnNodeSelected(ui_GraphNode)
 signal OnGraphEvent(ui_GraphEdit, StringName, Dictionary)
 
 func _ready():
+	for _icon_path in node_group_icons:
+		_group_icon_cache.append(load(_icon_path) if _icon_path != "" else null)
 	N_txtedit_NodeDir.text=""
 	GRAPH_Load(G.GRAPH_NewDefault())
 	N_screenplay.graph=self
@@ -99,10 +102,8 @@ func _rebuild_side_list():
 		if G.D_nodes.has(i):
 			var dat: String = G.D_nodes[i].get("name", "*no name")
 			var _nodeMeta = G.D_node_meta.get(i, {})
-			var _m_group = _nodeMeta.get('group', 0)
-			var texture: Texture2D = null
-			if node_group_icons.size() > _m_group and node_group_icons[_m_group] != "":
-				texture = load(node_group_icons[_m_group])
+			var _m_group: int = _nodeMeta.get('group', 0)
+			var texture: Texture2D = _group_icon_cache[_m_group] if _m_group < _group_icon_cache.size() else null
 			if filter.is_empty() or dat.to_lower().contains(filter):
 				var ind := N_NodeList.add_item(dat, texture)
 				N_NodeList.set_item_metadata(ind, i)
@@ -181,24 +182,18 @@ func GRAPH_Load(graph: Dictionary):
 	DATA.erase('meta')
 	
 	# ===== CLEAR GRAPH ====
-	
-	# Remove nodes
+	N_Graph.clear_connections()
 	for i in N_Graph.get_children():
 		if i is ui_GraphNode:
 			i.free()
-	
+
 	# ===== CREATE GRAPH ====
-	
-	# LOAD nodes
+	N_Graph.hide()
 	for i in DATA.get("nodes",[]):
 		NODE_Add(i)
-	
-	# LOAD - connections
-	for i in N_Graph.connections:
-		N_Graph.disconnect_node(i.from_node,i.from_port,i.to_node,i.to_port)
 	for c in DATA.get("connections",[]):
-		print("-- setup Connection: "+str(c.from_node))
 		N_Graph.connect_node(c.from_node,c.from_port,c.to_node,c.to_port)
+	N_Graph.show()
 	
 	GRAPH_Refresh()
 
@@ -300,18 +295,12 @@ func NODE_AddFromTemplate(template: String,pos: Vector2) -> ui_GraphNode:
 	return NODE_Add(_newNode)
 
 func NODE_Add(node: Dictionary) -> ui_GraphNode:
-	#add node to table if not already in
 	if !DATA["nodes"].has(node):
 		DATA["nodes"].push_back(node)
-	
 	var new_node: ui_GraphNode=REF_GraphNode.instantiate()
-	
-	# init label if none
 	new_node.OnNodeEvent.connect(_on_ui_flow_node_on_node_event)
 	N_Graph.add_child(new_node)
 	new_node.Setup(node)
-	print("Created new node "+str(new_node)+" on graph: "+str(self))
-	
 	return new_node
 
 func NODE_Remove(node: ui_GraphNode):

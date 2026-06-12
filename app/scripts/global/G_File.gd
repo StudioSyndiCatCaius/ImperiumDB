@@ -88,24 +88,18 @@ func LOAD_String(_file_path: String) -> String:
 
 	return file_content
 
-func LOAD_Texture(_path: String,useImageFolder=false) -> Texture2D:
-	var path=PathCorrect(_path)
-	
-	print("___ Loading Image: "+path+"___")
-	# Create a new image
-	var image = Image.new()
-	
-	# Load the image from the external path
-	var error = image.load(path)
-	
-	# Check if the image was loaded successfully
-	if error != OK:
+static var _texture_cache: Dictionary = {}
+
+func LOAD_Texture(_path: String, useImageFolder=false) -> Texture2D:
+	var path: String = PathCorrect(_path)
+	if _texture_cache.has(path):
+		return _texture_cache[path]
+	var image := Image.new()
+	if image.load(path) != OK:
 		push_error("Failed to load image from path: " + path)
 		return null
-	
-	# Create a texture from the image
-	var texture = ImageTexture.create_from_image(image)
-	
+	var texture := ImageTexture.create_from_image(image)
+	_texture_cache[path] = texture
 	return texture
 
 # ==============================================================================
