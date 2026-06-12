@@ -57,8 +57,10 @@ func _ready():
 	n_flow_template.add_item("")
 	for i in G.FlowTemplate_GetKeys():
 		n_flow_template.add_item(i)
-	
+
 	NodeList_Rebuild()
+	N_NodeList.set_drag_forwarding(_nodelist_get_drag_data, _nodelist_can_drop_data, _nodelist_drop_data)
+	N_Graph.set_drag_forwarding(_graph_get_drag_data, _graph_can_drop_data, _graph_drop_data)
 
 
 func _unhandled_key_input(event: InputEvent):
@@ -406,10 +408,40 @@ func _on_graph_edit_duplicate_nodes_request():
 	undo_redo.commit_action()
 			
 
-func _on_list_nodes_item_activated(index):
-	# Side-panel double-click: spawn at the visible centre of the graph
-	var vis_center: Vector2 = N_Graph.scroll_offset + N_Graph.size * 0.5 / N_Graph.zoom
-	_spawn_node_at(_NodeKeys[index], vis_center)
+func _on_list_nodes_item_activated(_index: int):
+	pass  # replaced by drag-and-drop
+
+# ------------------------------------------------------------------
+# Drag from side-panel node list
+# ------------------------------------------------------------------
+func _nodelist_get_drag_data(at_position: Vector2) -> Variant:
+	var idx := N_NodeList.get_item_at_position(at_position, true)
+	if idx < 0:
+		return null
+	var preview := Label.new()
+	preview.text = N_NodeList.get_item_text(idx)
+	set_drag_preview(preview)
+	return {"type": "flow_node", "node_key": _NodeKeys[idx]}
+
+func _nodelist_can_drop_data(_at_position: Vector2, _data: Variant) -> bool:
+	return false
+
+func _nodelist_drop_data(_at_position: Vector2, _data: Variant) -> void:
+	pass
+
+# ------------------------------------------------------------------
+# Drop onto GraphEdit canvas
+# ------------------------------------------------------------------
+func _graph_get_drag_data(_at_position: Vector2) -> Variant:
+	return null
+
+func _graph_can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	return data is Dictionary and data.get("type") == "flow_node"
+
+func _graph_drop_data(at_position: Vector2, data: Variant) -> void:
+	if data is Dictionary and data.get("type") == "flow_node":
+		var graph_pos := (at_position + N_Graph.scroll_offset) / N_Graph.zoom
+		_spawn_node_at(data["node_key"], graph_pos)
 
 func _spawn_node_at(node_type: String, graph_pos: Vector2):
 	var _node = G.NODE_Generate(node_type)
