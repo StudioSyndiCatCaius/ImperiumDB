@@ -360,7 +360,7 @@ func NODE_Generate(type: String) -> Dictionary:
 	_newNode["_template"]=type
 	var plist=_dat.get("params",{})
 	for i in plist:
-		_newNode["params"][i]=plist.get("default",'')
+		_newNode["params"][i]=plist[i].get("default",'')
 		
 	return _newNode
 

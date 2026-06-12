@@ -75,7 +75,7 @@ func Setup(obj: Dictionary):
 						_valIndex=index
 					
 					if paramConfig.get("GetIcon")!=null:
-						var ico_path=paramConfig.GetIcon.invoke(key)
+						var ico_path=paramConfig.GetIcon.call(key)
 						if ico_path is String:
 							var newtxt: Texture2D=G_Load.Texture(ico_path)
 							N_List.set_item_icon(index,newtxt)

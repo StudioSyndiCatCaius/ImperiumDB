@@ -74,7 +74,7 @@ func NodeList_Rebuild():
 			var _nodeMeta=G.D_node_meta.get(i,{})
 			var _m_group=_nodeMeta.get('group',0)
 			var texture: Texture2D=null
-			if node_group_icons.size()>_m_group:
+			if node_group_icons.size()>_m_group and node_group_icons[_m_group]!="":
 				texture=load(node_group_icons[_m_group])
 			N_popup_Nodelist.add_item(dat)
 			var ind=N_NodeList.add_item(dat,texture)
@@ -288,7 +288,7 @@ func NODE_GetByParam(param: String, value) -> ui_GraphNode:
 
 func NODE_RefreshCurrent():
 	var n: Array[ui_GraphNode]=NODES_GetSelected()
-	if n[0]:
+	if n.size()>0 and n[0]:
 		n[0].Refresh_Description()
 
 func CONNECTIONS_Fix():
@@ -438,7 +438,7 @@ func _on_spin_offset_key_value_changed(value):
 
 func _on_graph_edit_gui_input(event):
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_MASK_RIGHT and event.pressed:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			N_popup_Nodelist.popup()
 			N_popup_Nodelist.position=get_global_mouse_position()
 
@@ -452,7 +452,7 @@ func _on_btn_fix_con_pressed():
 func _on_i_select_all_next_input_begin():
 	var t: Array[ui_GraphNode]=NODES_GetSelected()
 	var _newSel: Array[String]
-	if t[0]:
+	if t.size()>0 and t[0]:
 		#print(str(current_graph.connections))
 		for i in DATA.connections:
 			print(i.from_node + " " + t[0].name)

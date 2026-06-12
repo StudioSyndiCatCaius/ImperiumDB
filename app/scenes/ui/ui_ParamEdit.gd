@@ -76,7 +76,7 @@ func _OnCmdSelect(key:String):
 		var _temp=current_template
 		var _func=_temp.cmd[key]
 		if _func is Callable:
-			var _output=_func.invoke(current_object)
+			var _output=_func.call(current_object)
 			if _output is Dictionary:
 				
 				#Play Sound

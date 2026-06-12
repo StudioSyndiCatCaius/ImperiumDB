@@ -65,7 +65,7 @@ func DIRECTION_Get() -> String:
 	return DATA.get('direction',"")
 
 func getSectionCount() -> int:
-	return TypeData.get('section_count',)
+	return TypeData.get('section_count', 1)
 
 
 func Setup(node: Dictionary):
@@ -157,7 +157,7 @@ func Refresh():
 		name=DATA.label
 		_inSize.x=_scale.x
 		_inSize.y=_scale.y
-		if resizable and !G_Conv.Dic_to_Vec2(DATA.get('size',{}))==Vector2.ZERO:
+		if resizable and G_Conv.Dic_to_Vec2(DATA.get('size',{})) != Vector2.ZERO:
 			_inSize=G_Conv.Dic_to_Vec2(DATA.size)
 		size=_inSize
 

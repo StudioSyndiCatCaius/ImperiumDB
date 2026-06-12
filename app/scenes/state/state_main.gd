@@ -49,9 +49,12 @@ func FileTree_SaveState():
 
 func _on_file_tree_file_selected(file_path):
 	FileTree_SaveState()
-	var new_graph={}
-	new_graph=GRAPH_FromFile(file_path)
-	GRAPH_Open(new_graph,file_path)
+	if file_path.get_extension() == "ImpFlow":
+		var existing: ui_GraphEdit = GRAPH_GetFromPath(file_path)
+		if existing:
+			N_TabGraphs.current_tab = N_TabGraphs.get_children().find(existing)
+		else:
+			GRAPH_Open(GRAPH_FromFile(file_path), file_path)
 
 func _on_file_tree_option_menu_visibility_changed(visible):
 	pass # Replace with function body.
@@ -117,7 +120,7 @@ func GRAPH_OnEvent(graph: ui_GraphEdit, event: StringName, meta: Dictionary):
 		n_block_color.mouse_filter=Control.MOUSE_FILTER_STOP
 
 func PLAYTEST_IsActive():
-	return n_window_playtest.visibile
+	return n_window_playtest.visible
 
 func GRAPH_Open(graph: Dictionary,path:String=""):
 	var new_graph: ui_GraphEdit =REF_GraphEdit.instantiate()
@@ -171,16 +174,7 @@ func _on_dlg_confirm_quit_confirmed():
 
 
 func _on_ui_file_tree_file_double_click(path: String):
-	if path.get_extension()=="ImpFlow":
-		# select if already open
-		if GRAPH_GetFromPath(path):
-			var _ind= N_TabGraphs.get_children().find(GRAPH_GetFromPath(path))
-			N_TabGraphs.current_tab=_ind
-		# open if not already open
-		else:
-			var new_graph={}
-			new_graph=GRAPH_FromFile(path)
-			GRAPH_Open(new_graph,path)
+	_on_file_tree_file_selected(path)
 
 func _on_btn_open_root_pressed():
 	OS.shell_open(G.active_project.GetProjectDir())

@@ -148,8 +148,8 @@ func FILES_SortByExtension(paths: PackedStringArray) -> PackedStringArray:
 
 func LIST_AllInDir(_path: String, include_full_path: bool = true, recursive: bool = false) -> Array[String]:
 	var items: Array[String] = []
-	var dir = DirAccess.open(_path)
 	_path=PathCorrect(_path)
+	var dir = DirAccess.open(_path)
 	if dir == null:
 		push_error("Failed to open directory: " + _path)
 		return items
