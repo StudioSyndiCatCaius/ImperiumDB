@@ -38,6 +38,7 @@ var DATA={
 @export var col_creating_screen: ColorRect
 @export var N_txtedit_GraphDesc: TextEdit
 @export var N_txtedit_NodeFilter: TextEdit
+@export var N_txtedit_NodeListFilter: TextEdit
 
 @export var parm_BindList: Array[ui_pEdit]
 
@@ -77,27 +78,32 @@ func _unhandled_key_input(event: InputEvent):
 
 
 func NodeList_Rebuild():
-	# add selectable nodes
 	N_NodeList.clear()
-	_NodeKeys=G.NODES_GetKeysAlphabetical()
-	
-	var template_list=G.FlowTemplate_GetKeys()
-	var _tmp=DATA.get('template',"")
+	N_popup_Nodelist.clear()
+	_NodeKeys = G.NODES_GetKeysAlphabetical()
+
+	var template_list = G.FlowTemplate_GetKeys()
+	var _tmp = DATA.get('template', "")
 	if template_list.has(_tmp):
-		var temp_data=G.FlowTemplate_GetData(_tmp)
-		var node_list=temp_data.get('nodes').to_array()
-		_NodeKeys=node_list
-	
+		var temp_data = G.FlowTemplate_GetData(_tmp)
+		_NodeKeys = temp_data.get('nodes').to_array()
+
+	var filter := ""
+	if N_txtedit_NodeListFilter:
+		filter = N_txtedit_NodeListFilter.text.to_lower()
+
 	for i in _NodeKeys:
 		if G.D_nodes.has(i):
-			var dat=G.D_nodes[i].get("name","*no name")
-			var _nodeMeta=G.D_node_meta.get(i,{})
-			var _m_group=_nodeMeta.get('group',0)
-			var texture: Texture2D=null
-			if node_group_icons.size()>_m_group and node_group_icons[_m_group]!="":
-				texture=load(node_group_icons[_m_group])
+			var dat: String = G.D_nodes[i].get("name", "*no name")
+			var _nodeMeta = G.D_node_meta.get(i, {})
+			var _m_group = _nodeMeta.get('group', 0)
+			var texture: Texture2D = null
+			if node_group_icons.size() > _m_group and node_group_icons[_m_group] != "":
+				texture = load(node_group_icons[_m_group])
 			N_popup_Nodelist.add_item(dat)
-			var ind=N_NodeList.add_item(dat,texture)
+			if filter.is_empty() or dat.to_lower().contains(filter):
+				var ind := N_NodeList.add_item(dat, texture)
+				N_NodeList.set_item_metadata(ind, i)
 	
 
 
@@ -411,6 +417,9 @@ func _on_graph_edit_duplicate_nodes_request():
 func _on_list_nodes_item_activated(_index: int):
 	pass  # replaced by drag-and-drop
 
+func _on_nodelist_filter_text_changed():
+	NodeList_Rebuild()
+
 # ------------------------------------------------------------------
 # Drag from side-panel node list
 # ------------------------------------------------------------------
@@ -421,7 +430,7 @@ func _nodelist_get_drag_data(at_position: Vector2) -> Variant:
 	var preview := Label.new()
 	preview.text = N_NodeList.get_item_text(idx)
 	set_drag_preview(preview)
-	return {"type": "flow_node", "node_key": _NodeKeys[idx]}
+	return {"type": "flow_node", "node_key": N_NodeList.get_item_metadata(idx)}
 
 func _nodelist_can_drop_data(_at_position: Vector2, _data: Variant) -> bool:
 	return false

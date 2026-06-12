@@ -28,7 +28,7 @@ corner_radius_bottom_left = 5
 corner_detail = 5
 shadow_color = Color(0, 0, 0, 0.3137255)
 
-[node name="UiFlowGraph" type="PanelContainer" unique_id=800245775 node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist", "N_screenplay", "n_flow_template", "col_creating_screen", "N_txtedit_GraphDesc", "N_txtedit_NodeFilter")]
+[node name="UiFlowGraph" type="PanelContainer" unique_id=800245775 node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist", "N_screenplay", "n_flow_template", "col_creating_screen", "N_txtedit_GraphDesc", "N_txtedit_NodeFilter", "N_txtedit_NodeListFilter")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -37,7 +37,7 @@ grow_vertical = 2
 script = ExtResource("1_pb1ws")
 N_Graph = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit")
 N_ParamEdit = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/params")
-N_NodeList = NodePath("TabContainer/🪢Graph/HSplitContainer2/list_nodes")
+N_NodeList = NodePath("TabContainer/🪢Graph/HSplitContainer2/VBoxContainer_NodeList/list_nodes")
 N_lbl_scriptPath = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/PanelContainer/lbl_scriptPath")
 N_txtedit_NodeDir = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/📜Direction/txtEdit_Dir")
 N_Dlg_csv = NodePath("FileDialog")
@@ -48,6 +48,7 @@ n_flow_template = NodePath("TabContainer/🪢Graph/HBoxContainer/n_FlowTemplate"
 col_creating_screen = NodePath("col_CreatingScreen")
 N_txtedit_GraphDesc = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer/TextEdit_GraphDesc")
 N_txtedit_NodeFilter = NodePath("TabContainer/🪢Graph/HBoxContainer/txtedit_NodeFilter")
+N_txtedit_NodeListFilter = NodePath("TabContainer/🪢Graph/HSplitContainer2/VBoxContainer_NodeList/txtedit_NodeListFilter")
 
 [node name="TabContainer" type="TabContainer" parent="." unique_id=1047816591]
 layout_mode = 2
@@ -97,9 +98,19 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="list_nodes" type="ItemList" parent="TabContainer/🪢Graph/HSplitContainer2" unique_id=944988957]
+[node name="VBoxContainer_NodeList" type="VBoxContainer" parent="TabContainer/🪢Graph/HSplitContainer2" unique_id=600000010]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+
+[node name="txtedit_NodeListFilter" type="TextEdit" parent="TabContainer/🪢Graph/HSplitContainer2/VBoxContainer_NodeList" unique_id=600000011]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+placeholder_text = "filter nodes..."
+theme_override_font_sizes/font_size = 10
+
+[node name="list_nodes" type="ItemList" parent="TabContainer/🪢Graph/HSplitContainer2/VBoxContainer_NodeList" unique_id=944988957]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/outline_size = 7
 theme_override_font_sizes/font_size = 10
 
@@ -344,7 +355,8 @@ text = "CREATING SCREENPLAY"
 [connection signal="pressed" from="TabContainer/🪢Graph/HBoxContainer/btn_Playtest" to="." method="_on_btn_playtest_pressed"]
 [connection signal="text_changed" from="TabContainer/🪢Graph/HBoxContainer/txtedit_NodeFilter" to="." method="_on_node_filter_text_changed"]
 [connection signal="item_selected" from="TabContainer/🪢Graph/HBoxContainer/n_FlowTemplate" to="." method="_on_n_flow_template_item_selected"]
-[connection signal="item_activated" from="TabContainer/🪢Graph/HSplitContainer2/list_nodes" to="." method="_on_list_nodes_item_activated"]
+[connection signal="text_changed" from="TabContainer/🪢Graph/HSplitContainer2/VBoxContainer_NodeList/txtedit_NodeListFilter" to="." method="_on_nodelist_filter_text_changed"]
+[connection signal="item_activated" from="TabContainer/🪢Graph/HSplitContainer2/VBoxContainer_NodeList/list_nodes" to="." method="_on_list_nodes_item_activated"]
 [connection signal="connection_request" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]
 [connection signal="delete_nodes_request" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
 [connection signal="disconnection_request" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
