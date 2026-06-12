@@ -8,6 +8,7 @@ var _NodeKeys: PackedStringArray
 var undo_redo := UndoRedo.new()
 var _undo_snapshots: Dictionary  # node_label -> {params, direction, position}
 var _popup_graph_pos: Vector2    # graph-space position recorded when right-click popup opens
+var _pending_connection: Dictionary = {}  # {from_node, from_port} set when popup opens from a port drag
 
 var node_group_icons=[
 	"",
@@ -32,7 +33,9 @@ var DATA={
 @export var N_txtedit_NodeDir: TextEdit
 @export var N_Dlg_csv: FileDialog
 @export var N_Spin_KeyOffset: SpinBox
-@export var N_popup_Nodelist: PopupMenu
+@export var N_popup_Nodelist: PopupPanel
+@export var N_popup_list: ItemList
+@export var N_txtedit_popup_filter: TextEdit
 @export var N_screenplay: ui_Screenplay
 @export var n_flow_template: OptionButton
 @export var col_creating_screen: ColorRect
@@ -78,8 +81,6 @@ func _unhandled_key_input(event: InputEvent):
 
 
 func NodeList_Rebuild():
-	N_NodeList.clear()
-	N_popup_Nodelist.clear()
 	_NodeKeys = G.NODES_GetKeysAlphabetical()
 
 	var template_list = G.FlowTemplate_GetKeys()
@@ -88,10 +89,12 @@ func NodeList_Rebuild():
 		var temp_data = G.FlowTemplate_GetData(_tmp)
 		_NodeKeys = temp_data.get('nodes').to_array()
 
-	var filter := ""
-	if N_txtedit_NodeListFilter:
-		filter = N_txtedit_NodeListFilter.text.to_lower()
+	_rebuild_side_list()
+	_rebuild_popup_list()
 
+func _rebuild_side_list():
+	N_NodeList.clear()
+	var filter := N_txtedit_NodeListFilter.text.to_lower() if N_txtedit_NodeListFilter else ""
 	for i in _NodeKeys:
 		if G.D_nodes.has(i):
 			var dat: String = G.D_nodes[i].get("name", "*no name")
@@ -100,10 +103,21 @@ func NodeList_Rebuild():
 			var texture: Texture2D = null
 			if node_group_icons.size() > _m_group and node_group_icons[_m_group] != "":
 				texture = load(node_group_icons[_m_group])
-			N_popup_Nodelist.add_item(dat)
 			if filter.is_empty() or dat.to_lower().contains(filter):
 				var ind := N_NodeList.add_item(dat, texture)
 				N_NodeList.set_item_metadata(ind, i)
+
+func _rebuild_popup_list():
+	if not N_popup_list:
+		return
+	N_popup_list.clear()
+	var filter := N_txtedit_popup_filter.text.to_lower() if N_txtedit_popup_filter else ""
+	for i in _NodeKeys:
+		if G.D_nodes.has(i):
+			var dat: String = G.D_nodes[i].get("name", "*no name")
+			if filter.is_empty() or dat.to_lower().contains(filter):
+				var ind := N_popup_list.add_item(dat)
+				N_popup_list.set_item_metadata(ind, i)
 	
 
 
@@ -452,7 +466,7 @@ func _graph_drop_data(at_position: Vector2, data: Variant) -> void:
 		var graph_pos := (at_position + N_Graph.scroll_offset) / N_Graph.zoom
 		_spawn_node_at(data["node_key"], graph_pos)
 
-func _spawn_node_at(node_type: String, graph_pos: Vector2):
+func _spawn_node_at(node_type: String, graph_pos: Vector2, from_node: String = "", from_port: int = -1):
 	var _node = G.NODE_Generate(node_type)
 	_node['position'] = {x = graph_pos.x, y = graph_pos.y}
 	if _node.get('label', '') == '':
@@ -462,6 +476,10 @@ func _spawn_node_at(node_type: String, graph_pos: Vector2):
 	undo_redo.create_action("Add Node")
 	undo_redo.add_do_method(_ur_node_add.bind(_node))
 	undo_redo.add_undo_method(_ur_node_remove.bind(label))
+	if from_node != "" and from_port >= 0:
+		_ur_connection_add(from_node, from_port, label, 0)
+		undo_redo.add_do_method(_ur_connection_add.bind(from_node, from_port, label, 0))
+		undo_redo.add_undo_method(_ur_connection_remove.bind(from_node, from_port, label, 0))
 	undo_redo.commit_action(false)
 
 func _on_graph_edit_delete_nodes_request(nodes):
@@ -575,11 +593,32 @@ func _on_graph_edit_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			_popup_graph_pos = (N_Graph.get_local_mouse_position() + N_Graph.scroll_offset) / N_Graph.zoom
-			N_popup_Nodelist.popup()
-			N_popup_Nodelist.position = get_global_mouse_position()
+			_pending_connection = {}
+			_open_node_popup()
 
-func _on_n_popup_node_list_index_pressed(index):
-	_spawn_node_at(_NodeKeys[index], _popup_graph_pos)
+func _open_node_popup():
+	if N_txtedit_popup_filter:
+		N_txtedit_popup_filter.text = ""
+	_rebuild_popup_list()
+	N_popup_Nodelist.position = DisplayServer.mouse_get_position()
+	N_popup_Nodelist.popup()
+	if N_txtedit_popup_filter:
+		N_txtedit_popup_filter.grab_focus()
+
+func _on_graph_edit_connection_to_empty(from_node: StringName, from_port: int, release_position: Vector2):
+	_popup_graph_pos = (release_position + N_Graph.scroll_offset) / N_Graph.zoom
+	_pending_connection = {from_node = str(from_node), from_port = from_port}
+	_open_node_popup()
+
+func _on_popup_list_item_selected(index: int):
+	var pending_from: String = _pending_connection.get("from_node", "")
+	var pending_port: int = _pending_connection.get("from_port", -1)
+	_pending_connection = {}
+	_spawn_node_at(N_popup_list.get_item_metadata(index), _popup_graph_pos, pending_from, pending_port)
+	N_popup_Nodelist.hide()
+
+func _on_popup_filter_text_changed():
+	_rebuild_popup_list()
 
 func _on_btn_fix_con_pressed():
 	CONNECTIONS_Fix()

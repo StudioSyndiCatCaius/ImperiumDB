@@ -20,19 +20,33 @@ extends Node
 func _ready():
 	if G.active_project==null:
 		G.active_project=G.list_projects[0]
-	
+
 	#Setup Linked Nodes
 	N_ProjName.text=G.active_project.name
 	N_Dialog_save.root_subfolder=G.PATH_GetRoot()+"/flow/"
 	N_img_logo.texture=G.active_project.image
-	
-	#setup first graph
+
+	#setup graphs — restore previous session or open a blank graph
 	G_Node.Children_ClearAll(N_TabGraphs)
-	GRAPH_Open(G.GRAPH_NewDefault())
-	
+	var _session_paths: Array = G.active_project.UserData_Get().get('open_graphs', [])
+	var _restored := 0
+	for _p in _session_paths:
+		if FileAccess.file_exists(_p):
+			GRAPH_Open(GRAPH_FromFile(_p), _p)
+			_restored += 1
+	if _restored == 0:
+		GRAPH_Open(G.GRAPH_NewDefault())
+
 	n_fileTree.root_path=G.PATH_GetRoot()+"/flow/"
 	FileTree_Rebuild()
 	n_fileTree.set_expanded_bulk(G.active_project.DATA.get('tree_expansion',{}))
+
+func _exit_tree():
+	var _open_paths: Array = []
+	for _graph in N_TabGraphs.get_children():
+		if _graph is ui_GraphEdit and _graph.file_path != "":
+			_open_paths.append(_graph.file_path)
+	G.active_project.UserData_Get()['open_graphs'] = _open_paths
 	
 func focus():
 	return get_viewport().gui_get_focus_owner()
