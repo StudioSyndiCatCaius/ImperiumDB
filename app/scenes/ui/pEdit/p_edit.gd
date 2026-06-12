@@ -38,10 +38,10 @@ func Setup(obj: Dictionary):
 		var list=[]
 		
 		if _tbl:
-			var _glob=G_Lua.DATABASE_Get()
+			var _glob=Z.L.pull_variant("_D")
 			var ltbl=_glob.get(_tbl,{})
-			if ltbl is LuaTable:
-				var _dtbl=ltbl.to_dictionary()
+			if ltbl is Dictionary:
+				var _dtbl=ltbl
 				var _keys=_dtbl.keys()
 				list=_keys
 				list.sort()
@@ -61,8 +61,6 @@ func Setup(obj: Dictionary):
 				if i == _val:
 					_valIndex=list.find(i)
 		#from files
-		if paramConfig is LuaTable:
-			paramConfig=paramConfig.to_dictionary()
 		elif paramConfig.has('filePath'):
 			var _filsPth=paramConfig.get('filePath')
 			_filsPth=G_File.PathCorrect(_filsPth)

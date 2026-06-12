@@ -23,21 +23,19 @@ func _ready():
 		N_lbl_out.text=pin_out.get('name','')
 
 
-func getSectionCall(call) -> LuaFunction:
-	if SECTION_DATA is LuaTable:
-		SECTION_DATA=SECTION_DATA.to_dictionary()
+func getSectionCall(call) -> Callable:
 
 	if SECTION_DATA.has(call):
 		return SECTION_DATA[call]
 	if NODE_TEMPLATE.has(call):
 		return NODE_TEMPLATE[call]
-	return null
+	return Callable()
 
 func getSectionParam_string(param: String) -> String:
 	
-	var i: LuaFunction = getSectionCall(param)
+	var i: Callable = getSectionCall(param)
 	if i:
-		var result=i.invoke(NODE_DATA,pin_index)
+		var result=i.call(NODE_DATA,pin_index)
 		if result is String:
 			return result
 	return ""
@@ -46,7 +44,7 @@ func getSectionParam_texture(param: String) -> Texture2D:
 	
 	var i = getSectionCall(param)
 	if i:
-		var result=i.invoke(NODE_DATA,pin_index)
+		var result=i.call(NODE_DATA,pin_index)
 		if result is String:
 			return G_File.LOAD_Texture(result)
 	return null
@@ -62,10 +60,8 @@ func _refresh():
 	
 	N_text.text=txt
 	var pList=SECTION_DATA.get('gParam',{})
-	if pList is LuaTable:
-		pList=pList.to_dictionary()
-	
-	var txt_col=G_Lua.CONV(SECTION_DATA.get('text_color',{r=1,g=1,b=1,a=1}))
+
+	var txt_col=SECTION_DATA.get('text_color',{r=1,g=1,b=1,a=1})
 	N_text.modulate.r=txt_col.r
 	N_text.modulate.g=txt_col.g
 	N_text.modulate.b=txt_col.b

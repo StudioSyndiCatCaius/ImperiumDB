@@ -31,6 +31,8 @@ var DATA={
 @export var N_popup_Nodelist: PopupMenu
 @export var N_screenplay: ui_Screenplay
 @export var n_flow_template: OptionButton
+@export var col_creating_screen: ColorRect
+@export var N_txtedit_GraphDesc: TextEdit
 
 @export var parm_BindList: Array[ui_pEdit]
 
@@ -41,7 +43,7 @@ signal OnGraphEvent(ui_GraphEdit, StringName, Dictionary)
 
 func _ready():
 	N_txtedit_NodeDir.text=""
-	GRAPH_Load(G_Lua.GRAPH_NewDefault())
+	GRAPH_Load(G.GRAPH_NewDefault())
 	N_screenplay.graph=self
 	
 	for i in parm_BindList:
@@ -57,7 +59,7 @@ func _ready():
 func NodeList_Rebuild():
 	# add selectable nodes
 	N_NodeList.clear()
-	_NodeKeys=G_Lua.NODES_GetKeysAlphabetical()
+	_NodeKeys=G.NODES_GetKeysAlphabetical()
 	
 	var template_list=G.FlowTemplate_GetKeys()
 	var _tmp=DATA.get('template',"")
@@ -67,9 +69,9 @@ func NodeList_Rebuild():
 		_NodeKeys=node_list
 	
 	for i in _NodeKeys:
-		if G_Lua.D_nodes.has(i):
-			var dat=G_Lua.D_nodes[i].get("name","*no name")
-			var _nodeMeta=G_Lua.D_node_meta.get(i,{})
+		if G.D_nodes.has(i):
+			var dat=G.D_nodes[i].get("name","*no name")
+			var _nodeMeta=G.D_node_meta.get(i,{})
 			var _m_group=_nodeMeta.get('group',0)
 			var texture: Texture2D=null
 			if node_group_icons.size()>_m_group:
@@ -82,9 +84,23 @@ func NodeList_Rebuild():
 func SAVE(path: String):
 	file_path=path
 	var dat=GRAPH_GetDic()
-	G_File.SAVE_Json(dat,path)
+	Z_File.SaveStringAsFile(path,Z_Parse.to_JSON(dat),true,true)
 	G_Log.Notification("File Saved: "+str(path),Color.GREEN)
 	GRAPH_Refresh()
+
+func DATA_to_CSV() -> String:
+	var nodes:=NODES_GetSortedOrder()
+	var output_array:=[]
+	
+	var output="key,speaker,line,direction,\n"
+	for i in nodes:
+		
+		var node_dat=i.DATA_to_CSV()
+		if node_dat is Dictionary:
+			output_array.push_back(node_dat)
+			
+	return Z_Parse.to_CSV(output_array)
+
 
 func GRAPH_GetDic():
 	var out: Dictionary=DATA
@@ -106,6 +122,9 @@ func GRAPH_Refresh():
 	N_lbl_scriptPath.text=DATA.get('linked_script',"")
 	#N_Spin_KeyOffset.value=current_graph.importkeyoffset
 	CONNECTIONS_Fix()
+	
+	# Load description
+	N_txtedit_GraphDesc.text=DATA.get("description","")
 
 func GRAPH_Load(graph: Dictionary):
 	DATA=graph
@@ -255,7 +274,8 @@ func NODE_Remove(node: ui_GraphNode):
 	node.queue_free()
 
 func NODE_GetByType(type: String) -> ui_GraphNode:
-	for n in NODES_GetAll():
+	var node_list=NODES_GetAll()
+	for n in node_list:
 		if n.node_type==type:
 			return n
 	return null
@@ -332,7 +352,7 @@ func _on_graph_edit_duplicate_nodes_request():
 
 func _on_list_nodes_item_activated(index):
 	var _nodeType=_NodeKeys[index]
-	var _node=G_Lua.NODE_Generate(_nodeType)
+	var _node=G.NODE_Generate(_nodeType)
 	
 	_node.position=N_Graph.scroll_offset*(1/N_Graph.zoom)+get_local_mouse_position()
 	NODE_Add(_node)
@@ -377,7 +397,7 @@ func SCRIPT_GetPath() -> String:
 
 func _on_btn_d_irection_import_pressed():
 
-	var line_dir_map: Dictionary=G.SCRIPT_GetDirectionTextByLineKey()
+	var line_dir_map: Dictionary=Z_Parse.from_JSON(Z_File.LoadFileAsString(G.PATH_GetRoot()+"/_dump/DirectionDump.json"))
 	
 	for i in NODES_GetAll():
 		if i:
@@ -502,3 +522,48 @@ func _on_n_flow_template_item_selected(index):
 
 func _on_btn_playtest_pressed():
 	OnGraphEvent.emit(self,'playtest',{})
+
+func _on_btn_export_pressed():
+	col_creating_screen.visible=true
+	await get_tree().create_timer(0.2).timeout
+	var project_dir: String = ProjectSettings.globalize_path("res://").replace("/", "\\")
+	
+	#SETUP - temp JSON
+	var _j: Dictionary=G.active_project.SCREENPLAY_GetPdfConfig()
+	
+	#SETUP - temp CSV
+	var _csvSting:=DATA_to_CSV()
+	
+	var output_name=file_path.get_file().get_basename()+".pdf"
+	var output_path=G.active_project.GetProjectDir()+"/Export/"+output_name
+	var output_desc=DATA.get('description',"")
+	var converter := CsvScriptToPdf.new()
+	#file_path.get_file()
+	var result=converter.CsvScriptToPDF(file_path.get_file().get_basename(),output_desc,_csvSting,_j,output_path)
+		
+	if result == OK:
+		print("✓ PDF created successfully!")
+		G_Log.Notification("Screenplay exported to: "+output_path,Color.AQUA)
+	else:
+		G_Log.Notification("✗ Failed to create PDF, error code: "+str(result),Color.RED)
+		print("PDF export error: ", result)
+		printerr(result)
+	col_creating_screen.visible=false
+
+
+func _on_btn_export_csv_pressed():
+	var output_name=DATA.get('label',"output")+".csv"
+	var output_path=G.active_project.GetProjectDir()+"/Export/"+output_name
+	var result=Z_File.SaveStringAsFile(output_path,DATA_to_CSV(),true,true)
+	
+	if result == OK:
+		print("✓ PDF created successfully!")
+		G_Log.Notification("Screenplay exported to: "+output_path,Color.AQUA)
+	else:
+		G_Log.Notification("✗ Failed to create PDF, error code: "+str(result),Color.RED)
+		print("PDF failed: "+output_path)
+		printerr(result)
+
+
+func _on_text_edit_graph_desc_text_changed():
+	DATA.description=N_txtedit_GraphDesc.text

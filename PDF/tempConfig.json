@@ -1,0 +1,19 @@
+{
+	"columns": {
+		"direction": {
+			"cell_color": "#ffd86e"
+		},
+		"key": {
+			"cell_color": "#b0b0b0",
+			"text_size": 7.0
+		},
+		"line": {
+			"size_ratio": 2.0
+		},
+		"speaker": {
+			"cell_color": "#abbeff",
+			"text_bold": true,
+			"text_size": 9.0
+		}
+	}
+}

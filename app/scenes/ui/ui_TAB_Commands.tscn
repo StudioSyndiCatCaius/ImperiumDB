@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://drugs6vqde2xp" path="res://app/scenes/ui/ui_tab_commands.gd" id="1_0qwug"]
 
-[node name="UiTabCommands" type="Control" unique_id=917735197]
+[node name="UiTabCommands" type="Control" unique_id=917735197 node_paths=PackedStringArray("btn_write_all_dir")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,6 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0qwug")
+btn_write_all_dir = NodePath("VBoxContainer/btn_WriteAllDir")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=518475587]
 layout_mode = 1

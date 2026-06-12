@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://b7dfyl2filvth"
+
+[deps]
+
+files=["res://ExportCsv/test.en.translation", "res://ExportCsv/test.en.translation", "res://ExportCsv/test.en.translation"]
+
+source_file="res://ExportCsv/test.csv"
+dest_files=["res://ExportCsv/test.en.translation", "res://ExportCsv/test.en.translation", "res://ExportCsv/test.en.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

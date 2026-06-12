@@ -15,13 +15,31 @@ var node_type: String
 
 var N_GraphOwner: ui_GraphEdit
 var LIST_pins: Array[ui_FlowPin]
-var TypeData: LuaTable
+var TypeData: Dictionary
 var DATA:Dictionary={}
 
 @onready var REF_Pin=preload("res://app/scenes/ui/ui_FlowPin.tscn")
 
 # 0=Label Refresh
 signal OnNodeEvent(event)
+
+
+func DATA_to_CSV():
+	var _key: String=DATA.get('key',"")
+	var _dir: String=DATA.get('direction',"")
+	var _spk: String=DATA.params.get('speaker',"")
+	var _line: String=DATA.params.get('line',"")
+	
+	var out=null
+	
+	if !_dir.is_empty() or !_spk.is_empty() or !_line.is_empty():
+		out={
+			key=_key,
+			speaker=_spk,
+			line=_line,
+			direction=_dir,
+		}
+	return out
 
 
 func LABEL_Regen(force=false):
@@ -47,7 +65,8 @@ func DIRECTION_Get() -> String:
 	return DATA.get('direction',"")
 
 func getSectionCount() -> int:
-	return TypeData.to_dictionary().get('section_count',)
+	return TypeData.get('section_count',)
+
 
 func Setup(node: Dictionary):
 	
@@ -72,8 +91,8 @@ func Setup(node: Dictionary):
 	DATA.erase('meta')
 	
 	#get node typedata
-	if G_Lua.D_nodes.has(_newType):
-		TypeData=G_Lua.D_nodes[_newType]
+	if G.D_nodes is Dictionary and G.D_nodes.has(_newType):
+		TypeData=G.D_nodes[_newType]
 		PIN_fix(0)
 		if TypeData!=null:
 			if DATA.position is Vector2:
@@ -88,13 +107,17 @@ func Setup(node: Dictionary):
 				if i!=null:
 					i.queue_free()
 					
-			var _pins_input: Array=TypeData.inputs.to_array()
+			var _pins_input=TypeData.inputs
+			if _pins_input is Dictionary:
+				_pins_input=_pins_input.values()
 			for i in range(_pins_input.size()):
 				var pin=_pins_input[i]
 				ValidateSlotPint(i)
 				set_slot_enabled_left(i,true)
 			
-			var _pins_output: Array=TypeData.outputs.to_array()
+			var _pins_output=TypeData.outputs
+			if _pins_output is Dictionary:
+				_pins_output=_pins_output.values()
 			for i in range(_pins_output.size()):
 				var pin=_pins_output[i]
 				ValidateSlotPint(i)
@@ -119,6 +142,10 @@ func Refresh_Title():
 		title=_newTit+" ("+_key+")"
 
 func Refresh():
+	
+	#remove '.tres' key
+	node_type=node_type.replace(".tres","")
+	
 	LABEL_Regen(false)
 	#if type data is valid
 	if TypeData!=null:
@@ -139,8 +166,6 @@ func Refresh():
 		#if _LinkKey:
 		#	title+="("+node_data.key+")"
 		var _col=TypeData.get("color",[1,1,1,1])
-		if _col is LuaTable:
-			_col=_col.to_array()
 		self_modulate=Color(_col[0],_col[1],_col[2],_col[3])
 	else:
 		Refresh_AsInvalid()
@@ -154,7 +179,6 @@ func Refresh_AsInvalid():
 func Refresh_Description():
 	Refresh_Title()
 	# text
-	var type_dic=TypeData.to_dictionary()
 	for i in get_children():
 		i._refresh()
 
@@ -162,17 +186,14 @@ func PIN_fix(index : int):
 	if get_child(index):
 		var d: ui_FlowPin=get_child(index)
 		d.NODE_DATA=DATA
-		d.NODE_TEMPLATE=TypeData.to_dictionary()
+		d.NODE_TEMPLATE=TypeData
 		d.pin_index=index
 		var _section_lua=d.NODE_TEMPLATE.get('sections',{})
-		_section_lua=G_Lua.CONV(_section_lua)
 		
-		
-		var _section_data=_section_lua.get(index+1,{})
-		
-		
-		d.SECTION_DATA=_section_data
-		d._refresh()
+		if _section_lua is Array:
+			var _section_data=_section_lua[index]
+			d.SECTION_DATA=_section_data
+			d._refresh()
 
 func ValidateSlotPint(index: int) -> ui_FlowPin:
 	var new_pin: ui_FlowPin
@@ -188,14 +209,14 @@ func ValidateSlotPint(index: int) -> ui_FlowPin:
 	
 	#FUNCTION - sizing pin array to slots
 	var pin_num=0
-	var SizeSlotsToArray=func(a : LuaTable, pin_dic: Dictionary):
+	var SizeSlotsToArray=func(a : Array, pin_dic: Dictionary):
 		
-		var _array: Array=a.to_array()
-		var _array_size: int=a.to_array().size()
+		var _array: Array=a
+		var _array_size: int=a.size()
 		
 		if _array_size>index:
 			print("try add pin to"+str(a)+" on "+node_type)
-			pin_dic=_array[index].to_dictionary()
+			pin_dic=_array[index]
 			if pin_num<_array_size:
 				pin_num=_array_size
 	
@@ -203,8 +224,10 @@ func ValidateSlotPint(index: int) -> ui_FlowPin:
 	if TypeData:
 		var _inputs=TypeData.get("inputs",[])
 		var _outputs=TypeData.get("outputs",[])
-		SizeSlotsToArray.call(_inputs,new_pin.pin_in)
-		SizeSlotsToArray.call(_outputs,new_pin.pin_out)
+		if _inputs is Array:
+			SizeSlotsToArray.call(_inputs,new_pin.pin_in)
+		if _outputs is Array:
+			SizeSlotsToArray.call(_outputs,new_pin.pin_out)
 	else:
 		new_pin.pin_in={}
 		new_pin.pin_out={}
@@ -228,6 +251,6 @@ func _on_resize_end(new_size):
 
 func SOUND_Play():
 	var _sound_path=TypeData.get('GetSoundPath')
-	if _sound_path is LuaFunction:
-		var _spath=_sound_path.invoke(DATA)
+	if _sound_path is Callable:
+		var _spath=_sound_path.call(DATA)
 		G.SOUND_PlayExternal(_spath)

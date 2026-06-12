@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://cca0n6v7t3edr"]
+
+[ext_resource type="Script" uid="uid://x01o1a15nivs" path="res://app/scenes/ui/_TEST/ui_tableEditor.gd" id="1_h7hhi"]
+
+[sub_resource type="Zen_ParamType_Bool" id="Zen_ParamType_Bool_h7hhi"]
+
+[sub_resource type="Zen_TableCellConfig" id="Zen_TableCellConfig_vhlxa"]
+resource_name = "thing"
+column_name = "dasgag"
+param_type = SubResource("Zen_ParamType_Bool_h7hhi")
+
+[sub_resource type="Zen_ParamType_Number" id="Zen_ParamType_Number_h7hhi"]
+
+[sub_resource type="Zen_TableCellConfig" id="Zen_TableCellConfig_mj32n"]
+resource_name = "scale"
+column_name = "safasd"
+param_type = SubResource("Zen_ParamType_Number_h7hhi")
+
+[sub_resource type="Zen_ParamType_String" id="Zen_ParamType_String_h7hhi"]
+
+[sub_resource type="Zen_TableCellConfig" id="Zen_TableCellConfig_amisr"]
+column_name = "ll"
+param_type = SubResource("Zen_ParamType_String_h7hhi")
+
+[sub_resource type="Zen_ParamType_Options" id="Zen_ParamType_Options_h7hhi"]
+options = PackedStringArray("A", "F")
+
+[sub_resource type="Zen_TableCellConfig" id="Zen_TableCellConfig_oaair"]
+column_name = "fasfa"
+color = Color(0.6340739, 7.0752203e-06, 0.4218074, 1)
+param_type = SubResource("Zen_ParamType_Options_h7hhi")
+
+[node name="UiTableTest" type="PanelContainer" unique_id=984714001 node_paths=PackedStringArray("table_editor")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h7hhi")
+table_editor = NodePath("Zen_TableEditor")
+
+[node name="Zen_TableEditor" type="Zen_TableEditor" parent="." unique_id=591401029]
+layout_mode = 2
+size_flags_vertical = 3
+data = [{}, {}, {}]
+columns = [SubResource("Zen_TableCellConfig_vhlxa"), SubResource("Zen_TableCellConfig_mj32n"), SubResource("Zen_TableCellConfig_amisr"), SubResource("Zen_TableCellConfig_oaair")]
+
+[connection signal="data_changed" from="Zen_TableEditor" to="." method="_on_zen_table_editor_data_changed"]

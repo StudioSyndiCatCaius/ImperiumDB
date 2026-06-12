@@ -7,16 +7,15 @@ extends Node
 @export var N_ProjName: Label
 @export var N_Dialog_save: FileDialog
 @export var N_Dialog_confirm_quit: ConfirmationDialog
-@export var N_TreeRoot: ui_FileTree
 @export var N_img_logo: TextureRect
+@export var n_fileTree: Zen_FileTree
 
 @export var n_window_playtest: Window
 @export var n_playtest: STATE_playtest
 @export var n_block_color: ColorRect
-
+@export var n_TxtEdit_TreeFilter: TextEdit
 
 @onready var REF_GraphEdit:=preload("res://app/scenes/ui/ui_FlowGraph.tscn")
-
 
 func _ready():
 	if G.active_project==null:
@@ -29,11 +28,46 @@ func _ready():
 	
 	#setup first graph
 	G_Node.Children_ClearAll(N_TabGraphs)
-	GRAPH_Open(G_Lua.GRAPH_NewDefault())
+	GRAPH_Open(G.GRAPH_NewDefault())
 	
+	n_fileTree.root_path=G.PATH_GetRoot()+"/flow/"
+	FileTree_Rebuild()
+	n_fileTree.set_expanded_bulk(G.active_project.DATA.get('tree_expansion',{}))
 	
 func focus():
 	return get_viewport().gui_get_focus_owner()
+
+# =============================================================================
+# FILE TREE
+# =============================================================================
+
+func FileTree_Rebuild():
+	n_fileTree.rebuild_tree()
+
+func FileTree_SaveState():
+	G.active_project.DATA['tree_expansion']=n_fileTree.get_expanded_bulk()
+
+func _on_file_tree_file_selected(file_path):
+	FileTree_SaveState()
+	var new_graph={}
+	new_graph=GRAPH_FromFile(file_path)
+	GRAPH_Open(new_graph,file_path)
+
+func _on_file_tree_option_menu_visibility_changed(visible):
+	pass # Replace with function body.
+
+func _on_file_tree_menu_option_selected(option_label, file_path, option_index):
+	if option_label=="Open Folder":
+		OS.shell_open(file_path)
+
+func _on_txt_edit_tree_filter_text_changed():
+	n_fileTree.name_filter=n_TxtEdit_TreeFilter.text
+	FileTree_Rebuild()
+
+
+func _on_file_tree_item_collapsed(item):
+	FileTree_SaveState()
+
 
 # =============================================================================
 # Keyboard Inputs
@@ -52,7 +86,7 @@ func _on_i_save_input_begin():
 		_tab.__SAVE()
 
 func _on_i_new_input_begin():
-	var _new = G_Lua.GRAPH_NewDefault()
+	var _new = G.GRAPH_NewDefault()
 	GRAPH_Open(_new)
 
 var SAVE_data={}
@@ -155,7 +189,7 @@ func _on_btn_new_res_pressed():
 	var _newEnt = res_Entity.new()
 	var _savPath=G.PATH_GetRoot()+"/entities/ent.tres"
 	print("Saving: "+str(_newEnt)+" to "+_savPath)
-	G_Resource.Save(_newEnt,_savPath)
+	ResourceSaver.save(_newEnt,_savPath)
 
 func CMD_RerunScripts():
 	G.PROJECT_RerunScripts()

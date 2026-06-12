@@ -21,17 +21,14 @@ config/icon="uid://bhmawjg5g0mrd"
 
 [autoload]
 
-G_Math="*res://app/scripts/global/G_Math.gd"
 G_Node="*res://app/scripts/global/G_Node.gd"
 G_File="*res://app/scripts/global/G_File.gd"
 G_String="*res://app/scripts/global/G_String.gd"
-G_Resource="*res://app/scripts/global/G_Resource.gd"
 G_Conv="*res://app/scripts/global/G_Conv.gd"
 G_Log="*res://app/scripts/global/G_Log.gd"
 G_Load="*res://app/scripts/global/G_Load.gd"
-G_Lua="*res://app/scripts/global/G_Lua.gd"
-TOML="*res://addons/not_full_toml_yet/parser_writer.gd"
 G="*res://app/scripts/global/G.gd"
+PDF="*uid://dpjvsghsskoei"
 
 [display]
 
@@ -45,7 +42,7 @@ project/assembly_name="ImperiumDB"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/lua-gdextension/plugin.cfg", "res://addons/not_full_toml_yet/plugin.cfg")
+enabled=PackedStringArray("res://addons/godotpdf/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [file_customization]
 
@@ -54,6 +51,7 @@ folder_colors={
 "res://app/assets/": "teal",
 "res://app/res/": "red",
 "res://app/scenes/": "yellow",
+"res://app/scenes/ui/_TEST/": "gray",
 "res://app/scripts/": "blue",
 "res://app/scripts/resources/sub/": "gray"
 }

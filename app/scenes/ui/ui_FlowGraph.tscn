@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://b48nuelmdg8mv" path="res://app/assets/2D/icons/t_ico_TreeClosed.png" id="4_iebi0"]
 [ext_resource type="PackedScene" uid="uid://bhat55834aisb" path="res://app/scenes/ui/ui_Screenplay.tscn" id="5_ctigr"]
 [ext_resource type="PackedScene" uid="uid://cqt3y6ahvm8cv" path="res://app/scenes/ui/pEdit/pEdit_string.tscn" id="7_p8sk6"]
+[ext_resource type="Texture2D" uid="uid://c5rogabybj50c" path="res://app/assets/2D/icons/t_ico_filePdf.png" id="8_bo6kr"]
+[ext_resource type="Texture2D" uid="uid://bqpcrcpry38ld" path="res://app/assets/2D/icons/t_ico_fileCsv.png" id="9_oajqh"]
 [ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="9_x45cu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_oytv5"]
@@ -26,7 +28,7 @@ corner_radius_bottom_left = 5
 corner_detail = 5
 shadow_color = Color(0, 0, 0, 0.3137255)
 
-[node name="UiFlowGraph" type="PanelContainer" unique_id=800245775 node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist", "N_screenplay", "n_flow_template", "parm_BindList")]
+[node name="UiFlowGraph" type="PanelContainer" unique_id=800245775 node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist", "N_screenplay", "n_flow_template", "col_creating_screen", "N_txtedit_GraphDesc")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -36,14 +38,15 @@ script = ExtResource("1_pb1ws")
 N_Graph = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit")
 N_ParamEdit = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/params")
 N_NodeList = NodePath("TabContainer/🪢Graph/HSplitContainer2/list_nodes")
-N_lbl_scriptPath = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/PanelContainer/lbl_scriptPath")
+N_lbl_scriptPath = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/PanelContainer/lbl_scriptPath")
 N_txtedit_NodeDir = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/📜Direction/txtEdit_Dir")
 N_Dlg_csv = NodePath("FileDialog")
-N_Spin_KeyOffset = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/spin_OffsetKey")
+N_Spin_KeyOffset = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/spin_OffsetKey")
 N_popup_Nodelist = NodePath("N_popup_NodeList")
 N_screenplay = NodePath("TabContainer/📜Screenplay")
 n_flow_template = NodePath("TabContainer/🪢Graph/HBoxContainer/n_FlowTemplate")
-parm_BindList = [NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer/parmSt_id"), NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer/parmSt_key")]
+col_creating_screen = NodePath("col_CreatingScreen")
+N_txtedit_GraphDesc = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer/TextEdit_GraphDesc")
 
 [node name="TabContainer" type="TabContainer" parent="." unique_id=1047816591]
 layout_mode = 2
@@ -158,68 +161,107 @@ theme_override_font_sizes/font_size = 12
 text = "TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR "
 wrap_mode = 1
 
-[node name="⚙️Import" type="PanelContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer" unique_id=1386595300]
+[node name="💬Graph" type="PanelContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer" unique_id=1386595300]
 visible = false
 layout_mode = 2
+theme = ExtResource("2_86c44")
 metadata/_tab_index = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import" unique_id=1230582494]
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph" unique_id=1230582494]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1828589029]
+[node name="Label" type="Label" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer" unique_id=986792467]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Graph Description"
+
+[node name="TextEdit_GraphDesc" type="TextEdit" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer" unique_id=217201831]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_colors/background_color = Color(0, 0, 0, 0.6117647)
+
+[node name="Label2" type="Label" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer" unique_id=766439866]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "EXPORT"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer" unique_id=234158866]
+layout_mode = 2
+
+[node name="Btn_Export" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer/HBoxContainer" unique_id=851341691]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PDF"
+icon = ExtResource("8_bo6kr")
+
+[node name="Btn_ExportCsv" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer/HBoxContainer" unique_id=689645667]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CSV"
+icon = ExtResource("9_oajqh")
+
+[node name="⚙️Cmd" type="PanelContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer" unique_id=120355592]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd" unique_id=607532792]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1828589029]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="lbl_scriptPath" type="TextEdit" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/PanelContainer" unique_id=326363850]
+[node name="lbl_scriptPath" type="TextEdit" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/PanelContainer" unique_id=326363850]
 layout_mode = 2
 theme_override_font_sizes/font_size = 9
 text = "sfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfaf"
 
-[node name="btn_ScriptSet" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=349146942]
+[node name="btn_ScriptSet" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=349146942]
 layout_mode = 2
 text = "Set Script"
 
-[node name="spin_OffsetKey" type="SpinBox" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1329120124]
+[node name="spin_OffsetKey" type="SpinBox" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1329120124]
 layout_mode = 2
 rounded = true
 prefix = "Key Offset   "
 
-[node name="btn_UpdateKeys" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=147788909]
+[node name="btn_UpdateKeys" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=147788909]
 layout_mode = 2
 text = "Update Keys"
 
-[node name="btn_ScriptImport" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1739928144]
+[node name="btn_ScriptImport" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1739928144]
 layout_mode = 2
 text = "Import Script"
 
-[node name="btn_dIRECTIONImport" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1952162939]
+[node name="btn_dIRECTIONImport" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1952162939]
 layout_mode = 2
 text = "Import Directions"
 
-[node name="HSeparator" type="HSeparator" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1476350722]
+[node name="HSeparator" type="HSeparator" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1476350722]
 layout_mode = 2
 
-[node name="btn_FixCon" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1107295288]
+[node name="btn_FixCon" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1107295288]
 layout_mode = 2
 text = "Fix Connections"
 
-[node name="btn_DelEmpty" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1903710703]
+[node name="btn_DelEmpty" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1903710703]
 layout_mode = 2
 text = "Delete Empty"
 
-[node name="btn_RegenNodes" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1000561361]
+[node name="btn_RegenNodes" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1000561361]
 layout_mode = 2
 text = "Regenerate Labels"
 
-[node name="HSeparator2" type="HSeparator" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1680541232]
+[node name="HSeparator2" type="HSeparator" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1680541232]
 layout_mode = 2
 
-[node name="btn_SetImportClean" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1312618856]
+[node name="btn_SetImportClean" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1312618856]
 layout_mode = 2
 text = "Set Import & Clean"
 
-[node name="btn_DEBUG" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1864798053]
+[node name="btn_DEBUG" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer" unique_id=1864798053]
 layout_mode = 2
 text = "DEBUG"
 
@@ -263,6 +305,27 @@ oversampling_override = 1.0
 max_size = Vector2i(32768, 500)
 theme_override_font_sizes/font_size = 10
 
+[node name="col_CreatingScreen" type="ColorRect" parent="." unique_id=792673186]
+visible = false
+layout_mode = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.5686275)
+
+[node name="Label" type="Label" parent="col_CreatingScreen" unique_id=1171779048]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "CREATING SCREENPLAY"
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]
 [connection signal="pressed" from="TabContainer/🪢Graph/HBoxContainer/btn_close" to="." method="_on_btn_close_pressed"]
@@ -279,17 +342,20 @@ theme_override_font_sizes/font_size = 10
 [connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/btn_playSound" to="." method="_on_btn_play_sound_pressed"]
 [connection signal="OnParamEdit" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/params" to="." method="_on_params_on_param_edit"]
 [connection signal="text_changed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/📜Direction/txtEdit_Dir" to="." method="_on_txt_edit_dir_text_changed"]
-[connection signal="text_changed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/PanelContainer/lbl_scriptPath" to="." method="_on_lbl_script_path_text_changed"]
-[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_ScriptSet" to="." method="_on_btn_script_set_pressed"]
-[connection signal="value_changed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/spin_OffsetKey" to="." method="_on_spin_offset_key_value_changed"]
-[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_UpdateKeys" to="." method="_on_btn_update_keys_pressed"]
-[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_ScriptImport" to="." method="_on_btn_script_import_pressed"]
-[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_dIRECTIONImport" to="." method="_on_btn_d_irection_import_pressed"]
-[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_FixCon" to="." method="_on_btn_fix_con_pressed"]
-[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_DelEmpty" to="." method="_on_btn_del_empty_pressed"]
-[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_RegenNodes" to="." method="_on_btn_regen_nodes_pressed"]
-[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_SetImportClean" to="." method="_on_btn_set_import_clean_pressed"]
-[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_DEBUG" to="." method="_on_btn_debug_pressed"]
+[connection signal="text_changed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer/TextEdit_GraphDesc" to="." method="_on_text_edit_graph_desc_text_changed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer/HBoxContainer/Btn_Export" to="." method="_on_btn_export_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer/HBoxContainer/Btn_ExportCsv" to="." method="_on_btn_export_csv_pressed"]
+[connection signal="text_changed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/PanelContainer/lbl_scriptPath" to="." method="_on_lbl_script_path_text_changed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/btn_ScriptSet" to="." method="_on_btn_script_set_pressed"]
+[connection signal="value_changed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/spin_OffsetKey" to="." method="_on_spin_offset_key_value_changed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/btn_UpdateKeys" to="." method="_on_btn_update_keys_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/btn_ScriptImport" to="." method="_on_btn_script_import_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/btn_dIRECTIONImport" to="." method="_on_btn_d_irection_import_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/btn_FixCon" to="." method="_on_btn_fix_con_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/btn_DelEmpty" to="." method="_on_btn_del_empty_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/btn_RegenNodes" to="." method="_on_btn_regen_nodes_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/btn_SetImportClean" to="." method="_on_btn_set_import_clean_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/btn_DEBUG" to="." method="_on_btn_debug_pressed"]
 [connection signal="InputBegin" from="i_NextNode" to="." method="_INPUT_Next"]
 [connection signal="InputBegin" from="i_NextNode2" to="." method="_INPUT_Next"]
 [connection signal="InputBegin" from="i_SelectAll_Next" to="." method="_on_i_select_all_next_input_begin"]

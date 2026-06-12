@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://nc2eeb1dmpxu"]
+
+[ext_resource type="Script" uid="uid://cycamf8xdsvlc" path="res://app/scenes/ui/_TEST/ui_file_tree_test.gd" id="1_vvrei"]
+[ext_resource type="Texture2D" uid="uid://bw7vluaiopfwi" path="res://app/assets/2D/icons/Icon_File_T.PNG" id="2_iykur"]
+[ext_resource type="Texture2D" uid="uid://dullmjmvl2s2h" path="res://app/assets/2D/icons/Icon_Folder_T.PNG" id="3_rs8jy"]
+
+[sub_resource type="Zen_FileTypeConfig" id="Zen_FileTypeConfig_vvrei"]
+extension = "ImpFlow"
+icon = ExtResource("2_iykur")
+color = Color(0.64265066, 0.81136036, 0.8742718, 1)
+menu_options = PackedStringArray("Open", "Clone")
+
+[sub_resource type="Zen_FileTypeConfig" id="Zen_FileTypeConfig_iykur"]
+is_folder = true
+icon = ExtResource("3_rs8jy")
+
+[node name="UiFileTreeTest" type="PanelContainer" unique_id=1941913942 node_paths=PackedStringArray("file_tree")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vvrei")
+file_tree = NodePath("VBoxContainer/FileTree")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1901484340]
+layout_mode = 2
+
+[node name="FileTree" type="FileTree" parent="VBoxContainer" unique_id=53340555]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/title_button_font_size = 12
+root_path = "D:\\PROJECTS\\Work\\Noiramore\\JudithTestClassroom\\Content\\__ImpDB\\flow\\"
+file_type_configs = Array[Zen_FileTypeConfig]([SubResource("Zen_FileTypeConfig_vvrei"), SubResource("Zen_FileTypeConfig_iykur")])
+
+[connection signal="file_selected" from="VBoxContainer/FileTree" to="." method="_on_file_tree_file_selected"]

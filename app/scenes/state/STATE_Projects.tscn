@@ -134,6 +134,8 @@ display_name = "Autoload last project?"
 [node name="Dialog_Load" type="FileDialog" parent="." unique_id=1957248846]
 title = "Open a File"
 initial_position = 1
+always_on_top = true
+sharp_corners = true
 ok_button_text = "Open"
 file_mode = 0
 access = 2

@@ -1,0 +1,297 @@
+[gd_scene format=3 uid="uid://yo3kw5xm1r1y"]
+
+[ext_resource type="Script" uid="uid://ninltbqxj6cg" path="res://app/scenes/ui/ui_FlowGraph.gd" id="1_pb1ws"]
+[ext_resource type="Theme" uid="uid://c0k1s5ql2mwpy" path="res://app/assets/Style/theme_tabs.theme" id="2_86c44"]
+[ext_resource type="PackedScene" uid="uid://dlr7wei0mcpmo" path="res://app/scenes/ui/ui_ParamEdit.tscn" id="2_mhv03"]
+[ext_resource type="Script" uid="uid://dmgwd5itujl7q" path="res://app/scripts/components/cmp_InputAction.gd" id="3_m5ua5"]
+[ext_resource type="Texture2D" uid="uid://v1ufeb8xrecf" path="res://app/assets/2D/icons/t_ico_sound.png" id="3_vx2s2"]
+[ext_resource type="Texture2D" uid="uid://b48nuelmdg8mv" path="res://app/assets/2D/icons/t_ico_TreeClosed.png" id="4_iebi0"]
+[ext_resource type="PackedScene" uid="uid://bhat55834aisb" path="res://app/scenes/ui/ui_Screenplay.tscn" id="5_ctigr"]
+[ext_resource type="PackedScene" uid="uid://cqt3y6ahvm8cv" path="res://app/scenes/ui/pEdit/pEdit_string.tscn" id="7_p8sk6"]
+[ext_resource type="Texture2D" uid="uid://bdsbohy4pkaix" path="res://app/assets/2D/icons/t_ico_CrossRed.png" id="9_x45cu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_oytv5"]
+font_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vx2s2"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.033853278, 0.033853278, 0.033853274, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 5
+shadow_color = Color(0, 0, 0, 0.3137255)
+
+[node name="UiFlowGraph" type="PanelContainer" unique_id=800245775 node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist", "N_screenplay", "n_flow_template", "parm_BindList")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pb1ws")
+N_Graph = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit")
+N_ParamEdit = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/params")
+N_NodeList = NodePath("TabContainer/🪢Graph/HSplitContainer2/list_nodes")
+N_lbl_scriptPath = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/PanelContainer/lbl_scriptPath")
+N_txtedit_NodeDir = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/📜Direction/txtEdit_Dir")
+N_Dlg_csv = NodePath("FileDialog")
+N_Spin_KeyOffset = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/spin_OffsetKey")
+N_popup_Nodelist = NodePath("N_popup_NodeList")
+N_screenplay = NodePath("TabContainer/📜Screenplay")
+n_flow_template = NodePath("TabContainer/🪢Graph/HBoxContainer/n_FlowTemplate")
+parm_BindList = [NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer/parmSt_id"), NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer/parmSt_key")]
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=1047816591]
+layout_mode = 2
+theme = ExtResource("2_86c44")
+current_tab = 0
+
+[node name="🪢Graph" type="VBoxContainer" parent="TabContainer" unique_id=2087820772]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/🪢Graph" unique_id=451559510]
+layout_mode = 2
+
+[node name="btn_close" type="Button" parent="TabContainer/🪢Graph/HBoxContainer" unique_id=1636069862]
+layout_mode = 2
+text = "Close Graph"
+icon = ExtResource("9_x45cu")
+
+[node name="btn_Playtest" type="Button" parent="TabContainer/🪢Graph/HBoxContainer" unique_id=596153542]
+self_modulate = Color(0, 1, 0.4666667, 1)
+layout_mode = 2
+text = "Playtest"
+icon = ExtResource("4_iebi0")
+
+[node name="Control" type="Control" parent="TabContainer/🪢Graph/HBoxContainer" unique_id=1690500704]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="TabContainer/🪢Graph/HBoxContainer" unique_id=285742082]
+layout_mode = 2
+text = "Flow Template"
+
+[node name="n_FlowTemplate" type="OptionButton" parent="TabContainer/🪢Graph/HBoxContainer" unique_id=251807626]
+layout_mode = 2
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="TabContainer/🪢Graph" unique_id=1750841040]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="list_nodes" type="ItemList" parent="TabContainer/🪢Graph/HSplitContainer2" unique_id=944988957]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_constants/outline_size = 7
+theme_override_font_sizes/font_size = 10
+
+[node name="HSplitContainer" type="HSplitContainer" parent="TabContainer/🪢Graph/HSplitContainer2" unique_id=891454270]
+layout_mode = 2
+split_offsets = PackedInt32Array(-400)
+split_offset = -400
+
+[node name="GraphEdit" type="GraphEdit" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer" unique_id=743626403]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/grid_major = Color(0, 0, 0, 0.615686)
+theme_override_colors/grid_minor = Color(1, 1, 1, 0.0509804)
+right_disconnects = true
+connection_lines_curvature = 0.0
+connection_lines_thickness = 3.0
+
+[node name="TabContainer" type="TabContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer" unique_id=1827958926]
+layout_mode = 2
+current_tab = 0
+
+[node name="🔸Node" type="PanelContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer" unique_id=52238729]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node" unique_id=931522791]
+layout_mode = 2
+
+[node name="btn_playSound" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer" unique_id=1159012788]
+layout_mode = 2
+size_flags_horizontal = 0
+icon = ExtResource("3_vx2s2")
+
+[node name="params" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer" unique_id=915610649 instance=ExtResource("2_mhv03")]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 3
+key = "params"
+
+[node name="Label" type="Label" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer" unique_id=1440190368]
+layout_mode = 2
+text = "script"
+label_settings = SubResource("LabelSettings_oytv5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer" unique_id=1899556969]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="parmSt_id" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer" unique_id=175299392 instance=ExtResource("7_p8sk6")]
+layout_mode = 2
+size_flags_horizontal = 3
+paramName = "label"
+
+[node name="parmSt_key" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer" unique_id=1106765642 instance=ExtResource("7_p8sk6")]
+layout_mode = 2
+size_flags_horizontal = 3
+paramName = "key"
+
+[node name="📜Direction" type="PanelContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer" unique_id=1208412767]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vx2s2")
+metadata/_tab_index = 1
+
+[node name="txtEdit_Dir" type="TextEdit" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/📜Direction" unique_id=923825062]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9349402, 0.8800169, 0.61536884, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_font_sizes/font_size = 12
+text = "TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR TAR "
+wrap_mode = 1
+
+[node name="⚙️Import" type="PanelContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer" unique_id=1386595300]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import" unique_id=1230582494]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1828589029]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="lbl_scriptPath" type="TextEdit" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/PanelContainer" unique_id=326363850]
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "sfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfafsfasfasfasfaf"
+
+[node name="btn_ScriptSet" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=349146942]
+layout_mode = 2
+text = "Set Script"
+
+[node name="spin_OffsetKey" type="SpinBox" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1329120124]
+layout_mode = 2
+rounded = true
+prefix = "Key Offset   "
+
+[node name="btn_UpdateKeys" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=147788909]
+layout_mode = 2
+text = "Update Keys"
+
+[node name="btn_ScriptImport" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1739928144]
+layout_mode = 2
+text = "Import Script"
+
+[node name="btn_dIRECTIONImport" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1952162939]
+layout_mode = 2
+text = "Import Directions"
+
+[node name="HSeparator" type="HSeparator" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1476350722]
+layout_mode = 2
+
+[node name="btn_FixCon" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1107295288]
+layout_mode = 2
+text = "Fix Connections"
+
+[node name="btn_DelEmpty" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1903710703]
+layout_mode = 2
+text = "Delete Empty"
+
+[node name="btn_RegenNodes" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1000561361]
+layout_mode = 2
+text = "Regenerate Labels"
+
+[node name="HSeparator2" type="HSeparator" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1680541232]
+layout_mode = 2
+
+[node name="btn_SetImportClean" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1312618856]
+layout_mode = 2
+text = "Set Import & Clean"
+
+[node name="btn_DEBUG" type="Button" parent="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer" unique_id=1864798053]
+layout_mode = 2
+text = "DEBUG"
+
+[node name="📜Screenplay" parent="TabContainer" unique_id=604287070 instance=ExtResource("5_ctigr")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="i_NextNode" type="Node" parent="." unique_id=632378959 node_paths=PackedStringArray("RequiredVisibleNode")]
+script = ExtResource("3_m5ua5")
+key = 4194309
+Require_CTRL = true
+RequiredVisibleNode = NodePath("..")
+metadata/_custom_type_script = "uid://dmgwd5itujl7q"
+
+[node name="i_NextNode2" type="Node" parent="." unique_id=1244939729 node_paths=PackedStringArray("RequiredVisibleNode")]
+script = ExtResource("3_m5ua5")
+key = 4194309
+Require_CTRL = true
+RequiredVisibleNode = NodePath("..")
+metadata/_custom_type_script = "uid://dmgwd5itujl7q"
+
+[node name="i_SelectAll_Next" type="Node" parent="." unique_id=37386233 node_paths=PackedStringArray("RequiredVisibleNode")]
+script = ExtResource("3_m5ua5")
+key = 4194321
+Require_CTRL = true
+Require_Shift = true
+RequiredVisibleNode = NodePath("..")
+metadata/_custom_type_script = "uid://dmgwd5itujl7q"
+
+[node name="FileDialog" type="FileDialog" parent="." unique_id=275149230]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.csv")
+use_native_dialog = true
+
+[node name="N_popup_NodeList" type="PopupMenu" parent="." unique_id=1089390992]
+oversampling_override = 1.0
+max_size = Vector2i(32768, 500)
+theme_override_font_sizes/font_size = 10
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="tab_changed" from="TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HBoxContainer/btn_close" to="." method="_on_btn_close_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HBoxContainer/btn_Playtest" to="." method="_on_btn_playtest_pressed"]
+[connection signal="item_selected" from="TabContainer/🪢Graph/HBoxContainer/n_FlowTemplate" to="." method="_on_n_flow_template_item_selected"]
+[connection signal="item_activated" from="TabContainer/🪢Graph/HSplitContainer2/list_nodes" to="." method="_on_list_nodes_item_activated"]
+[connection signal="connection_request" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_connection_request"]
+[connection signal="delete_nodes_request" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_delete_nodes_request"]
+[connection signal="disconnection_request" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_disconnection_request"]
+[connection signal="duplicate_nodes_request" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_duplicate_nodes_request"]
+[connection signal="gui_input" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_gui_input"]
+[connection signal="node_deselected" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_deselected"]
+[connection signal="node_selected" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/GraphEdit" to="." method="_on_graph_edit_node_selected"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/btn_playSound" to="." method="_on_btn_play_sound_pressed"]
+[connection signal="OnParamEdit" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/params" to="." method="_on_params_on_param_edit"]
+[connection signal="text_changed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/📜Direction/txtEdit_Dir" to="." method="_on_txt_edit_dir_text_changed"]
+[connection signal="text_changed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/PanelContainer/lbl_scriptPath" to="." method="_on_lbl_script_path_text_changed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_ScriptSet" to="." method="_on_btn_script_set_pressed"]
+[connection signal="value_changed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/spin_OffsetKey" to="." method="_on_spin_offset_key_value_changed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_UpdateKeys" to="." method="_on_btn_update_keys_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_ScriptImport" to="." method="_on_btn_script_import_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_dIRECTIONImport" to="." method="_on_btn_d_irection_import_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_FixCon" to="." method="_on_btn_fix_con_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_DelEmpty" to="." method="_on_btn_del_empty_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_RegenNodes" to="." method="_on_btn_regen_nodes_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_SetImportClean" to="." method="_on_btn_set_import_clean_pressed"]
+[connection signal="pressed" from="TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Import/VBoxContainer/btn_DEBUG" to="." method="_on_btn_debug_pressed"]
+[connection signal="InputBegin" from="i_NextNode" to="." method="_INPUT_Next"]
+[connection signal="InputBegin" from="i_NextNode2" to="." method="_INPUT_Next"]
+[connection signal="InputBegin" from="i_SelectAll_Next" to="." method="_on_i_select_all_next_input_begin"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="index_pressed" from="N_popup_NodeList" to="." method="_on_n_popup_node_list_index_pressed"]

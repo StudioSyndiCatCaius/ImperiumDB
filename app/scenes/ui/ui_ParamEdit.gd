@@ -2,7 +2,7 @@ extends Control
 class_name ui_ParamEdit
 
 var current_object={}
-var current_template: LuaTable
+var current_template: Dictionary
 
 @export var key=""
 @export var N_container: GridContainer
@@ -31,10 +31,10 @@ func OBJECT_MultiMode(on: bool):
 
 func OBJECT_Clear():
 	current_object={}
-	current_template=null
+	current_template={}
 	G_Node.Children_ClearAll(N_container)
 
-func OBJECT_Set(_obj: Dictionary, _template: LuaTable):
+func OBJECT_Set(_obj: Dictionary, _template: Dictionary):
 	OBJECT_Clear()
 	current_object=_obj
 	current_template=_template
@@ -45,7 +45,7 @@ func OBJECT_Set(_obj: Dictionary, _template: LuaTable):
 		print("could not set ParamEdit object: template is invalid")
 		return
 	
-	var plist: Dictionary=G_Lua.CONV(_template.get('params',{}))
+	var plist: Dictionary=_template.get('params',{})
 	var key_list: Array =plist.keys()
 	key_list.sort_custom(func(a,b):
 		return plist[a].get('order',0) < plist[b].get('order',0)
@@ -64,9 +64,7 @@ func OBJECT_Set(_obj: Dictionary, _template: LuaTable):
 	
 	#load commands
 	G_Node.Children_ClearAll(N_CmdContainer)
-	var _cmdList=_template.to_dictionary().get('cmd',[])
-	if _cmdList is LuaTable:
-		_cmdList=_cmdList.to_dictionary()
+	var _cmdList=_template.get('cmd',[])
 	for i in _cmdList:
 		var _newCmd: ui_CmdButton=REF_CmdButton.instantiate()
 		_newCmd.cmd_key=i
@@ -75,12 +73,11 @@ func OBJECT_Set(_obj: Dictionary, _template: LuaTable):
 
 func _OnCmdSelect(key:String):
 	if current_template:
-		var _temp=current_template.to_dictionary()
+		var _temp=current_template
 		var _func=_temp.cmd[key]
-		if _func is LuaFunction:
+		if _func is Callable:
 			var _output=_func.invoke(current_object)
-			if _output is LuaTable:
-				_output=_output.to_dictionary()
+			if _output is Dictionary:
 				
 				#Play Sound
 				if _output.get('action','')=='PlaySound':

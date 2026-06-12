@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cvrc6dkgs647b"]
+
+[ext_resource type="Script" uid="uid://bii57yyo6m5g4" path="res://app/scenes/ui/_TEST/TAB_TableEditor.gd" id="1_aqiex"]
+[ext_resource type="Texture2D" uid="uid://bw7vluaiopfwi" path="res://app/assets/2D/icons/Icon_File_T.PNG" id="2_dyt3e"]
+[ext_resource type="Texture2D" uid="uid://dcjotfayujy0e" path="res://app/assets/2D/icons/t_ico_ScriptReload.png" id="3_oht7d"]
+
+[node name="UiTableTest" type="PanelContainer" unique_id=984714001 node_paths=PackedStringArray("tab_container")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aqiex")
+tab_container = NodePath("VBoxContainer/TabContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=366331139]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=1774733061]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=13025564]
+layout_mode = 2
+
+[node name="BTN_SAVE" type="Button" parent="VBoxContainer/PanelContainer/HBoxContainer" unique_id=47053075]
+layout_mode = 2
+text = "Save"
+icon = ExtResource("2_dyt3e")
+
+[node name="BTN_SAVEall" type="Button" parent="VBoxContainer/PanelContainer/HBoxContainer" unique_id=2049742238]
+layout_mode = 2
+text = "Save All"
+icon = ExtResource("2_dyt3e")
+
+[node name="Control" type="Control" parent="VBoxContainer/PanelContainer/HBoxContainer" unique_id=2050181621]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Btn_ReloadTables" type="Button" parent="VBoxContainer/PanelContainer/HBoxContainer" unique_id=1981765159]
+layout_mode = 2
+text = "ReloadTables"
+icon = ExtResource("3_oht7d")
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer" unique_id=44679477]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Z1D_Input" type="Z1D_Input" parent="." unique_id=424414846]
+input_bindings = {
+&"S": Vector3(1, 0, 0)
+}
+require_ctrl = true
+visibility_link = NodePath("..")
+
+[connection signal="pressed" from="VBoxContainer/PanelContainer/HBoxContainer/BTN_SAVE" to="." method="_on_btn_save_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/HBoxContainer/BTN_SAVEall" to="." method="_on_btn_sav_eall_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/HBoxContainer/Btn_ReloadTables" to="." method="_on_btn_reload_tables_pressed"]
+[connection signal="input_started" from="Z1D_Input" to="." method="_on_z_1d_input_input_started"]

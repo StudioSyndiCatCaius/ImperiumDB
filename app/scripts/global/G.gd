@@ -1,5 +1,48 @@
 extends Node
 
+var D_templates={}
+var D_nodes={}
+var D_node_meta={}
+
+var NODE_Default={
+	id=0,
+	label="untitled*",
+	linked_script="",
+	connections=[
+			{
+				from_node="100",
+				from_port=0,
+				to_node="200",
+				to_port=0,
+			},
+			{
+				from_node="200",
+				from_port=0,
+				to_node="300",
+				to_port=0,
+			},
+	],
+	nodes=[
+		{
+			_template="node_Start",
+			label="100",
+			position={x=0,y=0},
+			params={}
+		},
+		{
+			_template="node_DialogueLine",
+			label="200",
+			position={x=300,y=0},
+			params={}
+		},
+		{
+			_template="node_End",
+			label="300",
+			position={x=600,y=0},
+			params={}
+		},
+	]
+}
 
 var project_template={
 	"flow/test.ImpFlow"="",
@@ -28,8 +71,10 @@ var path_SaveProj="user://projects.json"
 var users=[]
 
 func _ready():
+	
+	Z.L.do_string("ImpDB_Nodes={}")
+	await get_tree().create_timer(0.1)
 	DATA_global=G_File.LOAD_Json(path_SaveProj,DATA_global)
-	G_Lua.INIT()
 	for _path in DATA_global.get("projects",[]):
 		PROJECT_Load(_path)
 	if active_project==null and list_projects.size()>0:
@@ -38,7 +83,7 @@ func _ready():
 func _exit_tree():
 	G_File.SAVE_Json(DATA_global,path_SaveProj)
 	if active_project!=null:
-		active_project.__save()
+		active_project.SAVE()
 
 func GetCONFIG() -> Dictionary:
 	return active_project.DATA
@@ -82,8 +127,7 @@ func PROJECT_Load(path: String) -> res_project:
 	print("  new project object created as: "+str(new_proj))
 	
 	new_proj.path=path
-	new_proj.DATA=G_File.LOAD_Json(path)
-	new_proj.__load(new_proj.DATA)
+	new_proj.LOAD_fromPath(path)
 	list_projects.push_front(new_proj)
 	return new_proj
 
@@ -106,6 +150,18 @@ func PROJECT_Create(path: String):
 	PROJECT_Register(_path)
 	PROJECT_Load(_path)
 
+
+func PROJECT_CreateLua(string: String):
+	var s="""
+		return {
+			name="$project_name",
+			linked_script="",
+			tables={},
+			tags={},
+		}
+	"""
+
+
 func PROJECT_Open(project: res_project):
 	active_project=project
 	DATA_global['last_project']=project.path
@@ -115,14 +171,13 @@ func PROJECT_Open(project: res_project):
 	# Load CUSTOM/OVERRIDE lua
 	var _inDir: String=active_project.GetProjectDir()+"/lua/autorun/"
 	for i in G_File.LIST_AllInDir(_inDir,true,true):
-		G_Lua.l.do_file(i)
+		Z.L.do_file(i)
 		print(" --- project did lua file: "+i)
-	print("here da ting:" +str(G_Lua.l.globals.ImpDB_Nodes.to_dictionary()))
-	G_Lua.NODES_RegenLuaTable()
+	G.NODES_RegenLuaTable()
 
 func PROJECT_RerunScripts():
-	G_Lua.NODES_ReloadAll()
-	G_Lua.TEMPLATES_ReloadAll()
+	G.NODES_ReloadAll()
+	G.TEMPLATES_ReloadAll()
 
 # ====================================================================
 # TABLES
@@ -133,8 +188,8 @@ func TABLE_GetItem(table: String, entry: String) ->Dictionary:
 
 func TABLE_GetItemList(table: String) -> PackedStringArray:
 	var _keys: PackedStringArray=active_project.DataTables.get(table,{}).keys()
-	var _ap_keys: PackedStringArray=active_project.DATA.get('tables',{}).get(table,[])
-	_keys.append_array(_ap_keys)
+	#var _ap_keys: PackedStringArray=active_project.DATA.get('tables',{}).get(table,[])
+	#_keys.append_array(_ap_keys)
 	return _keys
 
 
@@ -143,14 +198,15 @@ func TABLE_GetItemList(table: String) -> PackedStringArray:
 # ====================================================================
 
 func FlowTemplate_GetData(id: String):
-	var imps=G_Lua.CONV(G_Lua.l.globals.ImpDB_FlowTemplates,true)
+	var imps=Z.L.pull_variant('ImpDB_FlowTemplates')
 	
 	return imps.get(id,{})
 
 func FlowTemplate_GetKeys():
-	var tbl=G_Lua.l.globals.ImpDB_FlowTemplates
-	var imps=G_Lua.CONV(tbl)
-	return imps.keys()
+	var tbl=Z.L.pull_variant('ImpDB_FlowTemplates')
+	if tbl is Dictionary:
+		return tbl.keys()
+	return []
 
 # ====================================================================
 # USER
@@ -191,41 +247,129 @@ func CSV_get(path: String):
 @export var import_script_directions={}
 @export var import_csv={}
 
-func SCRIPT_GetDirectionTextByLineKey() -> Dictionary[String,String]:
-	var out: Dictionary[String,String]={}
-	
+func SCRIPT_GetDirectionTextByLineKey() -> Dictionary:
+	var line_dir_map: Dictionary[String,String]={}
 	var _script_path=G.active_project.DATA.get('linked_script',"")
-	var _last_scene=""
-	var _last_key=""
-	var _last_direction=""
-	var data = G_File.CSV_ImportArray(_script_path)
-	import_csv=data
-	#iterate through csv lines
-	for _csv_lin in data:
-		var new_dir=_csv_lin.get('direction',"")
-		var _new_scene=_csv_lin.get('scene',"")
-		var line_key=_csv_lin.get('key',"")
+	var _str=Z_File.LoadFileAsString(_script_path)
+	var raw_dic: Array=Z_Parse.from_CSV(_str,true)
+
+	var last_key:=""
+	var last_dir:=""
+	
+	for i in raw_dic:
+	
+		var check_key:String=i.get('key',"")
+		print("getting keys from line: "+check_key)
 		
-		#if starting new scene
-		if _new_scene!="" and _new_scene!=_last_scene:
-			#mak 'last_scene' as thise new scene
-			_last_scene=_new_scene
+		#if reached a new valid key
+		if check_key!=last_key && !check_key.is_empty():
+			#if last bulked direction is NOT empty, then apply it to current key
+			if !last_dir.is_empty() && !last_key.is_empty():
+				line_dir_map[last_key]=last_dir
+			#clear direction & update to new key
+			last_dir=""
+			last_key=check_key
+		
+		#if this direction line has text, apply it on next line break to bulk dir
+		var apnd: String=i.get('direction',"")
+		if !apnd.is_empty():
+			last_dir+=apnd+"\n"
+	
+	#dump direction table into json
+	Z_File.SaveStringAsFile(G.PATH_GetRoot()+"/_dump/DirectionDump.json", Z_Parse.to_JSON(line_dir_map),true,true)
+	
+	return line_dir_map
+
+
+
+func AutorunPath(path: String):
+	var list=G_File.LIST_AllInDir(path,true,true)
+	
+	for i in list:
+		if i.get_extension()=="lua":
+			Z.L.do_file(i)
+
+
+# ====================================================================
+# TEMPLATES
+# ====================================================================
+
+func TEMPLATES_ReloadAll():
+	D_templates={}
+	TEMPLATES_LoadAllInPath(G.active_project.GetProjectDir()+"/FlowTemplates/")
+
+func TEMPLATES_LoadAllInPath(path: String):
+	for i in G_File.LIST_AllInDir(path):
+		var _new=Z.L.do_file(i)
+	
+	D_templates=Z.L.pull_variant('ImpDB_Templates')
+
+# ====================================================================
+# Nodes
+# ====================================================================
+
+func NODES_RegenLuaTable():
+	var dic2=Z.L.pull_variant('ImpDB_Nodes')
+	if dic2 is Dictionary:
+		D_nodes=dic2
+	else:
+		D_nodes={}
+
+
+func NODES_LoadAllInPath(path: String,group:int=0):
+	print("started lua path gen: "+path)
+	var _p=G_File.PathCorrect(path)
+	var _file_list=G_File.LIST_AllInDir(_p,true,true)
+	for i in _file_list:
+		if i.get_extension()=="lua":
+			var _key=i.get_file().get_basename()
+			var _val=Z.L.do_file(i)
+			print('did file restult: '+str(i))
 			
-			#append last direction to last line key & reset direction text
-			var _temp_dir=out.get(_last_key,"")
-			_temp_dir=_temp_dir+_last_direction
-			out[_last_key]=_temp_dir
-			_last_direction=""
-		# ELSE if on life
-		else:
-			
-			#pile up direction text until we get new line key
-			if !new_dir.is_empty():
-				_last_direction+=new_dir+"\n --- \n"
-			
-			# if on new key
-			if !line_key.is_empty():
-				out[line_key]=_last_direction
-				_last_key=line_key
-				_last_direction=""
-	return out
+	NODES_RegenLuaTable()
+
+func NODES_GetKeysAlphabetical() -> Array:
+	var _out=D_nodes.keys()
+	_out.sort()
+	return _out
+
+func get_executable_directory_path():
+	if OS.has_feature("editor"):
+		return "res://"
+	else:
+		return OS.get_executable_path().get_base_dir()+"/"
+
+func NODES_ReloadInternal():
+	D_nodes={}
+	NODES_LoadAllInPath(get_executable_directory_path()+"lua/autorun/nodes/")
+
+func NODES_ReloadAll():
+	NODES_ReloadInternal()
+	for i in G.GetCONFIG().get("external_node_paths",[]):
+		NODES_LoadAllInPath(i,1)
+
+func NODE_Generate(type: String) -> Dictionary:
+	var _dat=D_nodes[type]
+	var _newNode={
+		position={x=0,y=0},
+		id=0,
+		label="",
+		params={}
+	}
+	
+	_newNode["_template"]=type
+	var plist=_dat.get("params",{})
+	for i in plist:
+		_newNode["params"][i]=plist.get("default",'')
+		
+	return _newNode
+
+# ====================================================================
+# GRAPH
+# ====================================================================
+
+func GRAPH_NewDefault() -> Dictionary:
+	return NODE_Default.duplicate(true)
+
+func GRAPH_Export(flow: Dictionary):
+	print()
