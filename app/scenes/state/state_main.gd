@@ -164,6 +164,14 @@ func _on_btn_quit_pressed():
 func _on_menu_file_pressed():
 	pass # Replace with function body.
 
+func _on_menu_edit_id_pressed(id: int):
+	var graph: ui_GraphEdit = GRAPH_GetCurrent()
+	if not graph:
+		return
+	match id:
+		0: graph.undo_redo.undo()
+		1: graph.undo_redo.redo()
+
 
 func _on_ui_file_tree_tree_exiting():
 	pass # Replace with function body.

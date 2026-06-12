@@ -5,6 +5,10 @@ var nodes_selected: Array[ui_GraphNode]
 var importkeyoffset=0
 var _NodeKeys: PackedStringArray
 
+var undo_redo := UndoRedo.new()
+var _undo_snapshots: Dictionary  # node_label -> {params, direction, position}
+var _popup_graph_pos: Vector2    # graph-space position recorded when right-click popup opens
+
 var node_group_icons=[
 	"",
 	"res://app/assets/2D/icons/t_ico_PlusGreen.png",
@@ -55,6 +59,19 @@ func _ready():
 		n_flow_template.add_item(i)
 	
 	NodeList_Rebuild()
+
+
+func _unhandled_key_input(event: InputEvent):
+	if not (event is InputEventKey):
+		return
+	if not (event.pressed and not event.echo):
+		return
+	if event.ctrl_pressed and event.keycode == KEY_Z and not event.shift_pressed:
+		undo_redo.undo()
+		get_viewport().set_input_as_handled()
+	elif event.ctrl_pressed and (event.keycode == KEY_Y or (event.keycode == KEY_Z and event.shift_pressed)):
+		undo_redo.redo()
+		get_viewport().set_input_as_handled()
 
 
 func NodeList_Rebuild():
@@ -130,6 +147,8 @@ func GRAPH_Refresh():
 func GRAPH_Load(graph: Dictionary):
 	if N_txtedit_NodeFilter:
 		N_txtedit_NodeFilter.text = ""
+	undo_redo.clear_history()
+	_undo_snapshots.clear()
 	DATA=graph
 	
 	## CORRECT OLD NODE DATA
@@ -304,12 +323,18 @@ func PARAM_OnEdit(param: String, value):
 	NODE_RefreshCurrent()
 
 func _on_graph_edit_connection_request(from_node, from_port, to_node, to_port):
-	N_Graph.connect_node(from_node,from_port,to_node,to_port)
-	CONNECTIONS_Fix()
+	_ur_connection_add(from_node, from_port, to_node, to_port)
+	undo_redo.create_action("Connect Nodes")
+	undo_redo.add_do_method(_ur_connection_add.bind(from_node, from_port, to_node, to_port))
+	undo_redo.add_undo_method(_ur_connection_remove.bind(from_node, from_port, to_node, to_port))
+	undo_redo.commit_action(false)
 
 func _on_graph_edit_disconnection_request(from_node, from_port, to_node, to_port):
-	N_Graph.disconnect_node(from_node,from_port,to_node,to_port)
-	CONNECTIONS_Fix()
+	_ur_connection_remove(from_node, from_port, to_node, to_port)
+	undo_redo.create_action("Disconnect Nodes")
+	undo_redo.add_do_method(_ur_connection_remove.bind(from_node, from_port, to_node, to_port))
+	undo_redo.add_undo_method(_ur_connection_add.bind(from_node, from_port, to_node, to_port))
+	undo_redo.commit_action(false)
 
 # ==================================================================
 # Node Selection
@@ -318,17 +343,21 @@ func _on_graph_edit_node_selected(node):
 	nodes_selected.push_back(node)
 	N_ParamEdit.OBJECT_Clear()
 	N_txtedit_NodeDir.text=node.DATA.get('direction',"")
-	
+
 	var _multi: bool=nodes_selected.size()>1
 	N_ParamEdit.OBJECT_MultiMode(_multi)
-	
-	
+
 	if nodes_selected[0] and !_multi:
 		var n=nodes_selected[0]
 		N_ParamEdit.OBJECT_Set(n.DATA,n.TypeData)
-		
 		for i in parm_BindList:
 			i.Setup(n.DATA)
+
+	_undo_snapshots[str(node.name)] = {
+		params = node.DATA.get('params', {}).duplicate(true),
+		direction = node.DATA.get('direction', ''),
+		position = node.position_offset
+	}
 
 
 func _on_graph_edit_node_deselected(node):
@@ -337,36 +366,87 @@ func _on_graph_edit_node_deselected(node):
 		N_ParamEdit.OBJECT_MultiMode(false)
 		nodes_selected.erase(node)
 		N_ParamEdit.OBJECT_Clear()
-		
 		for i in parm_BindList:
 			i.OBJECT={}
 			i.Value_CLEAR()
 
+	var label := str(node.name)
+	var snap = _undo_snapshots.get(label)
+	if snap and !node.is_queued_for_deletion():
+		var cur_params = node.DATA.get('params', {})
+		var cur_dir = node.DATA.get('direction', '')
+		var cur_pos = node.position_offset
+		var params_changed = snap.params != cur_params
+		var dir_changed = snap.direction != cur_dir
+		var pos_changed = snap.position.distance_to(cur_pos) > 0.5
+		if params_changed or dir_changed or pos_changed:
+			undo_redo.create_action("Edit Node")
+			if params_changed:
+				undo_redo.add_do_method(_ur_params_set.bind(label, cur_params.duplicate(true)))
+				undo_redo.add_undo_method(_ur_params_set.bind(label, snap.params))
+			if dir_changed:
+				undo_redo.add_do_method(_ur_direction_set.bind(label, cur_dir))
+				undo_redo.add_undo_method(_ur_direction_set.bind(label, snap.direction))
+			if pos_changed:
+				undo_redo.add_do_method(_ur_position_set.bind(label, cur_pos))
+				undo_redo.add_undo_method(_ur_position_set.bind(label, snap.position))
+			undo_redo.commit_action(false)
+	_undo_snapshots.erase(label)
+
 func _on_graph_edit_duplicate_nodes_request():
-	var n=[]
+	undo_redo.create_action("Duplicate Nodes")
 	for i in nodes_selected:
 		if !i.is_queued_for_deletion():
-			var _new =i.DATA.duplicate(true)
-			_new['label']=""
-			var _ui=NODE_Add(_new)
-			_ui.position_offset=i.position_offset+Vector2(10,10)
-			n.push_back(_ui)
+			var _new = i.DATA.duplicate(true)
+			_new['label'] = str(randi_range(0, 9999999))
+			_new['position'] = {x = i.position_offset.x + 30, y = i.position_offset.y + 30}
+			var dup_label: String = _new['label']
+			undo_redo.add_do_method(_ur_node_add.bind(_new))
+			undo_redo.add_undo_method(_ur_node_remove.bind(dup_label))
+	undo_redo.commit_action()
 			
 
 func _on_list_nodes_item_activated(index):
-	var _nodeType=_NodeKeys[index]
-	var _node=G.NODE_Generate(_nodeType)
-	
-	_node.position=N_Graph.scroll_offset*(1/N_Graph.zoom)+get_local_mouse_position()
-	NODE_Add(_node)
+	# Side-panel double-click: spawn at the visible centre of the graph
+	var vis_center: Vector2 = N_Graph.scroll_offset + N_Graph.size * 0.5 / N_Graph.zoom
+	_spawn_node_at(_NodeKeys[index], vis_center)
+
+func _spawn_node_at(node_type: String, graph_pos: Vector2):
+	var _node = G.NODE_Generate(node_type)
+	_node['position'] = {x = graph_pos.x, y = graph_pos.y}
+	if _node.get('label', '') == '':
+		_node['label'] = str(randi_range(0, 9999999))
+	var label: String = _node['label']
+	_ur_node_add(_node)
+	undo_redo.create_action("Add Node")
+	undo_redo.add_do_method(_ur_node_add.bind(_node))
+	undo_redo.add_undo_method(_ur_node_remove.bind(label))
+	undo_redo.commit_action(false)
 
 func _on_graph_edit_delete_nodes_request(nodes):
-	for i in N_Graph.get_children():
-		if nodes.has(i.name):
-			NODE_Remove(i)
+	var all_data: Array = []
+	var all_labels: Array = []
+	var all_connections: Array = []
+	var seen_con_keys: Dictionary = {}
+	for n in N_Graph.get_children():
+		if nodes.has(n.name) and n is ui_GraphNode:
+			all_data.append(n.DATA.duplicate(true))
+			all_labels.append(str(n.name))
+			for c in N_Graph.connections:
+				if c.from_node == n.name or c.to_node == n.name:
+					var key := "%s:%d:%s:%d" % [c.from_node, c.from_port, c.to_node, c.to_port]
+					if !seen_con_keys.has(key):
+						seen_con_keys[key] = true
+						all_connections.append({from_node=c.from_node, from_port=c.from_port,
+							to_node=c.to_node, to_port=c.to_port})
+	undo_redo.create_action("Delete Nodes")
+	for label in all_labels:
+		undo_redo.add_do_method(_ur_node_remove.bind(label))
+	undo_redo.add_undo_method(_ur_nodes_restore.bind(all_data, all_connections))
+	undo_redo.commit_action()
 	for i in nodes_selected:
 		if i:
-			i.selected=false
+			i.selected = false
 		
 
 func _on_btn_close_pressed():
@@ -420,20 +500,31 @@ func _on_lbl_script_path_text_changed():
 	DATA['linked_script']=N_lbl_scriptPath.text
 
 func _INPUT_Next():
-	var t: Array[ui_GraphNode]=NODES_GetSelected()
-	print(str(t))
-	if t.size()>0:
-		var _cur: ui_GraphNode=t[0]
-		var _newClass=_cur.node_type
-		
-		if _cur.TypeData['quick_next']:
-			_newClass=_cur.TypeData['quick_next']
-		if _newClass:
-			var _newNode=NODE_AddFromTemplate(_newClass,_cur.position_offset+Vector2(_cur.size.x+50,0))
-			N_Graph.connect_node(_cur.name,0,_newNode.name,0)
-			NODES_SetAllSelected(false)
-			N_Graph.set_selected(_newNode)
-		CONNECTIONS_Fix()
+	var t: Array[ui_GraphNode] = NODES_GetSelected()
+	if t.size() == 0:
+		return
+	var _cur: ui_GraphNode = t[0]
+	var _newClass = _cur.node_type
+	if _cur.TypeData.get('quick_next'):
+		_newClass = _cur.TypeData['quick_next']
+	if !_newClass:
+		return
+	var pos = _cur.position_offset + Vector2(_cur.size.x + 50, 0)
+	var node_data = G.NODE_Generate(_newClass)
+	node_data['position'] = {x = pos.x, y = pos.y}
+	node_data['label'] = str(randi_range(0, 9999999))
+	var new_label: String = node_data['label']
+	var from_label: String = str(_cur.name)
+	undo_redo.create_action("Add Next Node")
+	undo_redo.add_do_method(_ur_node_add.bind(node_data))
+	undo_redo.add_do_method(_ur_connection_add.bind(from_label, 0, new_label, 0))
+	undo_redo.add_undo_method(_ur_connection_remove.bind(from_label, 0, new_label, 0))
+	undo_redo.add_undo_method(_ur_node_remove.bind(new_label))
+	undo_redo.commit_action()
+	NODES_SetAllSelected(false)
+	var new_node = NODE_GetByParam('label', new_label)
+	if new_node:
+		N_Graph.set_selected(new_node)
 
 func _on_spin_offset_key_value_changed(value):
 	var _newV: int=value
@@ -442,11 +533,12 @@ func _on_spin_offset_key_value_changed(value):
 func _on_graph_edit_gui_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			_popup_graph_pos = (N_Graph.get_local_mouse_position() + N_Graph.scroll_offset) / N_Graph.zoom
 			N_popup_Nodelist.popup()
-			N_popup_Nodelist.position=get_global_mouse_position()
+			N_popup_Nodelist.position = get_global_mouse_position()
 
 func _on_n_popup_node_list_index_pressed(index):
-	_on_list_nodes_item_activated(index)
+	_spawn_node_at(_NodeKeys[index], _popup_graph_pos)
 
 func _on_btn_fix_con_pressed():
 	CONNECTIONS_Fix()
@@ -587,3 +679,64 @@ func NODES_FilterByValue(text: String):
 					matched = true
 					break
 			node.modulate = Color.WHITE if matched else Color(1.0, 1.0, 1.0, 0.1)
+
+
+# ==============================================================
+# UNDO / REDO  — internal execution primitives
+# ==============================================================
+
+func _ur_node_add(data: Dictionary):
+	if !DATA["nodes"].has(data):
+		DATA["nodes"].push_back(data)
+	var new_node: ui_GraphNode = REF_GraphNode.instantiate()
+	new_node.OnNodeEvent.connect(_on_ui_flow_node_on_node_event)
+	N_Graph.add_child(new_node)
+	new_node.Setup(data)
+
+func _ur_node_remove(label: String):
+	for n in NODES_GetAll():
+		if n.DATA.get('label') == label:
+			var idx = DATA["nodes"].find(n.DATA)
+			if idx >= 0:
+				DATA["nodes"].remove_at(idx)
+			n.queue_free()
+			break
+	var to_remove: Array = []
+	for c in N_Graph.connections:
+		if c.from_node == label or c.to_node == label:
+			to_remove.append(c)
+	for c in to_remove:
+		N_Graph.disconnect_node(c.from_node, c.from_port, c.to_node, c.to_port)
+
+func _ur_nodes_restore(nodes_data: Array, connections: Array):
+	for data in nodes_data:
+		_ur_node_add(data)
+	for c in connections:
+		N_Graph.connect_node(c.from_node, c.from_port, c.to_node, c.to_port)
+
+func _ur_connection_add(from_node: String, from_port: int, to_node: String, to_port: int):
+	N_Graph.connect_node(from_node, from_port, to_node, to_port)
+
+func _ur_connection_remove(from_node: String, from_port: int, to_node: String, to_port: int):
+	N_Graph.disconnect_node(from_node, from_port, to_node, to_port)
+
+func _ur_params_set(label: String, params: Dictionary):
+	var n = NODE_GetByParam('label', label)
+	if n:
+		n.DATA['params'] = params
+		n.Refresh_Description()
+		if nodes_selected.has(n):
+			N_ParamEdit.OBJECT_Set(n.DATA, n.TypeData)
+
+func _ur_direction_set(label: String, text: String):
+	var n = NODE_GetByParam('label', label)
+	if n:
+		n.DATA['direction'] = text
+		n.Refresh_Description()
+		if nodes_selected.has(n):
+			N_txtedit_NodeDir.text = text
+
+func _ur_position_set(label: String, pos: Vector2):
+	var n = NODE_GetByParam('label', label)
+	if n:
+		n.position_offset = pos
