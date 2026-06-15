@@ -12,6 +12,17 @@ var OBJECT={}
 @export var N_List: OptionButton
 @export var N_check: CheckBox
 
+# Custom filterable dropdown (used by pEdit_table instead of N_List)
+@export var N_btn_dropdown: Button
+@export var N_dropdown_popup: PopupPanel
+@export var N_popup_filter: TextEdit
+@export var N_popup_items: ItemList
+@export var N_lineedit_manual: LineEdit
+@export var N_btn_edit_toggle: Button
+
+var _table_items: Array = []
+var _manual_mode := false
+
 signal OnParamEdit(param: String, value)
 
 func _ready():
@@ -31,56 +42,58 @@ func Setup(obj: Dictionary):
 		N_textEdit.text_changed.connect(_on_textChange)
 	
 	# TABLE
-	if N_List:
-		N_List.clear()
-		var _valIndex=-1
-		var _tbl=paramConfig.get('table')
-		var list=[]
-		
+	if N_btn_dropdown or N_List:
+		_table_items = []
+		var _tbl = paramConfig.get('table')
+		var list: Array = []
+
 		if _tbl:
-			var _glob=Z.L.pull_variant("_D")
-			var ltbl=_glob.get(_tbl,{})
+			var _glob = Z.L.pull_variant("_D")
+			var ltbl = _glob.get(_tbl, {})
 			if ltbl is Dictionary:
-				var _dtbl=ltbl
-				var _keys=_dtbl.keys()
-				list=_keys
+				list = ltbl.keys()
 				list.sort()
 			list.append_array(G.TABLE_GetItemList(_tbl))
-		#from csv
+
 		if _tbl:
 			for i in list:
-				var _idx=list.find(i)
-				var _imgPath=G.PATH_GetRoot()+"/image/ico_"+_tbl+"_"+i+".png"
-				var _ico=G_Load.Texture(_imgPath)
-				var _tblData=G.TABLE_GetItem(_tbl,i)
-				
-				N_List.add_item(i)
-				N_List.set_item_tooltip(_idx,_tblData.get("description",""))
-				N_List.set_item_icon(_idx,_ico)
-				
-				if i == _val:
-					_valIndex=list.find(i)
-		#from files
+				var _imgPath = G.PATH_GetRoot() + "/image/ico_" + _tbl + "_" + i + ".png"
+				var _ico: Texture2D = G_Load.Texture(_imgPath)
+				var _tblData = G.TABLE_GetItem(_tbl, i)
+				_table_items.append({text = i, icon = _ico, tooltip = _tblData.get("description", "")})
 		elif paramConfig.has('filePath'):
-			var _filsPth=paramConfig.get('filePath')
-			_filsPth=G_File.PathCorrect(_filsPth)
-			var _files=G_File.LIST_AllInDir(_filsPth)
+			var _filsPth: String = G_File.PathCorrect(paramConfig.get('filePath'))
+			var _files = G_File.LIST_AllInDir(_filsPth)
 			for i in _files:
-				if i.get_extension()==paramConfig.get('fileType'):
-					var key=i.get_file().get_basename()
-					var index=N_List.item_count
-					
-					N_List.add_item(key)
-					if key == _val:
-						_valIndex=index
-					
-					if paramConfig.get("GetIcon")!=null:
-						var ico_path=paramConfig.GetIcon.call(key)
+				if i.get_extension() == paramConfig.get('fileType'):
+					var key: String = i.get_file().get_basename()
+					var _ico: Texture2D = null
+					if paramConfig.get("GetIcon") != null:
+						var ico_path = paramConfig.GetIcon.call(key)
 						if ico_path is String:
-							var newtxt: Texture2D=G_Load.Texture(ico_path)
-							N_List.set_item_icon(index,newtxt)
-		
-		N_List.select(_valIndex)
+							_ico = G_Load.Texture(ico_path)
+					_table_items.append({text = key, icon = _ico, tooltip = ""})
+
+		_manual_mode = false
+		if N_lineedit_manual:
+			N_lineedit_manual.visible = false
+		if N_btn_edit_toggle:
+			N_btn_edit_toggle.text = "✏"
+		if N_btn_dropdown:
+			N_btn_dropdown.visible = true
+			var _match = _table_items.filter(func(it): return it.text == _val)
+			_set_dropdown_display(_val, _match[0].icon if _match.size() > 0 else null)
+
+		if N_List:
+			N_List.clear()
+			var _valIndex := -1
+			for item in _table_items:
+				var idx := N_List.item_count
+				N_List.add_item(item.text, item.icon)
+				N_List.set_item_tooltip(idx, item.tooltip)
+				if item.text == _val:
+					_valIndex = idx
+			N_List.select(_valIndex)
 	
 	# NUMBER
 	if N_int:
@@ -130,5 +143,86 @@ func _on_check_box_toggled(toggled_on):
 
 
 func _on_btn_clear_pressed():
-	N_List.select(-1)
+	if N_List:
+		N_List.select(-1)
+	if N_btn_dropdown:
+		_set_dropdown_display("", null)
 	Value_SET('')
+
+func _on_btn_dropdown_pressed():
+	if not N_dropdown_popup:
+		return
+	if N_popup_filter:
+		N_popup_filter.text = ""
+	_rebuild_table_popup()
+	N_dropdown_popup.position = DisplayServer.mouse_get_position()
+	N_dropdown_popup.popup()
+	if N_popup_filter:
+		N_popup_filter.grab_focus()
+
+func _rebuild_table_popup():
+	if not N_popup_items:
+		return
+	N_popup_items.clear()
+	var filter := N_popup_filter.text.to_lower() if N_popup_filter else ""
+	for item in _table_items:
+		if filter.is_empty() or item.text.to_lower().contains(filter):
+			var idx := N_popup_items.add_item(item.text, item.icon)
+			N_popup_items.set_item_tooltip(idx, item.tooltip)
+
+func _on_popup_filter_text_changed():
+	_rebuild_table_popup()
+
+func _set_dropdown_display(text: String, icon: Texture2D) -> void:
+	if not N_btn_dropdown:
+		return
+	if text != "":
+		N_btn_dropdown.text = text
+		N_btn_dropdown.icon = icon
+		N_btn_dropdown.remove_theme_color_override("font_color")
+	else:
+		N_btn_dropdown.text = "(none)"
+		N_btn_dropdown.icon = null
+		N_btn_dropdown.add_theme_color_override("font_color", Color(0.45, 0.45, 0.45))
+
+func _on_popup_items_item_selected(index: int):
+	var text := N_popup_items.get_item_text(index)
+	var icon := N_popup_items.get_item_icon(index)
+	_set_dropdown_display(text, icon)
+	Value_SET(text)
+	if N_dropdown_popup:
+		N_dropdown_popup.hide()
+
+func _set_manual_mode(enabled: bool) -> void:
+	_manual_mode = enabled
+	if N_btn_dropdown:
+		N_btn_dropdown.visible = not enabled
+	if N_lineedit_manual:
+		N_lineedit_manual.visible = enabled
+		if enabled:
+			N_lineedit_manual.text = Value_Get()
+			N_lineedit_manual.grab_focus()
+			N_lineedit_manual.select_all()
+	if N_btn_edit_toggle:
+		N_btn_edit_toggle.text = "✓" if enabled else "✏"
+
+func _commit_manual_input() -> void:
+	if not _manual_mode:
+		return
+	var text := N_lineedit_manual.text if N_lineedit_manual else ""
+	Value_SET(text)
+	var matched := _table_items.filter(func(it): return it.text == text)
+	_set_dropdown_display(text, matched[0].icon if matched.size() > 0 else null)
+	_set_manual_mode(false)
+
+func _on_btn_edit_toggle_pressed() -> void:
+	if _manual_mode:
+		_commit_manual_input()
+	else:
+		_set_manual_mode(true)
+
+func _on_lineedit_manual_submitted(_text: String) -> void:
+	_commit_manual_input()
+
+func _on_lineedit_manual_focus_exited() -> void:
+	_commit_manual_input()

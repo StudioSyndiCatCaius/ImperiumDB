@@ -17,8 +17,8 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="PEditInt" type="PanelContainer" node_paths=PackedStringArray("N__label", "N_List")]
-custom_minimum_size = Vector2(0, 40)
+[node name="PEditInt" type="PanelContainer" node_paths=PackedStringArray("N__label", "N_btn_dropdown", "N_dropdown_popup", "N_popup_filter", "N_popup_items", "N_lineedit_manual", "N_btn_edit_toggle")]
+custom_minimum_size = Vector2(0, 72)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -28,7 +28,12 @@ grow_vertical = 2
 theme_override_styles/panel = ExtResource("1_7ylv5")
 script = ExtResource("1_uovu6")
 N__label = NodePath("HBoxContainer/Label")
-N_List = NodePath("HBoxContainer/edit_list")
+N_btn_dropdown = NodePath("HBoxContainer/btn_dropdown")
+N_lineedit_manual = NodePath("HBoxContainer/lineedit_manual")
+N_btn_edit_toggle = NodePath("HBoxContainer/btn_edit_toggle")
+N_dropdown_popup = NodePath("dropdown_popup")
+N_popup_filter = NodePath("dropdown_popup/VBoxContainer/txt_filter")
+N_popup_items = NodePath("dropdown_popup/VBoxContainer/item_list")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -41,22 +46,55 @@ size_flags_stretch_ratio = 0.6
 text = "lbl"
 label_settings = ExtResource("3_3pgbf")
 
-[node name="edit_list" type="OptionButton" parent="HBoxContainer"]
+[node name="btn_dropdown" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_colors/font_outline_color = Color(0, 0, 0, 0.36862746)
-theme_override_constants/outline_size = 5
-theme_override_constants/icon_max_width = 60
+size_flags_vertical = 3
+clip_text = true
+theme_override_constants/icon_max_width = 72
 theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_uovu6")
-selected = 0
-item_count = 1
-popup/item_0/text = "num"
-popup/item_0/id = 0
+text = "(none)"
+
+[node name="lineedit_manual" type="LineEdit" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme_override_font_sizes/font_size = 13
+placeholder_text = "Enter value..."
+
+[node name="btn_edit_toggle" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "✏"
 
 [node name="btn_clear" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 icon = ExtResource("2_yav1r")
 
-[connection signal="item_selected" from="HBoxContainer/edit_list" to="." method="_on_edit_list_item_selected"]
+[node name="dropdown_popup" type="PopupPanel" parent="."]
+size = Vector2i(220, 260)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="dropdown_popup"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="txt_filter" type="TextEdit" parent="dropdown_popup/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+placeholder_text = "Filter..."
+
+[node name="item_list" type="ItemList" parent="dropdown_popup/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="HBoxContainer/btn_dropdown" to="." method="_on_btn_dropdown_pressed"]
+[connection signal="pressed" from="HBoxContainer/btn_edit_toggle" to="." method="_on_btn_edit_toggle_pressed"]
+[connection signal="text_submitted" from="HBoxContainer/lineedit_manual" to="." method="_on_lineedit_manual_submitted"]
+[connection signal="focus_exited" from="HBoxContainer/lineedit_manual" to="." method="_on_lineedit_manual_focus_exited"]
 [connection signal="pressed" from="HBoxContainer/btn_clear" to="." method="_on_btn_clear_pressed"]
+[connection signal="text_changed" from="dropdown_popup/VBoxContainer/txt_filter" to="." method="_on_popup_filter_text_changed"]
+[connection signal="item_selected" from="dropdown_popup/VBoxContainer/item_list" to="." method="_on_popup_items_item_selected"]

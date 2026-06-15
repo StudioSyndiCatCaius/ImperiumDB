@@ -28,7 +28,7 @@ corner_radius_bottom_left = 5
 corner_detail = 5
 shadow_color = Color(0, 0, 0, 0.3137255)
 
-[node name="UiFlowGraph" type="PanelContainer" unique_id=800245775 node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist", "N_screenplay", "n_flow_template", "col_creating_screen", "N_txtedit_GraphDesc", "N_txtedit_NodeFilter", "N_txtedit_NodeListFilter", "N_popup_list", "N_txtedit_popup_filter")]
+[node name="UiFlowGraph" type="PanelContainer" unique_id=800245775 node_paths=PackedStringArray("N_Graph", "N_ParamEdit", "N_NodeList", "N_lbl_scriptPath", "N_txtedit_NodeDir", "N_Dlg_csv", "N_Spin_KeyOffset", "N_popup_Nodelist", "N_popup_list", "N_txtedit_popup_filter", "N_screenplay", "n_flow_template", "col_creating_screen", "N_txtedit_GraphDesc", "N_txtedit_NodeFilter", "N_txtedit_NodeListFilter", "parm_BindList")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -43,14 +43,15 @@ N_txtedit_NodeDir = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitCont
 N_Dlg_csv = NodePath("FileDialog")
 N_Spin_KeyOffset = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/⚙️Cmd/VBoxContainer/spin_OffsetKey")
 N_popup_Nodelist = NodePath("N_popup_NodeList")
+N_popup_list = NodePath("N_popup_NodeList/VBoxContainer/list_popup")
+N_txtedit_popup_filter = NodePath("N_popup_NodeList/VBoxContainer/txtedit_PopupFilter")
 N_screenplay = NodePath("TabContainer/📜Screenplay")
 n_flow_template = NodePath("TabContainer/🪢Graph/HBoxContainer/n_FlowTemplate")
 col_creating_screen = NodePath("col_CreatingScreen")
 N_txtedit_GraphDesc = NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/💬Graph/VBoxContainer/TextEdit_GraphDesc")
 N_txtedit_NodeFilter = NodePath("TabContainer/🪢Graph/HBoxContainer/txtedit_NodeFilter")
 N_txtedit_NodeListFilter = NodePath("TabContainer/🪢Graph/HSplitContainer2/VBoxContainer_NodeList/txtedit_NodeListFilter")
-N_popup_list = NodePath("N_popup_NodeList/VBoxContainer/list_popup")
-N_txtedit_popup_filter = NodePath("N_popup_NodeList/VBoxContainer/txtedit_PopupFilter")
+parm_BindList = [NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer/parmSt_id"), NodePath("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer/🔸Node/VBoxContainer/HBoxContainer/parmSt_key")]
 
 [node name="TabContainer" type="TabContainer" parent="." unique_id=1047816591]
 layout_mode = 2
@@ -107,8 +108,8 @@ layout_mode = 2
 [node name="txtedit_NodeListFilter" type="TextEdit" parent="TabContainer/🪢Graph/HSplitContainer2/VBoxContainer_NodeList" unique_id=600000011]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-placeholder_text = "filter nodes..."
 theme_override_font_sizes/font_size = 10
+placeholder_text = "filter nodes..."
 
 [node name="list_nodes" type="ItemList" parent="TabContainer/🪢Graph/HSplitContainer2/VBoxContainer_NodeList" unique_id=944988957]
 layout_mode = 2
@@ -126,7 +127,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_colors/grid_major = Color(0, 0, 0, 0.615686)
 theme_override_colors/grid_minor = Color(1, 1, 1, 0.0509804)
-scroll_offset = Vector2(0, -1)
 right_disconnects = true
 connection_lines_curvature = 0.0
 connection_lines_thickness = 3.0
@@ -302,7 +302,6 @@ Require_CTRL = true
 RequiredVisibleNode = NodePath("..")
 metadata/_custom_type_script = "uid://dmgwd5itujl7q"
 
-
 [node name="i_SelectAll_Next" type="Node" parent="." unique_id=37386233 node_paths=PackedStringArray("RequiredVisibleNode")]
 script = ExtResource("3_m5ua5")
 key = 4194321
@@ -323,18 +322,21 @@ use_native_dialog = true
 size = Vector2i(200, 280)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="N_popup_NodeList" unique_id=600000020]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 196.0
+offset_bottom = 276.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="txtedit_PopupFilter" type="TextEdit" parent="N_popup_NodeList/VBoxContainer" unique_id=600000021]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
-placeholder_text = "filter nodes..."
 theme_override_font_sizes/font_size = 10
+placeholder_text = "filter nodes..."
 
 [node name="list_popup" type="ItemList" parent="N_popup_NodeList/VBoxContainer" unique_id=600000022]
 layout_mode = 2

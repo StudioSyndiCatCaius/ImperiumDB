@@ -52,3 +52,9 @@ size_flags_horizontal = 3
 size_flags_vertical = 6
 param_name = "extra_flow_paths"
 display_name = "Additional Data Paths"
+
+[node name="p_linkedScript2" parent="ScrollContainer/VBoxContainer" unique_id=1154915062 instance=ExtResource("2_1tx5a")]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+param_name = "voice_path"
+display_name = "Voice Path"
