@@ -63,8 +63,8 @@ custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
 [node name="Container" type="BoxContainer" parent="Control/VBoxContainer/HBoxContainer2" unique_id=71790782]
-clip_contents = true
 custom_minimum_size = Vector2(100, 0)
+clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 0
 
@@ -249,13 +249,13 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.14, 0.14, 0.14, 0.57254905)
 
-[connection signal="id_pressed" from="Control/VBoxContainer/PanelContainer/HBoxContainer/menu_edit" to="." method="_on_menu_edit_id_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_OpenRoot" to="." method="_on_btn_open_root_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_RunScripts" to="." method="CMD_RerunScripts"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_ReloadTables" to="." method="CMD_ReloadTables"]
 [connection signal="pressed" from="Control/VBoxContainer/HBoxContainer2/btn_quit2" to="." method="_on_btn_quit_pressed"]
 [connection signal="text_changed" from="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer/VBoxContainer2/HBoxContainer/txtEdit_TreeFilter" to="." method="_on_txt_edit_tree_filter_text_changed"]
 [connection signal="file_selected" from="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer/VBoxContainer2/FileTree" to="." method="_on_file_tree_file_selected"]
+[connection signal="item_collapsed" from="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer/VBoxContainer2/FileTree" to="." method="_on_file_tree_item_collapsed"]
 [connection signal="menu_option_selected" from="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer/VBoxContainer2/FileTree" to="." method="_on_file_tree_menu_option_selected"]
 [connection signal="option_menu_visibility_changed" from="Control/VBoxContainer/TABS_Main/💬Flow/PanelContainer/VBoxContainer2/FileTree" to="." method="_on_file_tree_option_menu_visibility_changed"]
 [connection signal="InputBegin" from="i_save" to="." method="_on_i_save_input_begin"]

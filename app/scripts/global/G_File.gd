@@ -103,6 +103,17 @@ func LOAD_Texture(_path: String, useImageFolder=false) -> Texture2D:
 	return texture
 
 # ==============================================================================
+# Audio
+# ==============================================================================
+
+func IMPORT_OGG(path: String) -> AudioStreamOggVorbis:
+	var corrected_path: String = PathCorrect(path)
+	if not FileAccess.file_exists(corrected_path):
+		push_error("OGG file not found: " + corrected_path)
+		return null
+	return AudioStreamOggVorbis.load_from_file(corrected_path)
+
+# ==============================================================================
 # Texture
 # ==============================================================================
 

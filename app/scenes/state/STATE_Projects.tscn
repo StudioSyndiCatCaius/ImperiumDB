@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://qw1rwupq5cl0" path="res://app/scenes/state/state_projects.gd" id="1_h33rn"]
 [ext_resource type="PackedScene" uid="uid://cacamryng1men" path="res://app/scenes/ui/ui_Project.tscn" id="2_io15f"]
 [ext_resource type="Texture2D" uid="uid://dullmjmvl2s2h" path="res://app/assets/2D/icons/Icon_Folder_T.PNG" id="3_m8sq3"]
+[ext_resource type="Texture2D" uid="uid://bhmawjg5g0mrd" path="res://icon.png" id="5_i45w4"]
 [ext_resource type="PackedScene" uid="uid://dkcfxxh3oy3ei" path="res://app/scenes/ui/ui_ProjectSetting.tscn" id="5_r66i8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h33rn"]
@@ -17,6 +18,18 @@ border_color = Color(0.8, 0.8, 0.8, 0.392157)
 
 [sub_resource type="LabelSettings" id="LabelSettings_h33rn"]
 font_size = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_io15f"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.14767182, 0.14767182, 0.14767176, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_size = 14
 
 [node name="StateProjects" type="Node" unique_id=773206013 node_paths=PackedStringArray("N_ProjList", "N_Dialog_LoadProj", "N_Dialog_NewProj", "N_Confirm_RemoveProj")]
 script = ExtResource("1_h33rn")
@@ -152,6 +165,113 @@ use_native_dialog = true
 [node name="Dialog_ConfirmDelete" type="ConfirmationDialog" parent="." unique_id=1875279353]
 title = "Remove this project?"
 initial_position = 2
+
+[node name="STATE_NewProject" type="Control" parent="." unique_id=1400556710]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="STATE_NewProject" unique_id=497311620]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.21950102, 0.21950102, 0.21950093, 0.7529412)
+
+[node name="PanelContainer" type="PanelContainer" parent="STATE_NewProject" unique_id=796370156]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -354.45
+offset_top = -153.0
+offset_right = 354.45
+offset_bottom = 153.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20, 20)
+theme_override_styles/panel = SubResource("StyleBoxFlat_io15f")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="STATE_NewProject/PanelContainer" unique_id=1574412929]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="STATE_NewProject/PanelContainer/VBoxContainer" unique_id=1790183743]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="STATE_NewProject/PanelContainer/VBoxContainer/HBoxContainer" unique_id=240125088]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+texture = ExtResource("5_i45w4")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="STATE_NewProject/PanelContainer/VBoxContainer/HBoxContainer" unique_id=1959434324]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="txtEdit_nProj_name" type="TextEdit" parent="STATE_NewProject/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1679946958]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Project Name"
+
+[node name="txtEdit_nProj_id" type="TextEdit" parent="STATE_NewProject/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=791518040]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Project ID"
+
+[node name="btn_nProj_ChangeImg" type="Button" parent="STATE_NewProject/PanelContainer/VBoxContainer/HBoxContainer/VBoxContainer" unique_id=1991070464]
+layout_mode = 2
+text = "Change Image"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="STATE_NewProject/PanelContainer/VBoxContainer" unique_id=581606461]
+layout_mode = 2
+
+[node name="btn_nProj_ChangeImg" type="Button" parent="STATE_NewProject/PanelContainer/VBoxContainer/HBoxContainer2" unique_id=478787971]
+layout_mode = 2
+text = "Set Path"
+
+[node name="ColorRect" type="ColorRect" parent="STATE_NewProject/PanelContainer/VBoxContainer/HBoxContainer2" unique_id=374202930]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.072842635, 0.072842635, 0.072842635, 1)
+
+[node name="lbl_projPath" type="Label" parent="STATE_NewProject/PanelContainer/VBoxContainer/HBoxContainer2/ColorRect" unique_id=1472919620]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+clip_text = true
+
+[node name="Control" type="Control" parent="STATE_NewProject/PanelContainer/VBoxContainer" unique_id=67832743]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="STATE_NewProject/PanelContainer/VBoxContainer" unique_id=1779586601]
+layout_mode = 2
+
+[node name="btn_nProj_create" type="Button" parent="STATE_NewProject/PanelContainer/VBoxContainer/HBoxContainer3" unique_id=1725533942]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "CREATE"
+
+[node name="btn_nProj_cancel" type="Button" parent="STATE_NewProject/PanelContainer/VBoxContainer/HBoxContainer3" unique_id=856342188]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 25
+text = "CANCEL"
 
 [connection signal="pressed" from="TabContainer/Projects/VBoxContainer2/HBoxContainer/btn_new" to="." method="_on_btn_new_pressed"]
 [connection signal="pressed" from="TabContainer/Projects/VBoxContainer2/HBoxContainer/btn_open" to="." method="_on_btn_open_pressed"]

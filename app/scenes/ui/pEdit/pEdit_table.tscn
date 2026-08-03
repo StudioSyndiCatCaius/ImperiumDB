@@ -97,4 +97,5 @@ size_flags_vertical = 3
 [connection signal="focus_exited" from="HBoxContainer/lineedit_manual" to="." method="_on_lineedit_manual_focus_exited"]
 [connection signal="pressed" from="HBoxContainer/btn_clear" to="." method="_on_btn_clear_pressed"]
 [connection signal="text_changed" from="dropdown_popup/VBoxContainer/txt_filter" to="." method="_on_popup_filter_text_changed"]
+[connection signal="gui_input" from="dropdown_popup/VBoxContainer/txt_filter" to="." method="_on_popup_filter_gui_input"]
 [connection signal="item_selected" from="dropdown_popup/VBoxContainer/item_list" to="." method="_on_popup_items_item_selected"]

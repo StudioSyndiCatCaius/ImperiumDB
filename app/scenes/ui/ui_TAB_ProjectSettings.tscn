@@ -15,7 +15,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
-[node name="UiTabProjectSettings" type="PanelContainer" unique_id=968286417]
+[node name="UiTabProjectSettings" type="PanelContainer" unique_id=968286417 node_paths=PackedStringArray("opts_voice_ext")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -23,6 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_1tx5a")
 script = ExtResource("1_fm2j3")
+opts_voice_ext = NodePath("ScrollContainer/VBoxContainer/GridContainer/BoxContainer/opts_VoiceExt")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1594424132]
 layout_mode = 2
@@ -45,6 +46,30 @@ layout_mode = 2
 layout_mode = 2
 columns = 2
 
+[node name="BoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=2092785997]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer/BoxContainer" unique_id=1661962074]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Voice File Type"
+
+[node name="opts_VoiceExt" type="OptionButton" parent="ScrollContainer/VBoxContainer/GridContainer/BoxContainer" unique_id=1736378893]
+layout_mode = 2
+size_flags_horizontal = 3
+item_count = 2
+popup/item_0/text = "wav"
+popup/item_0/id = 0
+popup/item_1/text = "ogg"
+popup/item_1/id = 1
+
+[node name="p_linkedScript2" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=1154915062 instance=ExtResource("2_1tx5a")]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+param_name = "voice_path"
+display_name = "Voice Path"
+
 [node name="p_linkedScript" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=29278151 instance=ExtResource("2_1tx5a")]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
@@ -53,8 +78,22 @@ size_flags_vertical = 6
 param_name = "extra_flow_paths"
 display_name = "Additional Data Paths"
 
-[node name="p_linkedScript2" parent="ScrollContainer/VBoxContainer" unique_id=1154915062 instance=ExtResource("2_1tx5a")]
+[node name="p_linkedScript3" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=1673611975 instance=ExtResource("2_1tx5a")]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-param_name = "voice_path"
-display_name = "Voice Path"
+size_flags_horizontal = 3
+param_name = "param_table"
+display_name = "Param Table "
+
+[node name="box_CmdEnb" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/GridContainer" unique_id=214445974]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/GridContainer/box_CmdEnb" unique_id=987030398]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Enable Commands"
+
+[node name="chk_cmdEnable" type="CheckButton" parent="ScrollContainer/VBoxContainer/GridContainer/box_CmdEnb" unique_id=1383574876]
+layout_mode = 2
+
+[connection signal="item_selected" from="ScrollContainer/VBoxContainer/GridContainer/BoxContainer/opts_VoiceExt" to="." method="_on_opts_voice_ext_item_selected"]

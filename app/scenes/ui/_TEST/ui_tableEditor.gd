@@ -48,7 +48,10 @@ func _Setup(new_key):
 	CSV_load()
 
 func CSV_getPath() -> String:
-	return G.PATH_GetRoot()+"/tables/"+table_key+".csv"
+	var _base := G.PATH_GetRoot()+"/tables/"+table_key
+	if FileAccess.file_exists(_base+".tbl"):
+		return _base+".tbl"
+	return _base+".csv"
 
 func CSV_getString() -> String:
 	return Z_File.LoadFileAsString(CSV_getPath())

@@ -119,10 +119,11 @@ func Setup(node: Dictionary):
 	_loading = true
 	_is_broken = false
 	DATA = node
-	var _basType: String = DATA._template
-	var _newType = _basType.replace("res://app/res/Nodes/", "")
+	# Normalize legacy Godot resource paths to template names
+	# e.g. "res://app/res/Nodes/node_DialogueLine.tres" -> "node_DialogueLine"
+	var _newType: String = G.NODE_TemplateName(str(DATA.get("_template", "")))
+	DATA["_template"] = _newType
 	node_type = _newType
-	_newType = _newType.replace(".tres", "")
 
 	if node_fix_matching.has(_newType):
 		_newType = node_fix_matching[_newType]
@@ -294,10 +295,10 @@ func _on_position_offset_changed():
 	DATA.position=G_Conv.Vec2_to_Dic(position_offset)
 
 func _on_resize_end(new_size):
-	DATA.size=size
+	DATA['size'] = G_Conv.Vec2_to_Dic(size)
 
 func SOUND_Play():
-	var _sound_path=TypeData.get('GetSoundPath')
-	if _sound_path is Callable:
-		var _spath=_sound_path.call(DATA)
-		G.SOUND_PlayExternal(_spath)
+	var ext_type: String=G.active_project.DATA.get("voice_ext","wav")
+	var _sound_path=G.active_project.PATH_Root()+G.active_project.DATA.get('voice_path',"")+DATA.get('key',"")+"."+ext_type
+	_sound_path=_sound_path.simplify_path()
+	G.SOUND_PlayExternal(_sound_path)

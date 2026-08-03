@@ -173,6 +173,21 @@ func _rebuild_table_popup():
 func _on_popup_filter_text_changed():
 	_rebuild_table_popup()
 
+func _on_popup_filter_gui_input(event: InputEvent) -> void:
+	if not event is InputEventKey or not event.pressed:
+		return
+	var count := N_popup_items.item_count if N_popup_items else 0
+	if count == 0:
+		return
+	if event.keycode == KEY_DOWN:
+		N_popup_items.grab_focus()
+		N_popup_items.select(0)
+		get_viewport().set_input_as_handled()
+	elif event.keycode == KEY_UP:
+		N_popup_items.grab_focus()
+		N_popup_items.select(count - 1)
+		get_viewport().set_input_as_handled()
+
 func _set_dropdown_display(text: String, icon: Texture2D) -> void:
 	if not N_btn_dropdown:
 		return

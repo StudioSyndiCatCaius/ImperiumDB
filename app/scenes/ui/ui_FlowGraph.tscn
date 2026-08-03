@@ -72,6 +72,7 @@ text = "Close Graph"
 icon = ExtResource("9_x45cu")
 
 [node name="btn_Playtest" type="Button" parent="TabContainer/🪢Graph/HBoxContainer" unique_id=596153542]
+visible = false
 self_modulate = Color(0, 1, 0.4666667, 1)
 layout_mode = 2
 text = "Playtest"
@@ -315,7 +316,7 @@ title = "Open a File"
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.csv")
+filters = PackedStringArray("*.csv", "*.tbl")
 use_native_dialog = true
 
 [node name="N_popup_NodeList" type="PopupPanel" parent="." unique_id=1089390992]
@@ -400,5 +401,6 @@ text = "CREATING SCREENPLAY"
 [connection signal="InputBegin" from="i_NextNode" to="." method="_INPUT_Next"]
 [connection signal="InputBegin" from="i_SelectAll_Next" to="." method="_on_i_select_all_next_input_begin"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="gui_input" from="N_popup_NodeList/VBoxContainer/txtedit_PopupFilter" to="." method="_on_popup_filter_gui_input"]
 [connection signal="text_changed" from="N_popup_NodeList/VBoxContainer/txtedit_PopupFilter" to="." method="_on_popup_filter_text_changed"]
 [connection signal="item_selected" from="N_popup_NodeList/VBoxContainer/list_popup" to="." method="_on_popup_list_item_selected"]

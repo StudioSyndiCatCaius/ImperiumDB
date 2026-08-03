@@ -144,7 +144,6 @@ func PROJECT_Create(path: String):
 			"{project}/FlowNodes/",
 		],
 		tags=[],
-		tree_expansion={}
 	}
 	G_File.SAVE_Json(_dat,_path)
 	PROJECT_Register(_path)
@@ -226,11 +225,15 @@ func USER_init() -> Dictionary:
 # ====================================================================
 
 func SOUND_PlayExternal(path: String):
-	var _soundPath=G_File.PathCorrect(path)
-	var _SP: AudioStreamPlayer=get_tree().current_scene.get_node("%soundPlayer")
-	var _sound=G_Load.SOUND(_soundPath)
-	_SP.stream=_sound
-	_SP.play()
+	if FileAccess.file_exists(path):
+	
+		var _soundPath=G_File.PathCorrect(path)
+		var _SP: AudioStreamPlayer=get_tree().current_scene.get_node("%soundPlayer")
+		var _sound=G_File.IMPORT_OGG(_soundPath)
+		_SP.stream=_sound
+		_SP.play()
+	else:
+		G_Log.Notification(path+" : NOT VALID SOUND",Color.RED)
 
 
 # ====================================================================
@@ -364,6 +367,13 @@ func NODE_Generate(type: String) -> Dictionary:
 		
 	return _newNode
 
+## Normalize a node template id: strip Godot resource paths and extensions.
+## e.g. "res://app/res/Nodes/node_DialogueLine.tres" -> "node_DialogueLine"
+func NODE_TemplateName(template: String) -> String:
+	if template.is_empty():
+		return template
+	return template.get_file().get_basename()
+
 # ====================================================================
 # GRAPH
 # ====================================================================
@@ -371,5 +381,12 @@ func NODE_Generate(type: String) -> Dictionary:
 func GRAPH_NewDefault() -> Dictionary:
 	return NODE_Default.duplicate(true)
 
-func GRAPH_Export(flow: Dictionary):
-	print()
+## Prepare a flow dictionary for .ImpFlow write: normalize node template ids.
+func GRAPH_Export(flow: Dictionary) -> Dictionary:
+	var out: Dictionary = flow.duplicate(true)
+	var nodes = out.get("nodes", [])
+	if nodes is Array:
+		for node in nodes:
+			if node is Dictionary and node.has("_template"):
+				node["_template"] = NODE_TemplateName(str(node["_template"]))
+	return out

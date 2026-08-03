@@ -58,6 +58,7 @@ func _ready():
 	GRAPH_Load(G.GRAPH_NewDefault())
 	N_screenplay.graph=self
 	
+	N_ParamEdit.OnParamEdit.connect(PARAM_OnEdit)
 	for i in parm_BindList:
 		i.OnParamEdit.connect(PARAM_OnEdit)
 	
@@ -124,8 +125,13 @@ func _rebuild_popup_list():
 
 func SAVE(path: String):
 	file_path=path
-	var dat=GRAPH_GetDic()
-	Z_File.SaveStringAsFile(path,Z_Parse.to_JSON(dat),true,true)
+	var dat=G.GRAPH_Export(GRAPH_GetDic())
+	var json_str := Z_Parse.to_JSON(dat).replace("\r\n", "\n")
+	DirAccess.make_dir_recursive_absolute(path.get_base_dir())
+	var fa := FileAccess.open(path, FileAccess.WRITE)
+	if fa:
+		fa.store_buffer(json_str.to_utf8_buffer())
+		fa.close()
 	G_Log.Notification("File Saved: "+str(path),Color.GREEN)
 	GRAPH_Refresh()
 
@@ -145,10 +151,18 @@ func DATA_to_CSV() -> String:
 
 func GRAPH_GetDic():
 	var out: Dictionary=DATA
+	if out.has('id'):
+		out['id'] = int(out['id'])
 	out['connections']=N_Graph.connections
 	out['nodes']=[]
 	for i in NODES_GetAll():
-		out['nodes'].push_back(i.DATA)
+		var node_dat: Dictionary = i.DATA
+		if node_dat.has('id'):
+			node_dat['id'] = int(node_dat['id'])
+		# Keep in-memory template ids as clean names (no res:// paths / .tres)
+		if node_dat.has('_template'):
+			node_dat['_template'] = G.NODE_TemplateName(str(node_dat['_template']))
+		out['nodes'].push_back(node_dat)
 	return DATA
 
 func GRAPH_Refresh():
@@ -194,8 +208,14 @@ func GRAPH_Load(graph: Dictionary):
 	for c in DATA.get("connections",[]):
 		N_Graph.connect_node(c.from_node,c.from_port,c.to_node,c.to_port)
 	N_Graph.show()
-	
+
 	GRAPH_Refresh()
+	CMD_Refresh()
+
+func CMD_Refresh():
+	var enabled: bool = G.active_project.DATA.get('cmd_enabled', false)
+	var _inner_tabs: TabContainer = get_node("TabContainer/🪢Graph/HSplitContainer2/HSplitContainer/TabContainer")
+	_inner_tabs.set_tab_hidden(3, !enabled)
 
 func NODES_GetAll() -> Array[ui_GraphNode]:
 	var out: Array[ui_GraphNode]
@@ -322,7 +342,7 @@ func NODE_GetByParam(param: String, value) -> ui_GraphNode:
 func NODE_RefreshCurrent():
 	var n: Array[ui_GraphNode]=NODES_GetSelected()
 	if n.size()>0 and n[0]:
-		n[0].Refresh_Description()
+		n[0].Refresh()
 
 func CONNECTIONS_Fix():
 	pass
@@ -609,6 +629,21 @@ func _on_popup_list_item_selected(index: int):
 func _on_popup_filter_text_changed():
 	_rebuild_popup_list()
 
+func _on_popup_filter_gui_input(event: InputEvent) -> void:
+	if not event is InputEventKey or not event.pressed:
+		return
+	var count := N_popup_list.item_count
+	if count == 0:
+		return
+	if event.keycode == KEY_DOWN:
+		N_popup_list.grab_focus()
+		N_popup_list.select(0)
+		get_viewport().set_input_as_handled()
+	elif event.keycode == KEY_UP:
+		N_popup_list.grab_focus()
+		N_popup_list.select(count - 1)
+		get_viewport().set_input_as_handled()
+
 func _on_btn_fix_con_pressed():
 	CONNECTIONS_Fix()
 
@@ -638,8 +673,6 @@ func _on_btn_del_empty_pressed():
 
 func _on_params_on_param_edit(param, value):
 	NODE_RefreshCurrent()
-
-
 
 
 func _on_btn_play_sound_pressed():

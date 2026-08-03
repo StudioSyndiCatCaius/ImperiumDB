@@ -8,7 +8,6 @@ class_name res_project
 var DATA={
 	name="",
 	tags=[],
-	tree_expansion={},
 }
 var PLUGIN={
 	
@@ -35,6 +34,11 @@ func GENERATE():
 	}""")
 	
 
+func PATH_Root():
+	return path.get_base_dir()
+
+
+
 func PATH_ToProjCoreFile(new_extenstion:String):
 	return path.replace(".IDBproj","."+new_extenstion)
 
@@ -50,6 +54,22 @@ func UserData_Get() -> Dictionary:
 	if !G.DATA_global['per_project'].has(path):
 		G.DATA_global['per_project'][path]={}
 	return G.DATA_global['per_project'].get(path,{})
+
+func TreeExpansion_Get(file_path: String) -> bool:
+	return G.DATA_global\
+		.get('per_project', {})\
+		.get(path, {})\
+		.get('tree_expansion', {})\
+		.get(file_path, false)
+
+func TreeExpansion_Set(file_path: String, expanded: bool):
+	if !G.DATA_global.has('per_project'):
+		G.DATA_global['per_project'] = {}
+	if !G.DATA_global['per_project'].has(path):
+		G.DATA_global['per_project'][path] = {}
+	if !G.DATA_global['per_project'][path].has('tree_expansion'):
+		G.DATA_global['per_project'][path]['tree_expansion'] = {}
+	G.DATA_global['per_project'][path]['tree_expansion'][file_path] = expanded
 
 func GetProjectDir():
 	return G_String.Split_AtCharacter(path,"/",true)[0]
@@ -84,6 +104,9 @@ func LOAD_fromDictionary(data: Dictionary):
 	
 	#load tables
 	for i in G_File.LIST_AllInDir(GetProjectDir()+"/tables/"):
+		var _ext := i.get_extension()
+		if _ext != "csv" and _ext != "tbl":
+			continue
 		var _nam=i.get_file().split(".")[0]
 		print("   Register table "+_nam)
 		DataTables[_nam]=G_File.CSV_Import(i)

@@ -39,7 +39,8 @@ func _ready():
 
 	n_fileTree.root_path=G.PATH_GetRoot()+"/flow/"
 	FileTree_Rebuild()
-	n_fileTree.set_expanded_bulk(G.active_project.DATA.get('tree_expansion',{}))
+	n_fileTree.set_expanded_bulk(G.active_project.UserData_Get().get('tree_expansion',{}))
+	CMD_Refresh()
 
 func _exit_tree():
 	var _open_paths: Array = []
@@ -59,7 +60,8 @@ func FileTree_Rebuild():
 	n_fileTree.rebuild_tree()
 
 func FileTree_SaveState():
-	G.active_project.DATA['tree_expansion']=n_fileTree.get_expanded_bulk()
+	var b=n_fileTree.get_expanded_bulk()
+	G.active_project.UserData_Get()['tree_expansion']=b
 
 func _on_file_tree_file_selected(file_path):
 	FileTree_SaveState()
@@ -150,6 +152,14 @@ func GRAPH_Open(graph: Dictionary,path:String=""):
 
 func GRAPH_FromFile(file: String) -> Dictionary:
 	var j=G_File.LOAD_Json(file)
+	# Normalize legacy node template paths on import
+	# e.g. "res://app/res/Nodes/node_DialogueLine.tres" -> "node_DialogueLine"
+	if j is Dictionary:
+		var nodes = j.get("nodes", [])
+		if nodes is Array:
+			for node in nodes:
+				if node is Dictionary and node.has("_template"):
+					node["_template"] = G.NODE_TemplateName(str(node["_template"]))
 	return j
 
 func GRAPH_GetCurrent() -> ui_GraphEdit:
@@ -206,6 +216,13 @@ func _on_btn_new_res_pressed():
 	var _savPath=G.PATH_GetRoot()+"/entities/ent.tres"
 	print("Saving: "+str(_newEnt)+" to "+_savPath)
 	ResourceSaver.save(_newEnt,_savPath)
+
+func CMD_Refresh():
+	var enabled: bool = G.active_project.DATA.get('cmd_enabled', false)
+	N_TabsMain.set_tab_hidden(3, !enabled)
+	for _graph in N_TabGraphs.get_children():
+		if _graph is ui_GraphEdit:
+			_graph.CMD_Refresh()
 
 func CMD_RerunScripts():
 	G.PROJECT_RerunScripts()

@@ -42,7 +42,7 @@ var is_folder: bool
 
 func _ready():
 	G_File.OnFilesUpdated.connect(_ReloadPath)
-	is_expanded=G.active_project.DATA.get('tree_expansion',{}).get(path,false)
+	is_expanded=G.active_project.UserData_Get().get('tree_expansion',{}).get(path,false)
 	N_SubitemRoot.visible=false
 	_ReloadPath()
 
@@ -63,10 +63,10 @@ func _ReloadPath():
 func SetExpanded(_expanded: bool):
 	is_expanded=_expanded
 	
-	if !G.active_project.DATA.has('tree_expansion'):
-		G.active_project.DATA["tree_expansion"]={}
-	
-	G.active_project.DATA['tree_expansion'][path]=is_expanded
+	var _user_data := G.active_project.UserData_Get()
+	if !_user_data.has('tree_expansion'):
+		_user_data['tree_expansion'] = {}
+	_user_data['tree_expansion'][path] = is_expanded
 	N_SubitemRoot.visible=is_expanded
 	G_Node.Children_ClearAll(N_SubitemList)
 	if is_expanded:
